@@ -5,6 +5,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-        <h1>Proiect Software</h1>
+        <h1>Job Recruiting</h1>
     </body>
 </html>
