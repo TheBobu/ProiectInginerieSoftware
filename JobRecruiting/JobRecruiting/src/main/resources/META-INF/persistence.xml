@@ -3,5 +3,12 @@
   <!-- Define Persistence Unit -->
   <persistence-unit name="my_persistence_unit">
     <class>com.recruit.jobrecruiting.entity.User</class>
+    <class>com.recruit.jobrecruiting.entity.Photo</class>
+    <class>com.recruit.jobrecruiting.entity.Candidate</class>
+    <class>com.recruit.jobrecruiting.entity.Interview</class>
+    <class>com.recruit.jobrecruiting.entity.Comment</class>
+    <class>com.recruit.jobrecruiting.entity.Employee</class>
+    <class>com.recruit.jobrecruiting.entity.Department</class>
+    <class>com.recruit.jobrecruiting.entity.JobPost</class>
   </persistence-unit>
 </persistence>
