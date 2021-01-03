@@ -7,6 +7,7 @@ package com.recruit.jobrecruiting.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
@@ -25,6 +26,9 @@ import javax.persistence.Table;
 @Table(name = "DEPARTMENTS")
 public class Department implements Serializable {
 
+    @OneToMany(mappedBy = "department")
+    private List<JobPost> jobPosts;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,10 +40,9 @@ public class Department implements Serializable {
     @OneToMany(mappedBy = "department")
     private Collection<Employee> employees;
 
-// uncomment after JobPost entity is created by Denisa
-//    @JsonbTransient
-//    @OneToMany(mappedBy = "department")
-//    private Collection<JobPost> JobPost;
+    @JsonbTransient
+    @OneToMany(mappedBy = "department")
+    private Collection<JobPost> JobPost;
     public Integer getId() {
         return id;
     }
