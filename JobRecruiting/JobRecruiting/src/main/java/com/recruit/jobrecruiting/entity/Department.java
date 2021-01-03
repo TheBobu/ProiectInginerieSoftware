@@ -18,28 +18,28 @@ import javax.persistence.Table;
 
 /**
  * The model of a department.
- * 
+ *
  * @author robert
  */
 @Entity
-@Table(name="DEPARTMENTS")
+@Table(name = "DEPARTMENTS")
 public class Department implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    
+
     private String name;
-    
+
     @JsonbTransient
     @OneToMany(mappedBy = "department")
-    private Collection<Employee> employees; 
-    
-    @JsonbTransient
-    @OneToMany(mappedBy = "department")
-    private Collection<JobPost> JobPost;
-    
+    private Collection<Employee> employees;
+
+// uncomment after JobPost entity is created by Denisa
+//    @JsonbTransient
+//    @OneToMany(mappedBy = "department")
+//    private Collection<JobPost> JobPost;
     public Integer getId() {
         return id;
     }
@@ -64,21 +64,21 @@ public class Department implements Serializable {
         this.employees = employees;
     }
 
-    public Collection<JobPost> getJobPost() {
-        return JobPost;
-    }
-
-    public void setJobPost(Collection<JobPost> JobPost) {
-        this.JobPost = JobPost;
-    }
-
+// uncomment after JobPost entity is created by Denisa
+//    public Collection<JobPost> getJobPost() {
+//        return JobPost;
+//    }
+//
+//    public void setJobPost(Collection<JobPost> JobPost) {
+//        this.JobPost = JobPost;
+//    }
     @Override
     public int hashCode() {
         int hash = 5;
         hash = 23 * hash + Objects.hashCode(this.id);
         hash = 23 * hash + Objects.hashCode(this.name);
         hash = 23 * hash + Objects.hashCode(this.employees);
-        hash = 23 * hash + Objects.hashCode(this.JobPost);
+//        hash = 23 * hash + Objects.hashCode(this.JobPost);
         return hash;
     }
 
@@ -103,14 +103,15 @@ public class Department implements Serializable {
         if (!Objects.equals(this.employees, other.employees)) {
             return false;
         }
-        if (!Objects.equals(this.JobPost, other.JobPost)) {
-            return false;
-        }
+//        if (!Objects.equals(this.JobPost, other.JobPost)) {
+//            return false;
+//        }
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "Department{" + "id=" + id + ", name=" + name + ", employees=" + employees + ", JobPost=" + JobPost + '}';
-    }
+    // uncomment after JobPost entity is created by Denisa
+//    @Override
+//    public String toString() {
+//        return "Department{" + "id=" + id + ", name=" + name + ", employees=" + employees + ", JobPost=" + JobPost + '}';
+//    }
 }
