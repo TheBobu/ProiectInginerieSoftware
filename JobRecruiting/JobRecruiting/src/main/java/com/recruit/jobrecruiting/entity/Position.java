@@ -6,10 +6,11 @@
 package com.recruit.jobrecruiting.entity;
 
 /**
- *  An enum with the possible states: GENERAL_DIRECTOR, DEPARTMENT_DIRECTOR. 
- * 
+ * An enum with the possible states: CANDIDATE, RECRUITER, DEPARTMENT_DIRECTOR,
+ * GENERAL_DIRECTOR, ADMIN
+ *
  * @author robert
  */
 public enum Position {
-    GENERAL_DIRECTOR, DEPARTMENT_DIRECTOR, HR_DIRECTOR, RECRUITER, ADMIN;
+    CANDIDATE, RECRUITER, DEPARTMENT_DIRECTOR, GENERAL_DIRECTOR, ADMIN;
 }

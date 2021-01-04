@@ -7,13 +7,18 @@ package com.recruit.jobrecruiting.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Objects;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -28,6 +33,7 @@ import javax.persistence.Table;
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -47,9 +53,31 @@ public class User implements Serializable {
     private String address;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Photo photo;
+    private Photo profilePhoto;
 
-    private Status accountStatus;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Photo cv;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @Enumerated(EnumType.STRING)
+    private Position position;
+
+    @Enumerated(EnumType.STRING)
+    private Department department;
+
+    @JsonbTransient
+    @OneToMany(mappedBy = "candidate")
+    private Collection<Interview> interviewsAsCandidate;
+
+    @JsonbTransient
+    @OneToMany(mappedBy = "interviewer")
+    private Collection<Interview> interviewsAsInterviewer;
+
+    @JsonbTransient
+    @OneToMany(mappedBy = "poster")
+    private Collection<JobPost> jobPostsAsPoster;
 
     public Integer getId() {
         return id;
@@ -115,19 +143,89 @@ public class User implements Serializable {
         this.address = address;
     }
 
+    public Photo getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(Photo profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
+
+    public Photo getCv() {
+        return cv;
+    }
+
+    public void setCv(Photo cv) {
+        this.cv = cv;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public Collection<Interview> getInterviewsAsCandidate() {
+        return interviewsAsCandidate;
+    }
+
+    public void setInterviewsAsCandidate(Collection<Interview> interviewsAsCandidate) {
+        this.interviewsAsCandidate = interviewsAsCandidate;
+    }
+
+    public Collection<Interview> getInterviewsAsInterviewer() {
+        return interviewsAsInterviewer;
+    }
+
+    public void setInterviewsAsInterviewer(Collection<Interview> interviewsAsInterviewer) {
+        this.interviewsAsInterviewer = interviewsAsInterviewer;
+    }
+
+    public Collection<JobPost> getJobPostsAsPoster() {
+        return jobPostsAsPoster;
+    }
+
+    public void setJobPostsAsPoster(Collection<JobPost> jobPostsAsPoster) {
+        this.jobPostsAsPoster = jobPostsAsPoster;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 71 * hash + Objects.hashCode(this.id);
-        hash = 71 * hash + Objects.hashCode(this.username);
-        hash = 71 * hash + Objects.hashCode(this.email);
-        hash = 71 * hash + Objects.hashCode(this.password);
-        hash = 71 * hash + Objects.hashCode(this.birthDate);
-        hash = 71 * hash + Objects.hashCode(this.firstName);
-        hash = 71 * hash + Objects.hashCode(this.lastName);
-        hash = 71 * hash + Objects.hashCode(this.address);
-        hash = 71 * hash + Objects.hashCode(this.photo);
-        hash = 71 * hash + Objects.hashCode(this.accountStatus);
+        int hash = 7;
+        hash = 11 * hash + Objects.hashCode(this.id);
+        hash = 11 * hash + Objects.hashCode(this.username);
+        hash = 11 * hash + Objects.hashCode(this.email);
+        hash = 11 * hash + Objects.hashCode(this.password);
+        hash = 11 * hash + Objects.hashCode(this.birthDate);
+        hash = 11 * hash + Objects.hashCode(this.firstName);
+        hash = 11 * hash + Objects.hashCode(this.lastName);
+        hash = 11 * hash + Objects.hashCode(this.address);
+        hash = 11 * hash + Objects.hashCode(this.profilePhoto);
+        hash = 11 * hash + Objects.hashCode(this.cv);
+        hash = 11 * hash + Objects.hashCode(this.status);
+        hash = 11 * hash + Objects.hashCode(this.position);
+        hash = 11 * hash + Objects.hashCode(this.department);
+        hash = 11 * hash + Objects.hashCode(this.interviewsAsCandidate);
+        hash = 11 * hash + Objects.hashCode(this.interviewsAsInterviewer);
+        hash = 11 * hash + Objects.hashCode(this.jobPostsAsPoster);
         return hash;
     }
 
@@ -167,10 +265,28 @@ public class User implements Serializable {
         if (!Objects.equals(this.birthDate, other.birthDate)) {
             return false;
         }
-        if (!Objects.equals(this.photo, other.photo)) {
+        if (!Objects.equals(this.profilePhoto, other.profilePhoto)) {
             return false;
         }
-        if (this.accountStatus != other.accountStatus) {
+        if (!Objects.equals(this.cv, other.cv)) {
+            return false;
+        }
+        if (this.status != other.status) {
+            return false;
+        }
+        if (this.position != other.position) {
+            return false;
+        }
+        if (this.department != other.department) {
+            return false;
+        }
+        if (!Objects.equals(this.interviewsAsCandidate, other.interviewsAsCandidate)) {
+            return false;
+        }
+        if (!Objects.equals(this.interviewsAsInterviewer, other.interviewsAsInterviewer)) {
+            return false;
+        }
+        if (!Objects.equals(this.jobPostsAsPoster, other.jobPostsAsPoster)) {
             return false;
         }
         return true;
@@ -178,6 +294,6 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", birthDate=" + birthDate + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", photo=" + photo + ", accountStatus=" + accountStatus + '}';
+        return "User{" + "id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", birthDate=" + birthDate + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", profilePhoto=" + profilePhoto + ", cv=" + cv + ", status=" + status + ", position=" + position + ", department=" + department + ", interviewsAsCandidate=" + interviewsAsCandidate + ", interviewsAsInterviewer=" + interviewsAsInterviewer + ", jobPostsAsPoster=" + jobPostsAsPoster + '}';
     }
 }

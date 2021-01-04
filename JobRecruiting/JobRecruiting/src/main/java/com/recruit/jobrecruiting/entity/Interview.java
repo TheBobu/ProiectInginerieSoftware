@@ -11,6 +11,8 @@ import java.util.Collection;
 import java.util.Objects;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,6 +32,7 @@ import javax.persistence.Table;
 public class Interview implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -40,12 +43,17 @@ public class Interview implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CANDIDATE_KEY")
-    private Candidate candidate;
+    private User candidate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "INTERVIEWER_KEY")
+    private User interviewer;
 
     private LocalDateTime dateTime;
 
     private String place;
 
+    @Enumerated(EnumType.STRING)
     private InterviewStatus status;
 
     @JsonbTransient
@@ -60,12 +68,28 @@ public class Interview implements Serializable {
         this.id = id;
     }
 
-    public Candidate getCandidate() {
+    public JobPost getJobPost() {
+        return jobPost;
+    }
+
+    public void setJobPost(JobPost jobPost) {
+        this.jobPost = jobPost;
+    }
+
+    public User getCandidate() {
         return candidate;
     }
 
-    public void setCandidate(Candidate candidate) {
+    public void setCandidate(User candidate) {
         this.candidate = candidate;
+    }
+
+    public User getInterviewer() {
+        return interviewer;
+    }
+
+    public void setInterviewer(User interviewer) {
+        this.interviewer = interviewer;
     }
 
     public LocalDateTime getDateTime() {
@@ -100,24 +124,17 @@ public class Interview implements Serializable {
         this.comments = comments;
     }
 
-    public JobPost getJobPost() {
-        return jobPost;
-    }
-
-    public void setJobPost(JobPost jobPost) {
-        this.jobPost = jobPost;
-    }
-
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.id);
-        hash = 97 * hash + Objects.hashCode(this.jobPost);
-        hash = 97 * hash + Objects.hashCode(this.candidate);
-        hash = 97 * hash + Objects.hashCode(this.dateTime);
-        hash = 97 * hash + Objects.hashCode(this.place);
-        hash = 97 * hash + Objects.hashCode(this.status);
-        hash = 97 * hash + Objects.hashCode(this.comments);
+        hash = 29 * hash + Objects.hashCode(this.id);
+        hash = 29 * hash + Objects.hashCode(this.jobPost);
+        hash = 29 * hash + Objects.hashCode(this.candidate);
+        hash = 29 * hash + Objects.hashCode(this.interviewer);
+        hash = 29 * hash + Objects.hashCode(this.dateTime);
+        hash = 29 * hash + Objects.hashCode(this.place);
+        hash = 29 * hash + Objects.hashCode(this.status);
+        hash = 29 * hash + Objects.hashCode(this.comments);
         return hash;
     }
 
@@ -145,6 +162,9 @@ public class Interview implements Serializable {
         if (!Objects.equals(this.candidate, other.candidate)) {
             return false;
         }
+        if (!Objects.equals(this.interviewer, other.interviewer)) {
+            return false;
+        }
         if (!Objects.equals(this.dateTime, other.dateTime)) {
             return false;
         }
@@ -159,6 +179,6 @@ public class Interview implements Serializable {
 
     @Override
     public String toString() {
-        return "Interview{" + "id=" + id + ", jobPost=" + jobPost + ", candidate=" + candidate + ", dateTime=" + dateTime + ", place=" + place + ", status=" + status + ", comments=" + comments + '}';
+        return "Interview{" + "id=" + id + ", jobPost=" + jobPost + ", candidate=" + candidate + ", interviewer=" + interviewer + ", dateTime=" + dateTime + ", place=" + place + ", status=" + status + ", comments=" + comments + '}';
     }
 }

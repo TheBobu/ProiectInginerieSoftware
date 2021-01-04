@@ -6,10 +6,10 @@
 package com.recruit.jobrecruiting.entity;
 
 /**
- * An enum with 3 possible states: INACTIVE, PENDING_APPROVAL, ACTIVE.
+ * An enum with 3 possible states: INACTIVE, ACTIVE.
  * 
  * @author robert
  */
 public enum Status {
-   INACTIVE, PENDING_APPROVAL, ACTIVE;
+   INACTIVE, ACTIVE;
 }

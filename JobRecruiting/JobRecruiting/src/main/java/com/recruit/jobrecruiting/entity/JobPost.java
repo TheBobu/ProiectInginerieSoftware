@@ -6,8 +6,13 @@
 package com.recruit.jobrecruiting.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,43 +26,43 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- * // TODO: To be created by Denisa
- *
+ * The model for a JobPost.
+ * 
+ * @author denisa
+ * @author robert
  */
 @Entity
 @Table(name = "JOBPOSTS")
 public class JobPost implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String title;
+    
     private String description;
 
-    @ManyToMany
-    @JoinTable(name = "JOBPOST_SKILL")
-    private List<Skill> skills;
+    private String skills;
 
     private int noOfPositionsAvailable;
+    
     private int noOfPositionsFilled;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "DEPARTMENT_KEY")
+    @Enumerated(EnumType.STRING)
     private Department department;
 
-    @OneToMany(mappedBy = "jobPost")
-    private List<Interview> interviews;
-
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "POSTER_KEY")
-    private Employee poster;
+    private User poster;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "INTERVIEWER_KEY")
-    private Employee interviwer;
-
+    @JsonbTransient
+    @OneToMany(mappedBy = "jobPost")
+    private Collection<Interview> interviewsForJobPost;
+        
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     public Integer getId() {
@@ -84,11 +89,11 @@ public class JobPost implements Serializable {
         this.description = description;
     }
 
-    public List<Skill> getSkills() {
+    public String getSkills() {
         return skills;
     }
 
-    public void setSkills(List<Skill> skills) {
+    public void setSkills(String skills) {
         this.skills = skills;
     }
 
@@ -116,28 +121,20 @@ public class JobPost implements Serializable {
         this.department = department;
     }
 
-    public List<Interview> getInterviews() {
-        return interviews;
-    }
-
-    public void setInterviews(List<Interview> interviews) {
-        this.interviews = interviews;
-    }
-
-    public Employee getPoster() {
+    public User getPoster() {
         return poster;
     }
 
-    public void setPoster(Employee poster) {
+    public void setPoster(User poster) {
         this.poster = poster;
     }
 
-    public Employee getInterviwer() {
-        return interviwer;
+    public Collection<Interview> getInterviewsForJobPost() {
+        return interviewsForJobPost;
     }
 
-    public void setInterviwer(Employee interviwer) {
-        this.interviwer = interviwer;
+    public void setInterviewsForJobPost(Collection<Interview> interviewsForJobPost) {
+        this.interviewsForJobPost = interviewsForJobPost;
     }
 
     public Status getStatus() {
@@ -146,5 +143,71 @@ public class JobPost implements Serializable {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + Objects.hashCode(this.id);
+        hash = 47 * hash + Objects.hashCode(this.title);
+        hash = 47 * hash + Objects.hashCode(this.description);
+        hash = 47 * hash + Objects.hashCode(this.skills);
+        hash = 47 * hash + this.noOfPositionsAvailable;
+        hash = 47 * hash + this.noOfPositionsFilled;
+        hash = 47 * hash + Objects.hashCode(this.department);
+        hash = 47 * hash + Objects.hashCode(this.poster);
+        hash = 47 * hash + Objects.hashCode(this.interviewsForJobPost);
+        hash = 47 * hash + Objects.hashCode(this.status);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final JobPost other = (JobPost) obj;
+        if (this.noOfPositionsAvailable != other.noOfPositionsAvailable) {
+            return false;
+        }
+        if (this.noOfPositionsFilled != other.noOfPositionsFilled) {
+            return false;
+        }
+        if (!Objects.equals(this.title, other.title)) {
+            return false;
+        }
+        if (!Objects.equals(this.description, other.description)) {
+            return false;
+        }
+        if (!Objects.equals(this.skills, other.skills)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (this.department != other.department) {
+            return false;
+        }
+        if (!Objects.equals(this.poster, other.poster)) {
+            return false;
+        }
+        if (!Objects.equals(this.interviewsForJobPost, other.interviewsForJobPost)) {
+            return false;
+        }
+        if (this.status != other.status) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "JobPost{" + "id=" + id + ", title=" + title + ", description=" + description + ", skills=" + skills + ", noOfPositionsAvailable=" + noOfPositionsAvailable + ", noOfPositionsFilled=" + noOfPositionsFilled + ", department=" + department + ", poster=" + poster + ", interviewsForJobPost=" + interviewsForJobPost + ", status=" + status + '}';
     }
 }
