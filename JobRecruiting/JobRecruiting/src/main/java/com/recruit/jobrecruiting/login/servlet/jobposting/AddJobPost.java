@@ -16,8 +16,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DENISA
  */
-@WebServlet(name = "JobPosting", urlPatterns = {"/JobPostings"})
-public class JobPostings extends HttpServlet {
+@WebServlet(name = "AddJobPost", urlPatterns = {"/JobPost/Create"})
+public class AddJobPost extends HttpServlet {
+
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -30,7 +31,21 @@ public class JobPostings extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.getRequestDispatcher("/WEB-INF/pages/jobpost/addjobpost.jsp").forward(request, response);
+    }
 
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        //processRequest(request, response);
     }
 
     /**
