@@ -6,17 +6,15 @@
 package com.recruit.jobrecruiting.common;
 
 import com.recruit.jobrecruiting.entity.Department;
-import com.recruit.jobrecruiting.entity.Interview;
 import com.recruit.jobrecruiting.entity.Skill;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.User;
-import java.util.List;
 
 /**
  *
  * @author DENISA
  */
-public class JobPostDetails {
+public class JobPostDetails extends DetachedEntity {
 
     private Integer id;
     private String title;
@@ -24,26 +22,23 @@ public class JobPostDetails {
     private int noOfPositionsAvailable;
     private int noOfPositionsFilled;
 
-    private List<Skill> skills;
-    private List<Interview> interviews;
+    private Skill skills;
 
     private Department department;
     private User poster;
     private Status status;
 
-    public JobPostDetails(Integer id, String title, String description, int noOfPositionsAvailable, int noOfPositionsFilled, List<Skill> skills, List<Interview> interviews, Department department, User poster, Status status) {
+    public JobPostDetails(Integer id, String title, String description, int noOfPositionsAvailable, int noOfPositionsFilled, Skill skills, Department department, User poster, Status status) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.noOfPositionsAvailable = noOfPositionsAvailable;
         this.noOfPositionsFilled = noOfPositionsFilled;
         this.skills = skills;
-        this.interviews = interviews;
         this.department = department;
         this.poster = poster;
         this.status = status;
     }
-
 
     public Integer getId() {
         return id;
@@ -85,20 +80,12 @@ public class JobPostDetails {
         this.noOfPositionsFilled = noOfPositionsFilled;
     }
 
-    public List<Skill> getSkills() {
+    public Skill getSkills() {
         return skills;
     }
 
-    public void setSkills(List<Skill> skills) {
+    public void setSkills(Skill skills) {
         this.skills = skills;
-    }
-
-    public List<Interview> getInterviews() {
-        return interviews;
-    }
-
-    public void setInterviews(List<Interview> interviews) {
-        this.interviews = interviews;
     }
 
     public Department getDepartment() {

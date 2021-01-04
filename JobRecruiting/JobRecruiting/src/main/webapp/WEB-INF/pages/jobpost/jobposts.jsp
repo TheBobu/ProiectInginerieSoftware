@@ -10,7 +10,6 @@
 
 <t:pageTemplate pageTitle="Jobs">
 
-    <h1 >Jobs</h1>
-    <p> Welcome! </p>
+    <h1 >Jobs posts</h1>
     
 </t:pageTemplate>

@@ -5,6 +5,9 @@
  */
 package com.recruit.jobrecruiting.entity;
 
+import com.recruit.jobrecruiting.common.DetachedEntity;
+import com.recruit.jobrecruiting.common.JobPostDetails;
+import com.recruit.jobrecruiting.util.Detachable;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
@@ -29,7 +32,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "JOBPOSTS")
-public class JobPost implements Serializable /*, Detachable*/ {
+
+public class JobPost implements Serializable, Detachable {
 
     private static final long serialVersionUID = 1L;
     
@@ -203,25 +207,23 @@ public class JobPost implements Serializable /*, Detachable*/ {
         return true;
     }
 
-    //Model
-
-//     @Override
-//    public JobPostDetails detach() {
-//        return new JobPostDetails(
-//                id,
-//                title,
-//                description,
-//                noOfPositionsAvailable,
-//                noOfPositionsFilled,
-//                skills,
-//                department,
-//                poster,
-//                status
-//        );
-//    }
-
     @Override
     public String toString() {
         return "JobPost{" + "id=" + id + ", title=" + title + ", description=" + description + ", skills=" + skills + ", noOfPositionsAvailable=" + noOfPositionsAvailable + ", noOfPositionsFilled=" + noOfPositionsFilled + ", department=" + department + ", poster=" + poster + ", interviewsForJobPost=" + interviewsForJobPost + ", status=" + status + '}';
+    }
+
+    @Override
+    public DetachedEntity detach() {
+        return new JobPostDetails(
+                id,
+                title,
+                description,
+                noOfPositionsAvailable,
+                noOfPositionsFilled,
+                skills,
+                department,
+                poster,
+                status
+        );
     }
 }
