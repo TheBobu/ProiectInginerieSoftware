@@ -5,7 +5,11 @@
  */
 package com.recruit.jobrecruiting.login.servlet.jobposting;
 
+import com.recruit.jobrecruiting.common.JobPostDetails;
+import com.recruit.jobrecruiting.ejb.JobPostBean;
 import java.io.IOException;
+import java.util.List;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,8 +20,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DENISA
  */
-@WebServlet(name = "JobPosting", urlPatterns = {"/JobPostings"})
-public class JobPostings extends HttpServlet {
+@WebServlet(name = "JobPosts", urlPatterns = {"/JobPosts"})
+public class JobPosts extends HttpServlet {
+
+    @Inject
+    private JobPostBean jobPostBean;
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -31,6 +38,8 @@ public class JobPostings extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        List<JobPostDetails> jobPosts = jobPostBean.getAllJobPosts();
+        request.getSession().setAttribute("jobPosts", jobPosts);
     }
 
     /**
