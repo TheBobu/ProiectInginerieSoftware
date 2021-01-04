@@ -5,10 +5,22 @@
  */
 package com.recruit.jobrecruiting.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author DENISA
  */
 public class Util {
 
+    public static <T> List<T> detachEntities(List<Detachable> inputArray) {
+
+        List<T> output = new ArrayList<>();
+        inputArray.forEach((Detachable element) -> {
+            output.add((T) element.detach());
+        });
+
+        return output;
+    }
 }
