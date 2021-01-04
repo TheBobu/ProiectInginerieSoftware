@@ -5,13 +5,11 @@
  */
 package com.recruit.jobrecruiting.util;
 
-import com.recruit.jobrecruiting.common.DetachedEntity;
-
 /**
  *
  * @author DENISA
  */
 public interface Detachable {
 
-    public DetachedEntity detach();
+    public <T> T detach();
 }
