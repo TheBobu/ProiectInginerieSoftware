@@ -14,7 +14,7 @@ import com.recruit.jobrecruiting.entity.User;
  *
  * @author DENISA
  */
-public class JobPostDetails extends DetachedEntity {
+public class JobPostDetails {
 
     private Integer id;
     private String title;

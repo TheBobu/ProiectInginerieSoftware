@@ -11,7 +11,7 @@
 <t:pageTemplate pageTitle="Add job post">
 
     <div class="col-md-7 col-lg-8">
-        <h2 class="mb-3">Add job post</h2>
+        <h2 class="mb-3">Add job post</h2> 
         <form class="needs-validation" action="${pageContext.request.contextPath}/AddJobPost" method="POST" novalidate>
             <div class="row g-3">
                 <div class="col-12">

@@ -12,5 +12,4 @@ package com.recruit.jobrecruiting.util;
 public interface Detachable {
 
     public <T> T detach();
-
 }

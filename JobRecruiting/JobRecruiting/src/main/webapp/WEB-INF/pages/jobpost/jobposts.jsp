@@ -13,7 +13,7 @@
 
     <h1 >Jobs posts ee</h1>
     
-    <c:forEach var="jobpost" items="${jobposts}">
+    <c:forEach var="jobpost" items="${jobPosts}">
         <p>${jobpost.title}</p>
     </c:forEach>
     

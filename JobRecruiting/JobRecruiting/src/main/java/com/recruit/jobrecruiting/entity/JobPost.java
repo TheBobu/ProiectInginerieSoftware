@@ -5,7 +5,6 @@
  */
 package com.recruit.jobrecruiting.entity;
 
-import com.recruit.jobrecruiting.common.DetachedEntity;
 import com.recruit.jobrecruiting.common.JobPostDetails;
 import com.recruit.jobrecruiting.util.Detachable;
 import java.io.Serializable;
@@ -213,7 +212,7 @@ public class JobPost implements Serializable, Detachable {
     }
 
     @Override
-    public DetachedEntity detach() {
+    public JobPostDetails detach() {
         return new JobPostDetails(
                 id,
                 title,
