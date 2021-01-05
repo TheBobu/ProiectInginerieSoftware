@@ -29,6 +29,7 @@ public class JobPostDetails {
     private Status status;
 
     public JobPostDetails(Integer id, String title, String description, int noOfPositionsAvailable, int noOfPositionsFilled, Skill skills, Department department, User poster, Status status) {
+
         this.id = id;
         this.title = title;
         this.description = description;
