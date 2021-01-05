@@ -41,7 +41,8 @@ public class JobPost implements Serializable /*, Detachable*/ {
     
     private String description;
 
-    private String skills;
+    @Enumerated(EnumType.STRING)
+    private Skill skills;
 
     private int noOfPositionsAvailable;
     
@@ -83,14 +84,6 @@ public class JobPost implements Serializable /*, Detachable*/ {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getSkills() {
-        return skills;
-    }
-
-    public void setSkills(String skills) {
-        this.skills = skills;
     }
 
     public int getNoOfPositionsAvailable() {
