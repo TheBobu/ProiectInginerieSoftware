@@ -11,5 +11,16 @@ package com.recruit.jobrecruiting.entity;
  * @author robert
  */
 public enum Status {
-   INACTIVE, ACTIVE;
+    INACTIVE("Inactive"),
+    ACTIVE("Active");
+
+    public final String label;
+
+    private Status(String label) {
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
+    }
 }

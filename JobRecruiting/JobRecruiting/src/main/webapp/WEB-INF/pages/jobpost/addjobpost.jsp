@@ -7,6 +7,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <t:pageTemplate pageTitle="Add job post">
 
@@ -38,20 +39,27 @@
                     </div>
                 </div>
 
-                <div class="col-12">
+                <div class="col-10">
                     <label for="parking_spot" class="form-label">Skills</label>
-                    <input type="text" class="form-control" id="parking_spot" name="skills" required>
+                    <select class="form-select" id="country" name="skills" required>
+                        <option value="">Choose...</option>
+                        <c:forEach var = "skill" items = "${skills}">
+                            <option value="${skill}">${skill.label}</option>
+                        </c:forEach>
+                    </select>
                     <div class="invalid-feedback">
                         Valid skills required.
                     </div>
                 </div>
 
                 <div class="col-10">
+                  
                     <label for="country" class="form-label">Department</label>
                     <select class="form-select" id="country" name="department" required>
                         <option value="">Choose...</option>
-                        <c:forEach var = "user" items = "${users}">
-                            <option value="${user.id}">${user.username}</option>
+                        
+                        <c:forEach var = "department" items = "${departments}">
+                            <option value="${department}">${department}</option>
                         </c:forEach>
                     </select>
                     <div class="invalid-feedback">
@@ -63,8 +71,8 @@
                     <label for="country" class="form-label">Status</label>
                     <select class="form-select" id="country" name="status" required>
                         <option value="">Choose...</option>
-                        <c:forEach var = "user" items = "${users}">
-                            <option value="${user.id}">${user.username}</option>
+                        <c:forEach var = "status" items = "${statuses}">
+                            <option value="${status}">${status.label}</option>
                         </c:forEach>
                     </select>
                     <div class="invalid-feedback">

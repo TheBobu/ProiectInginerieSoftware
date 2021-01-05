@@ -20,8 +20,6 @@ public class Util {
         inputArray.forEach((Detachable element) -> {
             output.add((T) element.detach());
         });
-
         return output;
     }
-
 }

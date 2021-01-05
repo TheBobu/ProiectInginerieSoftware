@@ -10,5 +10,18 @@ package com.recruit.jobrecruiting.entity;
  * @author DENISA
  */
 public enum Skill {
-    JAVA, C;
+    JAVA("Java"),
+    CS("C#"),
+    CPP("C++");
+
+    public final String label;
+
+    private Skill(String label) {
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
 }

@@ -5,6 +5,9 @@
  */
 package com.recruit.jobrecruiting.login.servlet.jobposting;
 
+import com.recruit.jobrecruiting.entity.Department;
+import com.recruit.jobrecruiting.entity.Skill;
+import com.recruit.jobrecruiting.entity.Status;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,6 +34,10 @@ public class AddJobPost extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        request.getSession().setAttribute("departments", Department.values());
+        request.getSession().setAttribute("skills", Skill.values());
+        request.getSession().setAttribute("statuses", Status.values());
         request.getRequestDispatcher("/WEB-INF/pages/jobpost/addjobpost.jsp").forward(request, response);
     }
 
