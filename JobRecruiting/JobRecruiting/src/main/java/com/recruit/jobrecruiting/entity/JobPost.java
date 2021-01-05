@@ -78,6 +78,14 @@ public class JobPost implements Serializable /*, Detachable*/ {
         this.title = title;
     }
 
+    public Skill getSkills() {
+        return skills;
+    }
+
+    public void setSkills(Skill skills) {
+        this.skills = skills;
+    }
+
     public String getDescription() {
         return description;
     }
