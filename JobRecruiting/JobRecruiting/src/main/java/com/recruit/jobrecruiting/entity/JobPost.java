@@ -9,6 +9,7 @@ import com.recruit.jobrecruiting.common.JobPostDetails;
 import com.recruit.jobrecruiting.util.Detachable;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
@@ -19,6 +20,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -44,8 +47,10 @@ public class JobPost implements Serializable, Detachable {
     
     private String description;
 
+    @ManyToMany
+    @JoinTable(name = "JOBPOST_SKILL")
     @Enumerated(EnumType.STRING)
-    private Skill skills;
+    private List<Skill> skills;
 
     private int noOfPositionsAvailable;
     
@@ -81,11 +86,11 @@ public class JobPost implements Serializable, Detachable {
         this.title = title;
     }
 
-    public Skill getSkills() {
+    public List<Skill> getSkills() {
         return skills;
     }
 
-    public void setSkills(Skill skills) {
+    public void setSkills(List<Skill> skills) {
         this.skills = skills;
     }
 

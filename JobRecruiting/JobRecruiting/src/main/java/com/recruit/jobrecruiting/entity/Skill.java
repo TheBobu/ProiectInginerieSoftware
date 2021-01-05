@@ -9,6 +9,7 @@ package com.recruit.jobrecruiting.entity;
  *
  * @author DENISA
  */
+
 public enum Skill {
     JAVA("Java"),
     CS("C#"),

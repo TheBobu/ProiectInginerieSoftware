@@ -9,6 +9,7 @@ import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Skill;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.User;
+import java.util.List;
 
 /**
  *
@@ -22,13 +23,13 @@ public class JobPostDetails {
     private int noOfPositionsAvailable;
     private int noOfPositionsFilled;
 
-    private Skill skills;
+    private List<Skill> skills;
 
     private Department department;
     private User poster;
     private Status status;
 
-    public JobPostDetails(Integer id, String title, String description, int noOfPositionsAvailable, int noOfPositionsFilled, Skill skills, Department department, User poster, Status status) {
+    public JobPostDetails(Integer id, String title, String description, int noOfPositionsAvailable, int noOfPositionsFilled, List<Skill> skills, Department department, User poster, Status status) {
 
         this.id = id;
         this.title = title;
@@ -81,11 +82,11 @@ public class JobPostDetails {
         this.noOfPositionsFilled = noOfPositionsFilled;
     }
 
-    public Skill getSkills() {
+    public List<Skill> getSkills() {
         return skills;
     }
 
-    public void setSkills(Skill skills) {
+    public void setSkills(List<Skill> skills) {
         this.skills = skills;
     }
 
