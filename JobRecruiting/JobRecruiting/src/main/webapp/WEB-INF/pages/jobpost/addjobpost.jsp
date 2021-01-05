@@ -25,7 +25,8 @@
 
                 <div class="col-12">
                     <label for="parking_spot" class="form-label">Description</label>
-                    <input type="text" class="form-control" id="parking_spot" name="description" required>
+                    <textarea type="text" class="form-control" id="parking_spot" name="description" required>
+                    </textarea>
                     <div class="invalid-feedback">
                         Valid description required.
                     </div>
@@ -33,7 +34,7 @@
 
                 <div class="col-12">
                     <label for="parking_spot" class="form-label">Positions available</label>
-                    <input type="text" class="form-control" id="parking_spot" name="noOfPositionsAvailable" required>
+                    <input type="number" class="form-control" id="parking_spot" name="noOfPositionsAvailable" required>
                     <div class="invalid-feedback">
                         Valid number of positions available required.
                     </div>
