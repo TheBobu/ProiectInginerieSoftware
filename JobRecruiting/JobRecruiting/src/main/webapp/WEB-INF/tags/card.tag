@@ -11,7 +11,7 @@
 <%@attribute name="description"%>
 
   <div class="card">
-    <img src="..." class="card-img-top" alt="...">
+    <img src="https://picsum.photos/seed/picsum/400" class="card-img-top" alt="...">
     <div class="card-body">
       <h5 class="card-title">${title}</h5>
       <p class="card-text">${description}</p>

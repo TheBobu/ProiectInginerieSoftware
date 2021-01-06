@@ -13,7 +13,7 @@
 
     <div class="col-md-7 col-lg-8">
         <h2 class="mb-3">Add job post</h2> 
-        <form class="needs-validation" action="${pageContext.request.contextPath}/AddJobPost" method="POST" novalidate>
+        <form class="needs-validation" action="${pageContext.request.contextPath}/JobPost/Create" method="POST" novalidate>
             <div class="row g-3">
                 <div class="col-12">
                     <label for="licence_plate" class="form-label">Title</label>
@@ -43,7 +43,7 @@
                 <div class="col-10">
                     ${skills}
                     <label for="parking_spot" class="form-label">Skills</label>
-                    <select class="form-select" id="country" name="skills" required>
+                    <select class="form-select" id="country" name="skills" required required>
                         <option value="">Choose...</option>
                         <c:forEach var = "skill" items = "${skills}">
                             <option value="${skill.id}">${skill.name}</option>

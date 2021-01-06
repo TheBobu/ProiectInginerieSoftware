@@ -62,7 +62,8 @@ public class JobPostBean {
         jobPost.setTitle(title);
         jobPost.setDescription(description);
         jobPost.setDepartment(department);
-        jobPost.setPoster(em.find(User.class, poster));
+        User user = em.find(User.class, poster);
+        jobPost.setPoster(user);
         jobPost.setNoOfPositionsAvailable(noOfPositionsAvailable);
         jobPost.setStatus(status);
 

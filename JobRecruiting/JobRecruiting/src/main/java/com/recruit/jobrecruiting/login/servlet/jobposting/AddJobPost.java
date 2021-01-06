@@ -68,7 +68,7 @@ public class AddJobPost extends HttpServlet {
         Department department = Department.valueOf(request.getParameter("department"));
         List<String> skills = Arrays.asList(request.getParameterValues("skills"));
         Status status = Status.valueOf(request.getParameter("status"));
-        int nopositionsAvailable = Integer.parseInt(request.getParameter("nopositionsAvailable"));
+        int nopositionsAvailable = Integer.parseInt(request.getParameter("noOfPositionsAvailable"));
 
 
         jobPostBean.createJobPost(title, description, nopositionsAvailable, skills, department, 1, status);
