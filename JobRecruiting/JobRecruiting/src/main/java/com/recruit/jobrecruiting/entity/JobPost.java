@@ -53,7 +53,7 @@ public class JobPost implements Serializable, Detachable {
 
     private int noOfPositionsAvailable;
     
-    private int noOfPositionsFilled;
+    private int noOfPositionsFilled = 0;
 
     @Enumerated(EnumType.STRING)
     private Department department;

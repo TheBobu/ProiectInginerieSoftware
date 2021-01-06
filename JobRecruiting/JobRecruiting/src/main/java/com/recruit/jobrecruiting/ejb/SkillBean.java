@@ -5,7 +5,7 @@
  */
 package com.recruit.jobrecruiting.ejb;
 
-import com.recruit.jobrecruiting.common.JobPostDetails;
+import com.recruit.jobrecruiting.common.SkillDetails;
 import com.recruit.jobrecruiting.entity.Skill;
 import com.recruit.jobrecruiting.util.Detachable;
 import com.recruit.jobrecruiting.util.Util;
@@ -29,11 +29,12 @@ public class SkillBean {
 
     private static final Logger LOG = Logger.getLogger(SkillBean.class.getName());
 
-    public List<JobPostDetails> getAllJobPosts() {
+    public List<SkillDetails> getAllSkills() {
+        LOG.info("getAllSkills");
         try {
             Query query = em.createQuery("SELECT s FROM Skill s");
-            List<Detachable> jobPosts = (List<Detachable>) query.getResultList();
-            return Util.detachEntities(jobPosts);
+            List<Detachable> skills = (List<Detachable>) query.getResultList();
+            return Util.detachEntities(skills);
         } catch (Exception ex) {
             throw new EJBException(ex);
         }

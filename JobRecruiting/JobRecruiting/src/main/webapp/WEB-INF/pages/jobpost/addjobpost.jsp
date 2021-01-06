@@ -41,11 +41,12 @@
                 </div>
 
                 <div class="col-10">
+                    ${skills}
                     <label for="parking_spot" class="form-label">Skills</label>
                     <select class="form-select" id="country" name="skills" required>
                         <option value="">Choose...</option>
                         <c:forEach var = "skill" items = "${skills}">
-                            <option value="${skill}">${skill.label}</option>
+                            <option value="${skill.id}">${skill.name}</option>
                         </c:forEach>
                     </select>
                     <div class="invalid-feedback">

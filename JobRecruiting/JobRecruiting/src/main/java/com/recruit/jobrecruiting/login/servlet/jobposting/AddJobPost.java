@@ -6,8 +6,8 @@
 package com.recruit.jobrecruiting.login.servlet.jobposting;
 
 import com.recruit.jobrecruiting.ejb.JobPostBean;
+import com.recruit.jobrecruiting.ejb.SkillBean;
 import com.recruit.jobrecruiting.entity.Department;
-import com.recruit.jobrecruiting.entity.Skill;
 import com.recruit.jobrecruiting.entity.Status;
 import java.io.IOException;
 import java.util.Arrays;
@@ -29,6 +29,9 @@ public class AddJobPost extends HttpServlet {
     @Inject
     private JobPostBean jobPostBean;
 
+    @Inject
+    private SkillBean skillBean;
+
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -43,7 +46,7 @@ public class AddJobPost extends HttpServlet {
             throws ServletException, IOException {
 
         request.getSession().setAttribute("departments", Department.values());
-        request.getSession().setAttribute("skills", Skill.values());
+        request.getSession().setAttribute("skills", skillBean.getAllSkills());
         request.getSession().setAttribute("statuses", Status.values());
         request.getRequestDispatcher("/WEB-INF/pages/jobpost/addjobpost.jsp").forward(request, response);
     }
