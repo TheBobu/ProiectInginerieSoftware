@@ -15,7 +15,11 @@
     <div class="row row-cols-1 row-cols-md-2 g-4 mt-4">
         <c:forEach var="jobpost" items="${jobPosts}">
             <div class="col">
-                <t:card title="${jobpost.title}" description="${jobpost.description}"/>
+                <t:card 
+                title="${jobpost.title}" 
+                description="${jobpost.description}" 
+                link="${pageContext.request.contextPath}/JobPost?id=${jobpost.id}"
+               />
             </div>
         </c:forEach>
     </div>

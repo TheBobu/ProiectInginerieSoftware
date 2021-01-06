@@ -9,7 +9,7 @@
 
 <t:pageTemplate pageTitle="Jobs">
 
-    <h1>Jobs</h1>
-    <p> Welcome! </p>
+    <h1>what</h1>
+   ${e}
 
 </t:pageTemplate>
