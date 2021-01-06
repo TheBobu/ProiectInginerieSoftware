@@ -49,7 +49,6 @@ public class JobPost implements Serializable, Detachable {
 
     @ManyToMany
     @JoinTable(name = "JOBPOST_SKILL")
-    @Enumerated(EnumType.STRING)
     private List<Skill> skills;
 
     private int noOfPositionsAvailable;

@@ -5,10 +5,14 @@
  */
 package com.recruit.jobrecruiting.login.servlet.jobposting;
 
+import com.recruit.jobrecruiting.ejb.JobPostBean;
 import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Skill;
 import com.recruit.jobrecruiting.entity.Status;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +25,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "AddJobPost", urlPatterns = {"/JobPost/Create"})
 public class AddJobPost extends HttpServlet {
+
+    @Inject
+    private JobPostBean jobPostBean;
 
 
     /**
@@ -52,8 +59,20 @@ public class AddJobPost extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
+
+        String title = request.getParameter("title");
+        String description = request.getParameter("description");
+        Department department = Department.valueOf(request.getParameter("department"));
+        List<String> skills = Arrays.asList(request.getParameterValues("skills"));
+        Status status = Status.valueOf(request.getParameter("status"));
+        int nopositionsAvailable = Integer.parseInt(request.getParameter("nopositionsAvailable"));
+
+
+        jobPostBean.createJobPost(title, description, nopositionsAvailable, skills, department, 1, status);
+
+        response.sendRedirect(request.getContextPath() + "/JobPosts");
     }
+
 
     /**
      * Returns a short description of the servlet.

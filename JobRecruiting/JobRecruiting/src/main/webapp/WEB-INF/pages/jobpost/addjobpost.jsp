@@ -86,5 +86,5 @@
             <button class="w-100 btn btn-primary btn-lg" type="submit">save</button>
         </form>
     </div>
-<t:formValidate></t:formValidate>
+<t:formValidate/>
 </t:pageTemplate>
