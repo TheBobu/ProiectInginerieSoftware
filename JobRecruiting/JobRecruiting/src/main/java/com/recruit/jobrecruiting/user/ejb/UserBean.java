@@ -8,6 +8,10 @@ package com.recruit.jobrecruiting.user.ejb;
 import com.recruit.jobrecruiting.entity.Photo;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.User;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Logger;
@@ -46,11 +50,24 @@ public class UserBean {
         }
     }
 
-    public void createUser(String username, String email, String password, LocalDate birthDate, String firstName, String lastName, String address) {
+    public void createUser(String username, String email, String password, LocalDate birthDate, String firstName, String lastName, String address) throws NoSuchAlgorithmException {
         User user = new User();
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+        BigInteger number = new BigInteger(1, hash);  
+  
+        // Convert message digest into hex value  
+        StringBuilder hexString = new StringBuilder(number.toString(16));  
+  
+        // Pad with leading zeros 
+        while (hexString.length() < 32)  
+        {  
+            hexString.insert(0, '0');  
+        }  
+        String pass = hexString.toString();
         user.setUsername(username);
         user.setEmail(email);
-        user.setPassword(password);
+        user.setPassword(pass);
         user.setBirthDate(birthDate);
         user.setFirstName(firstName);
         user.setLastName(lastName);
