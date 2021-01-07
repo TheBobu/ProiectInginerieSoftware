@@ -26,6 +26,9 @@ import javax.persistence.Table;
 public class Comment implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    public Comment() {
+    }
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

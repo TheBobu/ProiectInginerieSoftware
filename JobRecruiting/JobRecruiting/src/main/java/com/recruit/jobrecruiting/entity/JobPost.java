@@ -38,6 +38,9 @@ import javax.persistence.Table;
 public class JobPost implements Serializable, Detachable {
 
     private static final long serialVersionUID = 1L;
+
+    public JobPost() {
+    }
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
