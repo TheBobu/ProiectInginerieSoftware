@@ -69,9 +69,10 @@ public class AddJobPost extends HttpServlet {
         List<String> skills = Arrays.asList(request.getParameterValues("skills"));
         Status status = Status.valueOf(request.getParameter("status"));
         int nopositionsAvailable = Integer.parseInt(request.getParameter("noOfPositionsAvailable"));
+        int noOfPositionsFilled = Integer.parseInt(request.getParameter("noOfPositionsFilled"));
 
 
-        jobPostBean.createJobPost(title, description, nopositionsAvailable, skills, department, 1, status);
+        jobPostBean.createJobPost(title, description, noOfPositionsFilled, nopositionsAvailable, skills, department, 1, status);
 
         response.sendRedirect(request.getContextPath() + "/JobPosts");
     }

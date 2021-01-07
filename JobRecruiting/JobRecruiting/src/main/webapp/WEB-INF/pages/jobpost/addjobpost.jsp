@@ -11,8 +11,9 @@
 
 <t:pageTemplate pageTitle="Add job post">
 
-    <t:jobPostForm 
-        action="${pageContext.request.contextPath}/JobPost/Create"/>
+    <t:jobPostForm action="${pageContext.request.contextPath}/JobPost/Create">
+        <h2 class="mb-3">Add job post</h2> 
+    </t:jobPostForm>
     <t:formValidate/>
 
 </t:pageTemplate>

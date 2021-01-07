@@ -11,7 +11,7 @@
 
 <%-- any content can be specified here e.g.: --%>
 <div class="col-md-7 col-lg-8">
-    <h2 class="mb-3">Add job post</h2> 
+    <jsp:doBody />
     <form class="needs-validation" action="${action}" method="POST" novalidate>
         <div class="row g-3 mb-4">
             <div class="col-12">
@@ -33,17 +33,24 @@
             </div>
 
             <div class="col-12">
-                <label for="noOfPositionsAvailable" class="form-label">Positions available</label>
-                <input type="number" class="form-control" value ="${jobPost.noOfPositionsAvailable}" id="noOfPositionsAvailable" name="noOfPositionsAvailable" required>
+                <label for="noOfPositionsFilled" class="form-label">Positions occupied</label>
+                <input type="number" class="form-control" value ="${jobPost.noOfPositionsFilled}" id="noOfPositionsFilled" name="noOfPositionsFilled" required>
                 <div class="invalid-feedback">
-                    Valid number of positions available required.
+                    Valid number required.
+                </div>
+            </div>
+
+            <div class="col-12">
+                <label for="noOfPositionsAvailable" class="form-label">Positions available</label>
+                <input type="number" class="form-control" min=1 value ="${jobPost.noOfPositionsAvailable}" id="noOfPositionsAvailable" name="noOfPositionsAvailable" required>
+                <div class="invalid-feedback">
+                    Valid number required.
                 </div>
             </div>
 
             <div class="col-10">
                 <label for="skills" class="form-label">Skills</label>
                 <select class="form-select" id="skills" name="skills" multiple required>
-                    <option value="">Choose...</option>
                     <c:forEach var = "skill" items = "${skills}">
                         <option value="${skill.id}"
                                 <c:if test="${true eq jobPost.skills.contains(skill)}">
@@ -60,7 +67,7 @@
             <div class="col-10">
                 <label for="department" class="form-label">Department</label>
                 <select class="form-select" id="department" name="department" required>
-                    <option value="">Choose...</option>
+                    <option value="" disabled selected>Choose...</option>
                     <c:forEach var = "department" items = "${departments}">
                         <option value="${department}"
                                 <c:if test="${department eq jobPost.department}">
@@ -77,7 +84,7 @@
             <div class="col-10">
                 <label for="status" class="form-label">Status</label>
                 <select class="form-select" id="status" name="status" required>
-                    <option value="">Choose...</option>
+                    <option value="" disabled selected>Choose...</option>
                     <c:forEach var = "status" items = "${statuses}">
                         <option value="${status}"
                                 <c:if test="${status eq jobPost.status}">
@@ -91,6 +98,10 @@
                 </div>
             </div>
         </div>
+        <c:if test="${jobPost.id != null }">
+            <input type="hidden" name="id" value="${jobPost.id }">
+        </c:if>
+
 
         <button class="w-100 btn btn-primary btn-lg" type="submit">save</button>
     </form>

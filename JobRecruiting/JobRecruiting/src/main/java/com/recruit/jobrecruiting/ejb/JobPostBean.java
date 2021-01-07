@@ -55,7 +55,7 @@ public class JobPostBean {
         }
     }
 
-    public void createJobPost(String title, String description, int noOfPositionsAvailable, List<String> skillIds, Department department, int poster, Status status) {
+    public void createJobPost(String title, String description, int noOfPositionsFilled, int noOfPositionsAvailable, List<String> skillIds, Department department, int poster, Status status) {
         LOG.info("createJobPost");
         JobPost jobPost = new JobPost();
 
@@ -64,6 +64,7 @@ public class JobPostBean {
         jobPost.setDepartment(department);
         User user = em.find(User.class, poster);
         jobPost.setPoster(user);
+        jobPost.setNoOfPositionsAvailable(noOfPositionsFilled);
         jobPost.setNoOfPositionsAvailable(noOfPositionsAvailable);
         jobPost.setStatus(status);
 
@@ -73,8 +74,25 @@ public class JobPostBean {
     }
 
     public void deleteJobPost(int id) {
+        LOG.info("deleteJobPost");
         try {
             em.remove(em.find(JobPost.class, id));
+        } catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+    }
+
+    public void editJobPost(int id, String title, String description, int noOfPositionsFilled, int noOfPositionsAvailable, List<String> skillIds, Department department, Status status) {
+        LOG.info("editJobPost");
+        try {
+            JobPost jobPost = em.find(JobPost.class, id);
+            jobPost.setTitle(title);
+            jobPost.setDescription(description);
+            jobPost.setDepartment(department);
+            jobPost.setNoOfPositionsAvailable(noOfPositionsFilled);
+            jobPost.setNoOfPositionsAvailable(noOfPositionsAvailable);
+            jobPost.setSkills(skillBean.findSkills(skillIds));
+            jobPost.setStatus(status);
         } catch (Exception ex) {
             throw new EJBException(ex);
         }

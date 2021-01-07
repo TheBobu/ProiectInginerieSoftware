@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.recruit.jobrecruiting.servlet.jobposting;
 
 import com.recruit.jobrecruiting.common.JobPostDetails;
@@ -12,6 +11,8 @@ import com.recruit.jobrecruiting.ejb.SkillBean;
 import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Status;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,8 +33,9 @@ public class EditJobPost extends HttpServlet {
     @Inject
     private SkillBean skillBean;
 
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -50,10 +52,11 @@ public class EditJobPost extends HttpServlet {
         request.setAttribute("skills", skillBean.getAllSkills());
         request.setAttribute("statuses", Status.values());
         request.getRequestDispatcher("/WEB-INF/pages/jobpost/editjobpost.jsp").forward(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -61,12 +64,26 @@ public class EditJobPost extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        
+            throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String title = request.getParameter("title");
+        String description = request.getParameter("description");
+        Department department = Department.valueOf(request.getParameter("department"));
+        List<String> skills = Arrays.asList(request.getParameterValues("skills"));
+        Status status = Status.valueOf(request.getParameter("status"));
+        int nopositionsAvailable = Integer.parseInt(request.getParameter("noOfPositionsAvailable"));
+        int noOfPositionsFilled = Integer.parseInt(request.getParameter("noOfPositionsFilled"));
+
+        jobPostBean.editJobPost(id, title, description, noOfPositionsFilled, nopositionsAvailable, skills, department, status);
+
+        response.sendRedirect(request.getContextPath() + "/JobPosts");
+
+//        response.sendRedirect(request.getContextPath() + "/JobPost?id=" + id);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
