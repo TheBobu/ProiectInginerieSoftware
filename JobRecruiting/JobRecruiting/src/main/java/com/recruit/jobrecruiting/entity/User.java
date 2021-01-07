@@ -32,6 +32,19 @@ import javax.persistence.Table;
 @Table(name = "USERS")
 public class User implements Serializable {
 
+    public User(String username, String email, String password, LocalDate birthDate, String firstName, String lastName, String address, Status status) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.birthDate = birthDate;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.status = status;
+    }
+
+    
+    
     private static final long serialVersionUID = 1L;
 
     @Id
