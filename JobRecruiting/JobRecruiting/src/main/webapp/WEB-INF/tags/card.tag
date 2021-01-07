@@ -9,31 +9,27 @@
 <%-- The list of normal or fragment attributes can be specified here: --%>
 <%@attribute name="title"%>
 <%@attribute name="description"%>
-<%@attribute name="link"%>
+<%@attribute name="viewLink"%>
+<%@attribute name="deleteLink"%>
+<%@attribute name="id"%>
 
-<!--  <div class="card">
-    <img src="https://picsum.photos/seed/picsum/400" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">${title}</h5>
-      <p class="card-text">${description}</p>
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="https://picsum.photos/seed/picsum/400" class="card-img-top" alt="...">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">${title}</h5>
+                <p class="card-text">${description}</p>
+                <div class="card-text">
+                    <a href="${viewLink}" class="btn btn-primary me-2">View</a>
+                    <form method="post" class="d-inline" action="${deleteLink}">
+                        <input type="hidden" value="${id}">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-      <div class="card-footer">
-      <small class="text-muted">Last updated 3 mins ago</small>
-    </div>
-  </div>-->
-      
-    <div class="card mb-3" style="max-width: 540px;">
-  <div class="row g-0">
-    <div class="col-md-4">
-      <img src="https://picsum.photos/seed/picsum/400" class="card-img-top" alt="...">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-       <h5 class="card-title">${title}</h5>
-         <p class="card-text">${description}</p>
-        <p class="card-text"><a href="${link}" class="card-link">Go to job post</a></p>
-      </div>
-    </div>
-  </div>
 </div>
-      

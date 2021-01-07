@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.recruit.jobrecruiting.login.servlet.jobposting;
+package com.recruit.jobrecruiting.servlet.jobposting;
 
 import com.recruit.jobrecruiting.common.JobPostDetails;
 import com.recruit.jobrecruiting.ejb.JobPostBean;
-import com.recruit.jobrecruiting.entity.Department;
 import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
@@ -39,7 +38,6 @@ public class JobPosts extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        System.out.print(Department.valueOf("HR"));
         List<JobPostDetails> jobPosts = jobPostBean.getAllJobPosts();
         request.getSession().setAttribute("jobPosts", jobPosts);
         request.getRequestDispatcher("/WEB-INF/pages/jobpost/jobposts.jsp").forward(request, response);

@@ -72,4 +72,12 @@ public class JobPostBean {
         em.persist(jobPost);
     }
 
+    public void deleteJobPost(int id) {
+        try {
+            em.remove(em.find(JobPost.class, id));
+        } catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+    }
+
 }

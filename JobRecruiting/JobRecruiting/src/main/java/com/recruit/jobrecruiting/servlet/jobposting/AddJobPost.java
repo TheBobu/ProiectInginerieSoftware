@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.recruit.jobrecruiting.login.servlet.jobposting;
+package com.recruit.jobrecruiting.servlet.jobposting;
 
 import com.recruit.jobrecruiting.ejb.JobPostBean;
 import com.recruit.jobrecruiting.ejb.SkillBean;
