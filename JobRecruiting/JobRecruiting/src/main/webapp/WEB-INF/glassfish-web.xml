@@ -7,6 +7,36 @@
       <description>Keep a copy of the generated servlet class' java code.</description>
     </property>
   </jsp-config>
+  <security-role-mapping>
+    <role-name>AdminRole</role-name>
+    <group-name>ADMIN</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>GeneralDirectorRole</role-name>
+    <group-name>GENERAL_DIRECTOR</group-name>
+    <group-name>ADMIN</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>DepartmentDirectorRole</role-name>
+    <group-name>ADMIN</group-name>
+    <group-name>GENERAL_DIRECTOR</group-name>
+    <group-name>DEPARTMENT_DIRECTOR</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>RecruiterRole</role-name>
+    <group-name>ADMIN</group-name>
+    <group-name>GENERAL_DIRECTOR</group-name>
+    <group-name>DEPARTMENT_DIRECTOR</group-name>
+    <group-name>RECRUITER</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>CandidateRole</role-name>
+    <group-name>ADMIN</group-name>
+    <group-name>GENERAL_DIRECTOR</group-name>
+    <group-name>DEPARTMENT_DIRECTOR</group-name>
+    <group-name>RECRUITER</group-name>
+    <group-name>CANDIDATE</group-name>
+  </security-role-mapping>
   <resource-ref>
     <res-ref-name>jdbc/JobRecruiting</res-ref-name>
     <jndi-name>jdbc/JobRecruiting</jndi-name>
