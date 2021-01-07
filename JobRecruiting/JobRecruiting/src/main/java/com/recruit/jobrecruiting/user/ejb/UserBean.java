@@ -38,7 +38,7 @@ public class UserBean {
      */
     public List<User> getAllUsers() {
         try {
-            Query query = em.createQuery("SELECT u FROM User u");
+            Query query = em.createQuery("SELECT u FROM USERS u");
             List<User> users = (List<User>) query.getResultList();
             return users;
         } catch (Exception ex) {
