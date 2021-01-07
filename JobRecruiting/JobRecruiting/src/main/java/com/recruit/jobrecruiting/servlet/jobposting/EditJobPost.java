@@ -8,6 +8,9 @@ package com.recruit.jobrecruiting.servlet.jobposting;
 
 import com.recruit.jobrecruiting.common.JobPostDetails;
 import com.recruit.jobrecruiting.ejb.JobPostBean;
+import com.recruit.jobrecruiting.ejb.SkillBean;
+import com.recruit.jobrecruiting.entity.Department;
+import com.recruit.jobrecruiting.entity.Status;
 import java.io.IOException;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -20,11 +23,14 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DENISA
  */
-@WebServlet(name = "JobPost", urlPatterns = {"/JobPost"})
-public class JobPost extends HttpServlet {
+@WebServlet(name = "EditJobPost", urlPatterns = {"/JobPost/Edit"})
+public class EditJobPost extends HttpServlet {
 
     @Inject
     private JobPostBean jobPostBean;
+
+    @Inject
+    private SkillBean skillBean;
 
     /** 
      * Handles the HTTP <code>GET</code> method.
@@ -40,8 +46,10 @@ public class JobPost extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         JobPostDetails jobPost = jobPostBean.getJobPost(id);
         request.setAttribute("jobPost", jobPost);
-
-        request.getRequestDispatcher("/WEB-INF/pages/jobpost/jobpost.jsp").forward(request, response);
+        request.setAttribute("departments", Department.values());
+        request.setAttribute("skills", skillBean.getAllSkills());
+        request.setAttribute("statuses", Status.values());
+        request.getRequestDispatcher("/WEB-INF/pages/jobpost/editjobpost.jsp").forward(request, response);
     } 
 
     /** 
@@ -53,11 +61,8 @@ public class JobPost extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        int id = Integer.parseInt(request.getParameter("id"));
-        jobPostBean.deleteJobPost(id);
-        response.sendRedirect(request.getContextPath() + "/JobPosts");
+    throws ServletException, IOException {
+        
     }
 
     /** 

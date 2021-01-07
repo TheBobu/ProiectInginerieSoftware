@@ -7,6 +7,7 @@ package com.recruit.jobrecruiting.entity;
 
 import com.recruit.jobrecruiting.common.JobPostDetails;
 import com.recruit.jobrecruiting.util.Detachable;
+import com.recruit.jobrecruiting.util.Util;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -47,7 +48,7 @@ public class JobPost implements Serializable, Detachable {
     
     private String description;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "JOBPOST_SKILL")
     private List<Skill> skills;
 
@@ -223,7 +224,7 @@ public class JobPost implements Serializable, Detachable {
                 description,
                 noOfPositionsAvailable,
                 noOfPositionsFilled,
-                skills,
+                Util.detachEntities(skills),
                 department,
                 poster,
                 status

@@ -39,7 +39,7 @@ public class JobPosts extends HttpServlet {
             throws ServletException, IOException {
 
         List<JobPostDetails> jobPosts = jobPostBean.getAllJobPosts();
-        request.getSession().setAttribute("jobPosts", jobPosts);
+        request.setAttribute("jobPosts", jobPosts);
         request.getRequestDispatcher("/WEB-INF/pages/jobpost/jobposts.jsp").forward(request, response);
     }
 

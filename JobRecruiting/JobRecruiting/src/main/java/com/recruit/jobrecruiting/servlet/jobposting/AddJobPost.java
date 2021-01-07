@@ -45,9 +45,9 @@ public class AddJobPost extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        request.getSession().setAttribute("departments", Department.values());
-        request.getSession().setAttribute("skills", skillBean.getAllSkills());
-        request.getSession().setAttribute("statuses", Status.values());
+        request.setAttribute("departments", Department.values());
+        request.setAttribute("skills", skillBean.getAllSkills());
+        request.setAttribute("statuses", Status.values());
         request.getRequestDispatcher("/WEB-INF/pages/jobpost/addjobpost.jsp").forward(request, response);
     }
 

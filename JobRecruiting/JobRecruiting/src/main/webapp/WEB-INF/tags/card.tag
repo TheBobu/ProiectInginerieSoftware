@@ -11,6 +11,7 @@
 <%@attribute name="description"%>
 <%@attribute name="viewLink"%>
 <%@attribute name="deleteLink"%>
+<%@attribute name="editLink"%>
 <%@attribute name="id"%>
 
 <div class="card mb-3" style="max-width: 540px;">
@@ -19,6 +20,11 @@
             <img src="https://picsum.photos/seed/picsum/400" class="card-img-top" alt="...">
         </div>
         <div class="col-md-8">
+            <div class="d-flex justify-content-end">
+                <a href="${editLink}" class=" mt-1 me-1 text-decoration-none link-secondary">
+                    <i class="far fa-edit"></i>
+                </a>
+            </div>
             <div class="card-body">
                 <h5 class="card-title">${title}</h5>
                 <p class="card-text">${description}</p>

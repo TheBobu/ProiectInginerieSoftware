@@ -33,7 +33,7 @@ public class SkillBean {
         LOG.info("getAllSkills");
         try {
             Query query = em.createQuery("SELECT s FROM Skill s");
-            List<Detachable> skills = (List<Detachable>) query.getResultList();
+            List<Detachable> skills = query.getResultList();
             return Util.detachEntities(skills);
         } catch (Exception ex) {
             throw new EJBException(ex);

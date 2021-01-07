@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Util {
 
-    public static <T> List<T> detachEntities(List<Detachable> inputArray) {
+    public static <T> List<T> detachEntities(List<? extends Detachable> inputArray) {
 
         List<T> output = new ArrayList<>();
         inputArray.forEach((Detachable element) -> {
