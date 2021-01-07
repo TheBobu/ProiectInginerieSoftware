@@ -46,8 +46,15 @@ public class UserBean {
         }
     }
 
-    public void createUser(String username, String email, String password, LocalDate birthDate, String firstName, String lastName, String address, Status status) {
-        User user = new User(username, email, password, birthDate, firstName, lastName, address, status);
+    public void createUser(String username, String email, String password, LocalDate birthDate, String firstName, String lastName, String address) {
+        User user = new User();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setBirthDate(birthDate);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setAddress(address);
         
         em.persist(user);
     }
