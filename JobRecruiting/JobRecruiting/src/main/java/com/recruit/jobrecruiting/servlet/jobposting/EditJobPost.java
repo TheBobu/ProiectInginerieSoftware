@@ -66,6 +66,8 @@ public class EditJobPost extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        request.getSession().removeAttribute("errors");
+
         HashMap<String, String> messageBag = new HashMap<>();
 
         int id = Integer.parseInt(request.getParameter("id"));
@@ -83,6 +85,9 @@ public class EditJobPost extends HttpServlet {
             jobPostBean.editJobPost(id, title, description, noOfPositionsFilled, nopositionsAvailable, skills, department, status);
             response.sendRedirect(request.getContextPath() + "/JobPosts");
         }
+
+        request.getSession().setAttribute("errors", messageBag);
+        response.sendRedirect(request.getContextPath() + "/JobPost/Create");
 
     }
 
