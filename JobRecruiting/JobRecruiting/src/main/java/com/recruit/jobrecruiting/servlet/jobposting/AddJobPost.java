@@ -84,9 +84,7 @@ public class AddJobPost extends HttpServlet {
         }
 
         request.getSession().setAttribute("errors", messageBag);
-        //request.getRequestDispatcher("/WEB-INF/pages/jobpost/addjobpost.jsp").forward(request, response);
         response.sendRedirect(request.getContextPath() + "/JobPost/Create");
-
 
     }
 
