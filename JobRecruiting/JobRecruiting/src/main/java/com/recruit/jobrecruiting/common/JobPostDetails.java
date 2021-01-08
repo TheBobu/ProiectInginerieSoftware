@@ -76,4 +76,41 @@ public class JobPostDetails {
     public Status getStatus() {
         return status;
     }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setNoOfPositionsAvailable(int noOfPositionsAvailable) {
+        this.noOfPositionsAvailable = noOfPositionsAvailable;
+    }
+
+    public void setNoOfPositionsFilled(int noOfPositionsFilled) {
+        this.noOfPositionsFilled = noOfPositionsFilled;
+    }
+
+    public void setSkills(List<SkillDetails> skills) {
+        this.skills = skills;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public void setPoster(User poster) {
+        this.poster = poster;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
 }

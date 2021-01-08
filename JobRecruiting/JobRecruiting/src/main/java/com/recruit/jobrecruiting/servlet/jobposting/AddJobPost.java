@@ -62,6 +62,8 @@ public class AddJobPost extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        request.getSession().removeAttribute("errors");
+
         HashMap<String, String> messageBag = new HashMap<>();
         String title = request.getParameter("title");
         String description = request.getParameter("description");
@@ -81,9 +83,10 @@ public class AddJobPost extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/JobPosts");
         }
 
-        request.setAttribute("errors", messageBag);
-
+        request.getSession().setAttribute("errors", messageBag);
+        //request.getRequestDispatcher("/WEB-INF/pages/jobpost/addjobpost.jsp").forward(request, response);
         response.sendRedirect(request.getContextPath() + "/JobPost/Create");
+
 
     }
 

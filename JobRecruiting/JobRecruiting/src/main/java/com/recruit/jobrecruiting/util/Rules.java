@@ -56,7 +56,7 @@ public class Rules {
     }
 
     public static Boolean arrayNotEmpty(String[] array) {
-        return array.length > 0;
+        return array != null && array.length > 0;
     }
 
     public static Boolean isNumber(String value) {

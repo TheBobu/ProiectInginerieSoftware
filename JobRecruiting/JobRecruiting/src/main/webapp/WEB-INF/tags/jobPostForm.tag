@@ -6,6 +6,7 @@
 
 <%@tag description="put the tag description here" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%-- The list of normal or fragment attributes can be specified here: --%>
 <%@attribute name="action"%>
 
@@ -17,34 +18,26 @@
             <div class="col-12">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" minlength=6 class="form-control" id="title" name="title" value ="${jobPost.title}" required>
-                <div class="invalid-feedback">
-                    Valid title required.
-                </div>
+                <t:displayError error="title"/>
             </div>
 
             <div class="col-12">
                 <label for="description" class="form-label">Description</label>
                 <textarea type="text" wrap="hard"  class="form-control" id="description" name="description" required>${jobPost.description}
                 </textarea>
-                <div class="invalid-feedback">
-                    Valid description required.
-                </div>
+                 <t:displayError error="description"/>
             </div>
-
+           
             <div class="col-12">
                 <label for="noOfPositionsFilled" class="form-label">Positions occupied</label>
                 <input type="number" class="form-control" min=0 value ="${jobPost.noOfPositionsFilled}" id="noOfPositionsFilled" name="noOfPositionsFilled" required>
-                <div class="invalid-feedback">
-                    Valid number required.
-                </div>
+                <t:displayError error="noOfPositionsFilled"/>
             </div>
 
             <div class="col-12">
                 <label for="noOfPositionsAvailable" class="form-label">Positions available</label>
                 <input type="number" class="form-control" min=1 value ="${jobPost.noOfPositionsAvailable}" id="noOfPositionsAvailable" name="noOfPositionsAvailable" required>
-                <div class="invalid-feedback">
-                    Valid number required.
-                </div>
+                 <t:displayError error="noOfPositionsAvailable"/>
             </div>
 
             <div class="col-10">
@@ -58,9 +51,7 @@
                                 >${skill.name}</option>
                     </c:forEach>
                 </select>
-                <div class="invalid-feedback">
-                    Valid skills required.
-                </div>
+                <t:displayError error="skills"/>
             </div>
 
             <div class="col-10">
@@ -75,9 +66,7 @@
                                 >${department}</option>
                     </c:forEach>
                 </select>
-                <div class="invalid-feedback">
-                    Please select a valid department.
-                </div>
+                 <t:displayError error="department"/>
             </div>
 
             <div class="col-10">
@@ -92,9 +81,7 @@
                                 >${status.label}</option>
                     </c:forEach>
                 </select>
-                <div class="invalid-feedback">
-                    Please select a valid status.
-                </div>
+                <t:displayError error="status"/>
             </div>
         </div>
         <c:if test="${jobPost.id != null }">
