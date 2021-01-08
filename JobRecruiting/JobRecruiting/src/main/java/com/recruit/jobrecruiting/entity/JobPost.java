@@ -29,7 +29,7 @@ import javax.persistence.Table;
 
 /**
  * The model for a JobPost.
- * 
+ *
  * @author denisa
  * @author robert
  */
@@ -39,13 +39,13 @@ import javax.persistence.Table;
 public class JobPost implements Serializable, Detachable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String title;
-    
+
     private String description;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -53,7 +53,7 @@ public class JobPost implements Serializable, Detachable {
     private List<Skill> skills;
 
     private int noOfPositionsAvailable;
-    
+
     private int noOfPositionsFilled = 0;
 
     @Enumerated(EnumType.STRING)
@@ -66,7 +66,7 @@ public class JobPost implements Serializable, Detachable {
     @JsonbTransient
     @OneToMany(mappedBy = "jobPost")
     private Collection<Interview> interviewsForJobPost;
-        
+
     @Enumerated(EnumType.STRING)
     private Status status;
 

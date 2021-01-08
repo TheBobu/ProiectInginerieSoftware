@@ -76,5 +76,4 @@ public class JobPostDetails {
     public Status getStatus() {
         return status;
     }
-
 }

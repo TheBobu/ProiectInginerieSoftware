@@ -55,18 +55,18 @@ public class JobPostBean {
         }
     }
 
-    public void createJobPost(String title, String description, int noOfPositionsFilled, int noOfPositionsAvailable, List<String> skillIds, Department department, int poster, Status status) {
+    public void createJobPost(String title, String description, int noOfPositionsFilled, int noOfPositionsAvailable, List<String> skillIds, String department, int poster, String status) {
         LOG.info("createJobPost");
         JobPost jobPost = new JobPost();
 
         jobPost.setTitle(title);
         jobPost.setDescription(description);
-        jobPost.setDepartment(department);
         User user = em.find(User.class, poster);
         jobPost.setPoster(user);
         jobPost.setNoOfPositionsAvailable(noOfPositionsFilled);
         jobPost.setNoOfPositionsAvailable(noOfPositionsAvailable);
-        jobPost.setStatus(status);
+        jobPost.setDepartment(Department.valueOf(department));
+        jobPost.setStatus(Status.valueOf(status));
 
         jobPost.setSkills(skillBean.findSkills(skillIds));
 
@@ -82,17 +82,19 @@ public class JobPostBean {
         }
     }
 
-    public void editJobPost(int id, String title, String description, int noOfPositionsFilled, int noOfPositionsAvailable, List<String> skillIds, Department department, Status status) {
+    public void editJobPost(int id, String title, String description, int noOfPositionsFilled, int noOfPositionsAvailable, List<String> skillIds, String department, String status) {
         LOG.info("editJobPost");
         try {
             JobPost jobPost = em.find(JobPost.class, id);
             jobPost.setTitle(title);
             jobPost.setDescription(description);
-            jobPost.setDepartment(department);
+            jobPost.setDepartment(Department.valueOf(department));
+            jobPost.setStatus(Status.valueOf(status));
             jobPost.setNoOfPositionsAvailable(noOfPositionsFilled);
             jobPost.setNoOfPositionsAvailable(noOfPositionsAvailable);
             jobPost.setSkills(skillBean.findSkills(skillIds));
-            jobPost.setStatus(status);
+
+
         } catch (Exception ex) {
             throw new EJBException(ex);
         }

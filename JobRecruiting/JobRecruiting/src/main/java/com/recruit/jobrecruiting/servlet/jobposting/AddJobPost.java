@@ -9,8 +9,10 @@ import com.recruit.jobrecruiting.ejb.JobPostBean;
 import com.recruit.jobrecruiting.ejb.SkillBean;
 import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Status;
+import com.recruit.jobrecruiting.validators.JobPostValidator;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -31,7 +33,6 @@ public class AddJobPost extends HttpServlet {
 
     @Inject
     private SkillBean skillBean;
-
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -63,20 +64,30 @@ public class AddJobPost extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        HashMap<String, String> messageBag = new HashMap<>();
+
         String title = request.getParameter("title");
         String description = request.getParameter("description");
-        Department department = Department.valueOf(request.getParameter("department"));
+        String department = request.getParameter("department");
         List<String> skills = Arrays.asList(request.getParameterValues("skills"));
-        Status status = Status.valueOf(request.getParameter("status"));
+        String status = request.getParameter("status");
         int nopositionsAvailable = Integer.parseInt(request.getParameter("noOfPositionsAvailable"));
         int noOfPositionsFilled = Integer.parseInt(request.getParameter("noOfPositionsFilled"));
 
+        int poster = 1;
 
-        jobPostBean.createJobPost(title, description, noOfPositionsFilled, nopositionsAvailable, skills, department, 1, status);
+        JobPostValidator validator = new JobPostValidator(title, description, nopositionsAvailable, noOfPositionsFilled, department, status);
+
+        if (validator.passes(messageBag)) {
+            jobPostBean.createJobPost(title, description, noOfPositionsFilled, nopositionsAvailable, skills, department, poster, status);
+            response.sendRedirect(request.getContextPath() + "/JobPosts");
+        }
+
+        request.setAttribute("errors", messageBag);
 
         response.sendRedirect(request.getContextPath() + "/JobPosts");
-    }
 
+    }
 
     /**
      * Returns a short description of the servlet.

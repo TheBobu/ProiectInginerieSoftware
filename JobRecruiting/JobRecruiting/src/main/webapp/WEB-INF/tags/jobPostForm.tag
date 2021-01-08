@@ -16,7 +16,7 @@
         <div class="row g-3 mb-4">
             <div class="col-12">
                 <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="title" name="title" value ="${jobPost.title}" required>
+                <input type="text" minlength=6 class="form-control" id="title" name="title" value ="${jobPost.title}" required>
                 <div class="invalid-feedback">
                     Valid title required.
                 </div>
@@ -24,8 +24,7 @@
 
             <div class="col-12">
                 <label for="description" class="form-label">Description</label>
-                <textarea type="text" class="form-control" id="description" name="description" required>
-                    ${jobPost.description}
+                <textarea type="text" wrap="hard"  class="form-control" id="description" name="description" required>${jobPost.description}
                 </textarea>
                 <div class="invalid-feedback">
                     Valid description required.
@@ -34,7 +33,7 @@
 
             <div class="col-12">
                 <label for="noOfPositionsFilled" class="form-label">Positions occupied</label>
-                <input type="number" class="form-control" value ="${jobPost.noOfPositionsFilled}" id="noOfPositionsFilled" name="noOfPositionsFilled" required>
+                <input type="number" class="form-control" min=0 value ="${jobPost.noOfPositionsFilled}" id="noOfPositionsFilled" name="noOfPositionsFilled" required>
                 <div class="invalid-feedback">
                     Valid number required.
                 </div>
@@ -101,7 +100,6 @@
         <c:if test="${jobPost.id != null }">
             <input type="hidden" name="id" value="${jobPost.id }">
         </c:if>
-
 
         <button class="w-100 btn btn-primary btn-lg" type="submit">save</button>
     </form>
