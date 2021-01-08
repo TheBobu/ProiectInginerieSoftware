@@ -6,6 +6,7 @@
 package com.recruit.jobrecruiting.validators;
 
 import com.recruit.jobrecruiting.util.Rules;
+import com.recruit.jobrecruiting.util.Util;
 import java.util.HashMap;
 
 /**
@@ -16,27 +17,29 @@ public class JobPostValidator implements Validator {
 
     private String title;
     private String description;
-    private int noOfPositionsAvailable;
-    private int noOfPositionsFilled;
+    private String noOfPositionsAvailable;
+    private String noOfPositionsFilled;
     private String department;
     private String status;
+    private String[] skills;
 
     private HashMap<String, String> messageBag;
 
-    public JobPostValidator(String title, String description, int noOfPositionsAvailable, int noOfPositionsFilled, String department, String status) {
+    public JobPostValidator(String title, String description, String noOfPositionsAvailable, String noOfPositionsFilled, String department, String status, String[] skills) {
         this.title = title;
         this.description = description;
         this.noOfPositionsAvailable = noOfPositionsAvailable;
         this.noOfPositionsFilled = noOfPositionsFilled;
         this.department = department;
         this.status = status;
+        this.skills = skills;
     }
 
     public Boolean passes(HashMap<String, String> messageBag) {
         this.messageBag = messageBag;
 
         return title() && description() && noOfPositionsAvailable() && noOfPositionsFilled()
-                && status() && department();
+                && status() && department() && skills();
     }
 
     private Boolean title() {
@@ -62,7 +65,7 @@ public class JobPostValidator implements Validator {
 
     private Boolean noOfPositionsAvailable() {
 
-        Boolean result = Rules.greaterThan(noOfPositionsAvailable, 0);
+        Boolean result = Rules.isNumber(noOfPositionsAvailable) && Rules.greaterThan(Util.number(noOfPositionsAvailable), 0);
 
         if (result == false) {
             messageBag.put("noOfPositionsAvailable", "Please provide a valid number of position available");
@@ -73,7 +76,7 @@ public class JobPostValidator implements Validator {
 
     private Boolean noOfPositionsFilled() {
 
-        Boolean result = Rules.greaterThan(noOfPositionsFilled, -1);
+        Boolean result = Rules.isNumber(noOfPositionsFilled) && Rules.greaterThan(Util.number(noOfPositionsFilled), -1);
 
         if (result == false) {
             messageBag.put("noOfPositionsFilled", "Please provide a valid number of positions filled");
@@ -99,6 +102,17 @@ public class JobPostValidator implements Validator {
 
         if (result == false) {
             messageBag.put("department", "Please provide a valid department");
+        }
+
+        return result;
+    }
+
+    private Boolean skills() {
+
+        Boolean result = Rules.arrayNotEmpty(skills);
+
+        if (result == false) {
+            messageBag.put("skills", "Please choose at least one skill");
         }
 
         return result;

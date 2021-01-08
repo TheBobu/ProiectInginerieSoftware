@@ -54,4 +54,17 @@ public class Rules {
             return false;
         }
     }
+
+    public static Boolean arrayNotEmpty(String[] array) {
+        return array.length > 0;
+    }
+
+    public static Boolean isNumber(String value) {
+        try {
+            Integer.parseInt(value);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
 }

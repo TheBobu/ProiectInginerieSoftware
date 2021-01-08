@@ -11,9 +11,7 @@ import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.validators.JobPostValidator;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -65,18 +63,18 @@ public class AddJobPost extends HttpServlet {
             throws ServletException, IOException {
 
         HashMap<String, String> messageBag = new HashMap<>();
-
         String title = request.getParameter("title");
         String description = request.getParameter("description");
         String department = request.getParameter("department");
-        List<String> skills = Arrays.asList(request.getParameterValues("skills"));
+        String[] skills = request.getParameterValues("skills");
+
         String status = request.getParameter("status");
-        int nopositionsAvailable = Integer.parseInt(request.getParameter("noOfPositionsAvailable"));
-        int noOfPositionsFilled = Integer.parseInt(request.getParameter("noOfPositionsFilled"));
+        String nopositionsAvailable = request.getParameter("noOfPositionsAvailable");
+        String noOfPositionsFilled = request.getParameter("noOfPositionsFilled");
 
         int poster = 1;
 
-        JobPostValidator validator = new JobPostValidator(title, description, nopositionsAvailable, noOfPositionsFilled, department, status);
+        JobPostValidator validator = new JobPostValidator(title, description, nopositionsAvailable, noOfPositionsFilled, department, status, skills);
 
         if (validator.passes(messageBag)) {
             jobPostBean.createJobPost(title, description, noOfPositionsFilled, nopositionsAvailable, skills, department, poster, status);
@@ -85,7 +83,7 @@ public class AddJobPost extends HttpServlet {
 
         request.setAttribute("errors", messageBag);
 
-        response.sendRedirect(request.getContextPath() + "/JobPosts");
+        response.sendRedirect(request.getContextPath() + "/JobPost/Create");
 
     }
 

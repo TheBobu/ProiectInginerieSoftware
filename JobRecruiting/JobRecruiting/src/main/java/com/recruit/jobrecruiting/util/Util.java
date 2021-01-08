@@ -22,4 +22,8 @@ public class Util {
         });
         return output;
     }
+
+    public static int number(String number) {
+        return Integer.parseInt(number);
+    }
 }

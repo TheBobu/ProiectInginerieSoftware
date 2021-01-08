@@ -12,6 +12,7 @@ import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.util.Detachable;
 import com.recruit.jobrecruiting.util.Util;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJBException;
@@ -55,7 +56,7 @@ public class JobPostBean {
         }
     }
 
-    public void createJobPost(String title, String description, int noOfPositionsFilled, int noOfPositionsAvailable, List<String> skillIds, String department, int poster, String status) {
+    public void createJobPost(String title, String description, String noOfPositionsFilled, String noOfPositionsAvailable, String[] skillIds, String department, int poster, String status) {
         LOG.info("createJobPost");
         JobPost jobPost = new JobPost();
 
@@ -63,12 +64,12 @@ public class JobPostBean {
         jobPost.setDescription(description);
         User user = em.find(User.class, poster);
         jobPost.setPoster(user);
-        jobPost.setNoOfPositionsAvailable(noOfPositionsFilled);
-        jobPost.setNoOfPositionsAvailable(noOfPositionsAvailable);
+        jobPost.setNoOfPositionsAvailable(Util.number(noOfPositionsFilled));
+        jobPost.setNoOfPositionsAvailable(Util.number(noOfPositionsAvailable));
         jobPost.setDepartment(Department.valueOf(department));
         jobPost.setStatus(Status.valueOf(status));
 
-        jobPost.setSkills(skillBean.findSkills(skillIds));
+        jobPost.setSkills(skillBean.findSkills(Arrays.asList(skillIds)));
 
         em.persist(jobPost);
     }
@@ -82,7 +83,7 @@ public class JobPostBean {
         }
     }
 
-    public void editJobPost(int id, String title, String description, int noOfPositionsFilled, int noOfPositionsAvailable, List<String> skillIds, String department, String status) {
+    public void editJobPost(int id, String title, String description, String noOfPositionsFilled, String noOfPositionsAvailable, String[] skillIds, String department, String status) {
         LOG.info("editJobPost");
         try {
             JobPost jobPost = em.find(JobPost.class, id);
@@ -90,9 +91,9 @@ public class JobPostBean {
             jobPost.setDescription(description);
             jobPost.setDepartment(Department.valueOf(department));
             jobPost.setStatus(Status.valueOf(status));
-            jobPost.setNoOfPositionsAvailable(noOfPositionsFilled);
-            jobPost.setNoOfPositionsAvailable(noOfPositionsAvailable);
-            jobPost.setSkills(skillBean.findSkills(skillIds));
+            jobPost.setNoOfPositionsAvailable(Util.number(noOfPositionsFilled));
+            jobPost.setNoOfPositionsAvailable(Util.number(noOfPositionsAvailable));
+            jobPost.setSkills(skillBean.findSkills(Arrays.asList(skillIds)));
 
 
         } catch (Exception ex) {
