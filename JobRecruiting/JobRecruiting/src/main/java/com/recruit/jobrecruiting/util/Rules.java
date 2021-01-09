@@ -5,6 +5,7 @@
  */
 package com.recruit.jobrecruiting.util;
 
+import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Status;
 
 /**
@@ -48,7 +49,7 @@ public class Rules {
 
     public static Boolean isDepartment(String department) {
         try {
-            Status.valueOf(department);
+            Department.valueOf(department);
             return true;
         } catch (IllegalArgumentException | NullPointerException ex) {
             return false;

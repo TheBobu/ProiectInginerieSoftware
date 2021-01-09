@@ -5,20 +5,15 @@
  */
 package com.recruit.jobrecruiting.validators;
 
-import com.recruit.jobrecruiting.ejb.SkillBean;
 import com.recruit.jobrecruiting.util.Rules;
 import com.recruit.jobrecruiting.util.Util;
 import java.util.HashMap;
-import javax.inject.Inject;
 
 /**
  *
  * @author DENISA
  */
 public class JobPostValidator implements Validator {
-
-    @Inject
-    private SkillBean skillBean;
 
     private String title;
     private String description;
@@ -89,7 +84,7 @@ public class JobPostValidator implements Validator {
 
         Boolean result = Rules.isStatus(status);
 
-        if (!Rules.isStatus(status)) {
+        if (result == false) {
             messageBag.put("status", "Please provide a valid status");
         }
     }
@@ -98,7 +93,7 @@ public class JobPostValidator implements Validator {
 
         Boolean result = Rules.isDepartment(department);
 
-        if (!Rules.isDepartment(department)) {
+        if (result == false) {
             messageBag.put("department", "Please provide a valid department");
         }
     }

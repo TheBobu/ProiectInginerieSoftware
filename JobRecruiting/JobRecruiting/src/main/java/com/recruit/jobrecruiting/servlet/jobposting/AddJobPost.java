@@ -81,10 +81,10 @@ public class AddJobPost extends HttpServlet {
         if (validator.passes(messageBag)) {
             jobPostBean.createJobPost(title, description, noOfPositionsFilled, nopositionsAvailable, skills, department, poster, status);
             response.sendRedirect(request.getContextPath() + "/JobPosts");
+        } else {
+            request.getSession().setAttribute("errors", messageBag);
+            response.sendRedirect(request.getHeader("Referer"));
         }
-
-        request.getSession().setAttribute("errors", messageBag);
-        response.sendRedirect(request.getContextPath() + "/JobPost/Create");
 
     }
 

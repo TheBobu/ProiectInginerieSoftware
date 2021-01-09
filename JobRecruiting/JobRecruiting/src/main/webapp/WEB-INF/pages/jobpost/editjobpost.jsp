@@ -13,6 +13,5 @@
     <t:jobPostForm action="${pageContext.request.contextPath}/JobPost/Edit">
         <h2 class="mb-3">Edit job post</h2> 
     </t:jobPostForm>
-    <t:formValidate/>
     
 </t:pageTemplate>

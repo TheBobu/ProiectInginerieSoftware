@@ -10,8 +10,6 @@
 <%@attribute name="error"%>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- any content can be specified here e.g.: --%>
-<h2>${message}</h2>
 
 <c:if test="${errors.get(error)!=''}">
     <div class="text-danger">
