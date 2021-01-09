@@ -81,7 +81,7 @@ public class JobPostValidator implements Validator {
 
     private void noOfPositionsFilled() {
 
-        Boolean result = Rules.isNumber(noOfPositionsFilled) && Rules.greaterThan(Util.number(noOfPositionsFilled), -1);
+        Boolean result = (noOfPositionsFilled.equals("")) || Rules.isNumber(noOfPositionsFilled) && Rules.greaterThan(Util.number(noOfPositionsFilled), -1);
 
         if (result == false) {
             messageBag.put("noOfPositionsFilled", "Please provide a valid number of positions filled");

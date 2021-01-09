@@ -139,12 +139,12 @@
                 </c:if>
 
                 <div class="col-md-6 ">
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-4">
                         <label for="title" class="form-label">Title</label>
                         <input type="text" minlength=6 class="form-control" id="title" name="title" value ="${jobPost.title}" required>
                         <t:displayError error="title"/>
                     </div>
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-4">
                         <label for="department" class="form-label">Department</label>
                         <select class="form-select" id="department" name="department" required>
                             <option value="" disabled selected>Choose...</option>
@@ -158,13 +158,13 @@
                         </select>
                         <t:displayError error="department"/>
                     </div>
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-4">
                         <label for="noOfPositionsFilled" class="form-label">Positions occupied</label>
-                        <input type="number" class="form-control" min=0 value ="${jobPost.noOfPositionsFilled}" id="noOfPositionsFilled" name="noOfPositionsFilled" required>
+                        <input type="number" class="form-control" min=0 value ="${jobPost.noOfPositionsFilled}" id="noOfPositionsFilled" name="noOfPositionsFilled">
                         <t:displayError error="noOfPositionsFilled"/>
                     </div>
 
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-4">
                         <label for="description" class="form-label">Description</label>
                         <textarea type="text" wrap="hard"  class="form-control" id="description" name="description" required>${jobPost.description}
                         </textarea>
@@ -172,7 +172,7 @@
                     </div>
 
 
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-4">
                         <label for="status" class="form-label">Status</label>
                         <select class="form-select" id="status" name="status" required>
                             <option value="" disabled selected>Choose...</option>
@@ -188,7 +188,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-4">
                         <label for="type" class="form-label">Type</label>
                         <select class="form-select" id="type" name="type" required>
                             <option value="" disabled selected>Choose...</option>
@@ -203,14 +203,14 @@
                         <t:displayError error="type"/>
                     </div>
 
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-4">
                         
                         <label for="salary" class="form-label">Salary</label>
-                        <input type="number" class="form-control" min=1 value ="${jobPost.noOfPositionsAvailable}" id="salary" name="salary">
+                        <input type="number" class="form-control" min=1 value ="${jobPost.salary}" id="salary" name="salary" required>
                         <t:displayError error="salary"/>
                     </div>
 
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-4">
                         <label for="noOfPositionsAvailable" class="form-label">Positions available</label>
                         <input type="number" class="form-control" min=1 value ="${jobPost.noOfPositionsAvailable}" id="noOfPositionsAvailable" name="noOfPositionsAvailable" required>
                         <t:displayError error="noOfPositionsAvailable"/>
@@ -218,7 +218,7 @@
 
 
 
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-4">
                         <label for="skills" class="form-label">Skills</label>
                         <select class="form-select" id="skills" name="skills" multiple required>
                             <c:forEach var = "skill" items = "${skills}">

@@ -24,6 +24,10 @@ public class Util {
     }
 
     public static int number(String number) {
-        return Integer.parseInt(number);
+        try {
+            return Integer.parseInt(number);
+        } catch (NumberFormatException ex) {
+            return 0;
+        }
     }
 }

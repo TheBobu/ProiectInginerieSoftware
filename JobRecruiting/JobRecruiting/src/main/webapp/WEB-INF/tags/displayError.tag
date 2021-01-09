@@ -12,7 +12,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:if test="${errors.get(error)!=''}">
-    <div class="text-danger">
+    <div class="text-danger small position-absolute">
         ${errors.get(error)}
     </div>
 </c:if>
