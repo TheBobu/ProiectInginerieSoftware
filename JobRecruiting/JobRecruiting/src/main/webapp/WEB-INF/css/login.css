@@ -74,3 +74,9 @@ body {
 }
 
 
+.alert-warning{
+    color: #ffffff !important;
+    background-color: #191919 !important;
+    border-color: #191919 !important;
+}
+
