@@ -64,7 +64,7 @@ public class JobPostBean {
         jobPost.setDescription(description);
         User user = em.find(User.class, poster);
         jobPost.setPoster(user);
-        jobPost.setNoOfPositionsAvailable(Util.number(noOfPositionsFilled));
+        jobPost.setNoOfPositionsFilled(Util.number(noOfPositionsFilled));
         jobPost.setNoOfPositionsAvailable(Util.number(noOfPositionsAvailable));
         jobPost.setDepartment(Department.valueOf(department));
         jobPost.setStatus(Status.valueOf(status));
@@ -91,11 +91,9 @@ public class JobPostBean {
             jobPost.setDescription(description);
             jobPost.setDepartment(Department.valueOf(department));
             jobPost.setStatus(Status.valueOf(status));
-            jobPost.setNoOfPositionsAvailable(Util.number(noOfPositionsFilled));
+            jobPost.setNoOfPositionsFilled(Util.number(noOfPositionsFilled));
             jobPost.setNoOfPositionsAvailable(Util.number(noOfPositionsAvailable));
             jobPost.setSkills(skillBean.findSkills(Arrays.asList(skillIds)));
-
-
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
