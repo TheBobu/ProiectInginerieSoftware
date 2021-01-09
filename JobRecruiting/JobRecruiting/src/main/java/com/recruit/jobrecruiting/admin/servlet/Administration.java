@@ -5,7 +5,6 @@
  */
 package com.recruit.jobrecruiting.admin.servlet;
 
-import com.recruit.jobrecruiting.common.UserLightDetails;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
 import java.util.List;
