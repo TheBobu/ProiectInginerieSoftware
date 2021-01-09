@@ -5,9 +5,12 @@
  */
 package com.recruit.jobrecruiting.user.ejb;
 
+import com.recruit.jobrecruiting.common.UserDetails;
 import com.recruit.jobrecruiting.entity.Photo;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.User;
+import com.recruit.jobrecruiting.util.Detachable;
+import com.recruit.jobrecruiting.util.Util;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -40,16 +43,17 @@ public class UserBean {
      *
      * @return Returns a complete list of users.
      */
-    public List<User> getAllUsers() {
+
+    public List<UserDetails> getAllUsers() {
         try {
-            Query query = em.createQuery("SELECT u FROM USERS u");
-            List<User> users = (List<User>) query.getResultList();
-            return users;
+            Query query = em.createQuery("SELECT u FROM User u");
+            List<Detachable> users = (List<Detachable>) query.getResultList();
+            return Util.detachEntities(users);
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
     }
-
+    
     public void createUser(String username, String email, String password, LocalDate birthDate, String firstName, String lastName, String address) throws NoSuchAlgorithmException {
         User user = new User();
         MessageDigest digest = MessageDigest.getInstance("SHA-256");

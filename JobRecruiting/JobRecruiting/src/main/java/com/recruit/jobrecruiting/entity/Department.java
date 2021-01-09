@@ -11,5 +11,5 @@ package com.recruit.jobrecruiting.entity;
  * @author robert
  */
 public enum Department {
-    HR, JAVA, C, EMBEDDED;
+    HR, JAVA, C, EMBEDDED, IT;
 }
