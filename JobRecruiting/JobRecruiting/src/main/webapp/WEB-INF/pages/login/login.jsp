@@ -1,25 +1,30 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%--<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>--%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style><%@include file="/WEB-INF/css/login.css"%></style>
 
-<%--<t:pageTemplate pageTitle="Login">--%>
+<t:pageTemplate pageTitle="Login">
     <c:if test = "${message!=null}">
         <div class="alert alert-warning" role="alert">
             ${message}
         </div>
     </c:if>
+   
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md"></div>
-        <div class="col-md">
-            <form class="form-signin" method="post" action="j_security_check">
-                <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
-                <label for="username" class="sr-only">Username</label>
-                <input type="text" id="username" class="form-control" placeholder="Username" name="j_username" required autofocus>
-                <label for="password" class="sr-only">Password</label>
-                <input type="password" id="password" class="form-control" name="j_password" placeholder="Password" required>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-            </form>
+        <div class="col-md-12">
+            <div class="card">
+                <form class="box" method="post" action="j_security_check">
+                    <h1>Login</h1>
+                    <p class="text-muted"> Please enter your login and password!</p> 
+                     <input type="text" id="username" class="form-control" placeholder="Username" name="j_username" required autofocus>
+                    <input type="password" id="password" class="form-control" name="j_password" placeholder="Password" required>
+                    <a class="forgot text-muted" href="#">Forgot password?</a> 
+                   <input type="submit" name="" value="Login" href="#">
+                </form>
+            </div>
         </div>
-        <div class="col-md"></div>
     </div>
-<%--</t:pageTemplate>--%>
+</div>
+
+</t:pageTemplate>
