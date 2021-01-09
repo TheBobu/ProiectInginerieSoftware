@@ -5,7 +5,6 @@
  */
 package com.recruit.jobrecruiting.admin.servlet;
 
-import com.recruit.jobrecruiting.common.UserDetails;
 import com.recruit.jobrecruiting.common.UserLightDetails;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
@@ -39,6 +38,7 @@ public class Administration extends HttpServlet {
  
     @Inject
     private UserBean userBean;
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
