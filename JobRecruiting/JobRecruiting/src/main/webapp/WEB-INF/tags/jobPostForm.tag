@@ -13,9 +13,9 @@
     main.container{
         max-width: 1560px!important;
     }
-    
+
     body{
-    background-image: linear-gradient(to right, #5f72bd 0%, #9b23ea 100%);
+        background-image: linear-gradient(to right, #5f72bd 0%, #9b23ea 100%);
     }
 
     .register{
@@ -79,7 +79,7 @@
     }
     .btnRegister{
         float: right;
-        margin-top: 10%;
+        margin-top: 32px;
         border: none;
         border-radius: 1.5rem;
         padding: 2%;
@@ -132,7 +132,7 @@
         </div>
         <div class="col-md-9 register-right">
             <jsp:doBody />
-           
+
             <form class="needs-validation row register-form" action="${action}" method="POST" novalidate>
                 <c:if test="${jobPost.id != null }">
                     <input type="hidden" name="id" value="${jobPost.id }">
@@ -189,37 +189,29 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group mb-2">
-                        <label for="description" class="form-label">Level</label>
-                        <select class="form-select" id="status" name="level" required>
+                        <label for="type" class="form-label">Type</label>
+                        <select class="form-select" id="type" name="type" required>
                             <option value="" disabled selected>Choose...</option>
-                            <c:forEach var = "status" items = "${statuses}">
-                                <option value="${status}"
-                                        <c:if test="${status eq jobPost.status}">
+                            <c:forEach var = "type" items = "${types}">
+                                <option value="${type}"
+                                        <c:if test="${type eq jobPost.type}">
                                             selected
                                         </c:if>
-                                        >${status.label}</option>
+                                        >${type.label}</option>
                             </c:forEach>
                         </select>
-                        <t:displayError error="description"/>
+                        <t:displayError error="type"/>
                     </div>
 
                     <div class="form-group mb-2">
-                        <label for="noOfPositionsAvailable" class="form-label">Type</label>
-                         <select class="form-select" id="status" name="type" required>
-                            <option value="" disabled selected>Choose...</option>
-                            <c:forEach var = "status" items = "${statuses}">
-                                <option value="${status}"
-                                        <c:if test="${status eq jobPost.status}">
-                                            selected
-                                        </c:if>
-                                        >${status.label}</option>
-                            </c:forEach>
-                        </select>
-                        <t:displayError error="noOfPositionsAvailable"/>
+                        
+                        <label for="salary" class="form-label">Salary</label>
+                        <input type="number" class="form-control" min=1 value ="${jobPost.noOfPositionsAvailable}" id="salary" name="salary">
+                        <t:displayError error="salary"/>
                     </div>
 
                     <div class="form-group mb-2">
-                        <label for="noOfPositionsAvailable" class="form-label">Position availables</label>
+                        <label for="noOfPositionsAvailable" class="form-label">Positions available</label>
                         <input type="number" class="form-control" min=1 value ="${jobPost.noOfPositionsAvailable}" id="noOfPositionsAvailable" name="noOfPositionsAvailable" required>
                         <t:displayError error="noOfPositionsAvailable"/>
                     </div>
@@ -239,11 +231,7 @@
                         </select>
                         <t:displayError error="skills"/>
                     </div>
-                    <div class="form-group mb-2">
-                        <label for="noOfPositionsAvailable" class="form-label">Salary</label>
-                        <input type="number" class="form-control" min=1 value ="${jobPost.noOfPositionsAvailable}" id="noOfPositionsAvailable" name="salary">
-                        <t:displayError error="noOfPositionsAvailable"/>
-                    </div>
+
                     <input type="submit" class="btnRegister"  value="Save"/>
                 </div>
             </form>

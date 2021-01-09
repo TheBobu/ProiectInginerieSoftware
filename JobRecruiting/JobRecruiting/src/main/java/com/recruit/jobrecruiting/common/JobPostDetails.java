@@ -7,6 +7,7 @@ package com.recruit.jobrecruiting.common;
 
 import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Status;
+import com.recruit.jobrecruiting.entity.Type;
 import com.recruit.jobrecruiting.entity.User;
 import java.util.List;
 
@@ -27,9 +28,10 @@ public class JobPostDetails {
     private Department department;
     private User poster;
     private Status status;
+    private Type type;
+    private int salary;
 
-    public JobPostDetails(Integer id, String title, String description, int noOfPositionsAvailable, int noOfPositionsFilled, List<SkillDetails> skills, Department department, User poster, Status status) {
-
+    public JobPostDetails(Integer id, String title, String description, int noOfPositionsAvailable, int noOfPositionsFilled, List<SkillDetails> skills, Department department, User poster, Status status, Type type, int salary) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -39,6 +41,8 @@ public class JobPostDetails {
         this.department = department;
         this.poster = poster;
         this.status = status;
+        this.type = type;
+        this.salary = salary;
     }
 
     public Integer getId() {
@@ -113,4 +117,19 @@ public class JobPostDetails {
         this.status = status;
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
 }

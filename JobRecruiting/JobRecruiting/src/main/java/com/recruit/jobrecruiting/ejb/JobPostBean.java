@@ -9,6 +9,7 @@ import com.recruit.jobrecruiting.common.JobPostDetails;
 import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.JobPost;
 import com.recruit.jobrecruiting.entity.Status;
+import com.recruit.jobrecruiting.entity.Type;
 import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.util.Detachable;
 import com.recruit.jobrecruiting.util.Util;
@@ -56,7 +57,7 @@ public class JobPostBean {
         }
     }
 
-    public void createJobPost(String title, String description, String noOfPositionsFilled, String noOfPositionsAvailable, String[] skillIds, String department, int poster, String status) {
+    public void createJobPost(String title, String description, String noOfPositionsFilled, String noOfPositionsAvailable, String[] skillIds, String department, int poster, String status, String type, String salary) {
         LOG.info("createJobPost");
         JobPost jobPost = new JobPost();
 
@@ -68,6 +69,9 @@ public class JobPostBean {
         jobPost.setNoOfPositionsAvailable(Util.number(noOfPositionsAvailable));
         jobPost.setDepartment(Department.valueOf(department));
         jobPost.setStatus(Status.valueOf(status));
+        jobPost.setStatus(Status.valueOf(status));
+        jobPost.setType(Type.valueOf(type));
+        jobPost.setSalary(Util.number(salary));
 
         jobPost.setSkills(skillBean.findSkills(Arrays.asList(skillIds)));
 
@@ -83,7 +87,7 @@ public class JobPostBean {
         }
     }
 
-    public void editJobPost(int id, String title, String description, String noOfPositionsFilled, String noOfPositionsAvailable, String[] skillIds, String department, String status) {
+    public void editJobPost(int id, String title, String description, String noOfPositionsFilled, String noOfPositionsAvailable, String[] skillIds, String department, String status, String type, String salary) {
         LOG.info("editJobPost");
         try {
             JobPost jobPost = em.find(JobPost.class, id);
@@ -93,6 +97,8 @@ public class JobPostBean {
             jobPost.setStatus(Status.valueOf(status));
             jobPost.setNoOfPositionsFilled(Util.number(noOfPositionsFilled));
             jobPost.setNoOfPositionsAvailable(Util.number(noOfPositionsAvailable));
+            jobPost.setType(Type.valueOf(type));
+            jobPost.setSalary(Util.number(salary));
             jobPost.setSkills(skillBean.findSkills(Arrays.asList(skillIds)));
         } catch (Exception ex) {
             throw new EJBException(ex);

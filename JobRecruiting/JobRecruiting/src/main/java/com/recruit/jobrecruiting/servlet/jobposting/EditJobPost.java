@@ -10,6 +10,7 @@ import com.recruit.jobrecruiting.ejb.JobPostBean;
 import com.recruit.jobrecruiting.ejb.SkillBean;
 import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Status;
+import com.recruit.jobrecruiting.entity.Type;
 import com.recruit.jobrecruiting.validators.JobPostValidator;
 import java.io.IOException;
 import java.util.HashMap;
@@ -51,6 +52,7 @@ public class EditJobPost extends HttpServlet {
         request.setAttribute("departments", Department.values());
         request.setAttribute("skills", skillBean.getAllSkills());
         request.setAttribute("statuses", Status.values());
+        request.setAttribute("types", Type.values());
         request.getRequestDispatcher("/WEB-INF/pages/jobpost/editjobpost.jsp").forward(request, response);
     }
 
@@ -78,11 +80,13 @@ public class EditJobPost extends HttpServlet {
         String status = request.getParameter("status");
         String nopositionsAvailable = request.getParameter("noOfPositionsAvailable");
         String noOfPositionsFilled = request.getParameter("noOfPositionsFilled");
+        String type = request.getParameter("type");
+        String salary = request.getParameter("salary");
 
-        JobPostValidator validator = new JobPostValidator(title, description, nopositionsAvailable, noOfPositionsFilled, department, status, skills);
+        JobPostValidator validator = new JobPostValidator(title, description, nopositionsAvailable, noOfPositionsFilled, department, status, skills, type, salary);
 
         if (validator.passes(messageBag)) {
-            jobPostBean.editJobPost(id, title, description, noOfPositionsFilled, nopositionsAvailable, skills, department, status);
+            jobPostBean.editJobPost(id, title, description, noOfPositionsFilled, nopositionsAvailable, skills, department, status, type, salary);
             response.sendRedirect(request.getContextPath() + "/JobPosts");
         } else {
             request.getSession().setAttribute("errors", messageBag);

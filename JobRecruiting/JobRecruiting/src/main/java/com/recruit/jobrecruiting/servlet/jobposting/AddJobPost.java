@@ -9,6 +9,7 @@ import com.recruit.jobrecruiting.ejb.JobPostBean;
 import com.recruit.jobrecruiting.ejb.SkillBean;
 import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Status;
+import com.recruit.jobrecruiting.entity.Type;
 import com.recruit.jobrecruiting.validators.JobPostValidator;
 import java.io.IOException;
 import java.util.HashMap;
@@ -47,6 +48,7 @@ public class AddJobPost extends HttpServlet {
         request.setAttribute("departments", Department.values());
         request.setAttribute("skills", skillBean.getAllSkills());
         request.setAttribute("statuses", Status.values());
+        request.setAttribute("types", Type.values());
         request.getRequestDispatcher("/WEB-INF/pages/jobpost/addjobpost.jsp").forward(request, response);
     }
 
@@ -73,13 +75,15 @@ public class AddJobPost extends HttpServlet {
         String status = request.getParameter("status");
         String nopositionsAvailable = request.getParameter("noOfPositionsAvailable");
         String noOfPositionsFilled = request.getParameter("noOfPositionsFilled");
+        String type = request.getParameter("type");
+        String salary = request.getParameter("salary");
 
         int poster = 1;
 
-        JobPostValidator validator = new JobPostValidator(title, description, nopositionsAvailable, noOfPositionsFilled, department, status, skills);
+        JobPostValidator validator = new JobPostValidator(title, description, nopositionsAvailable, noOfPositionsFilled, department, status, skills, type, salary);
 
         if (validator.passes(messageBag)) {
-            jobPostBean.createJobPost(title, description, noOfPositionsFilled, nopositionsAvailable, skills, department, poster, status);
+            jobPostBean.createJobPost(title, description, noOfPositionsFilled, nopositionsAvailable, skills, department, poster, status, type, salary);
             response.sendRedirect(request.getContextPath() + "/JobPosts");
         } else {
 

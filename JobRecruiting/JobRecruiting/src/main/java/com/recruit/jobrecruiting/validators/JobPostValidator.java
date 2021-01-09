@@ -22,10 +22,12 @@ public class JobPostValidator implements Validator {
     private String department;
     private String status;
     private String[] skills;
+    private String type;
+    private String salary;
 
     private HashMap<String, String> messageBag;
 
-    public JobPostValidator(String title, String description, String noOfPositionsAvailable, String noOfPositionsFilled, String department, String status, String[] skills) {
+    public JobPostValidator(String title, String description, String noOfPositionsAvailable, String noOfPositionsFilled, String department, String status, String[] skills, String type, String salary) {
         this.title = title;
         this.description = description;
         this.noOfPositionsAvailable = noOfPositionsAvailable;
@@ -33,7 +35,11 @@ public class JobPostValidator implements Validator {
         this.department = department;
         this.status = status;
         this.skills = skills;
+        this.type = type;
+        this.salary = salary;
+        this.messageBag = messageBag;
     }
+
 
     @Override
     public Boolean passes(HashMap<String, String> messageBag) {
@@ -46,6 +52,8 @@ public class JobPostValidator implements Validator {
         status();
         department();
         skills();
+        salary();
+        type();
 
         return messageBag.isEmpty();
     }
@@ -95,6 +103,24 @@ public class JobPostValidator implements Validator {
 
         if (result == false) {
             messageBag.put("department", "Please provide a valid department");
+        }
+    }
+
+    private void type() {
+
+        Boolean result = Rules.isType(type);
+
+        if (result == false) {
+            messageBag.put("type", "Please provide a valid job type");
+        }
+    }
+
+    private void salary() {
+
+        Boolean result = Rules.isNumber(salary) && Rules.greaterThan(Util.number(salary), 0);
+
+        if (result == false) {
+            messageBag.put("salary", "Please provide a valid salary");
         }
     }
 

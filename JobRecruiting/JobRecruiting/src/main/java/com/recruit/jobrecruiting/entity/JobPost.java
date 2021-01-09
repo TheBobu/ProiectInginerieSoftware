@@ -70,6 +70,11 @@ public class JobPost implements Serializable, Detachable {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Enumerated(EnumType.STRING)
+    private Type type;
+
+    private int salary;
+
     public Integer getId() {
         return id;
     }
@@ -150,6 +155,22 @@ public class JobPost implements Serializable, Detachable {
         this.status = status;
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -227,7 +248,9 @@ public class JobPost implements Serializable, Detachable {
                 Util.detachEntities(skills),
                 department,
                 poster,
-                status
+                status,
+                type,
+                salary
         );
     }
 }
