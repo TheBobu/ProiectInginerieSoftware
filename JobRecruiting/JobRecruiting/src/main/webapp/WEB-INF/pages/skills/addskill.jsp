@@ -11,7 +11,7 @@
 <t:pageTemplate pageTitle="Add Skill">
 
     <t:formTemplate >
-        <t:skillForm action="${pageContext.request.contextPath}/JobPost/Create">
+        <t:skillForm action="${pageContext.request.contextPath}/Skills/Create">
             <h3 class="register-heading">Add a Skill</h3>
         </t:skillForm>
     </t:formTemplate>

@@ -48,4 +48,12 @@ public class SkillBean {
                 .setParameter(1, skillIds)
                 .getResultList();
     }
+
+    public void createSkill(String name) {
+        LOG.info("createSkill");
+
+        Skill skill = new Skill();
+        skill.setName(name);
+        em.persist(skill);
+    }
 }

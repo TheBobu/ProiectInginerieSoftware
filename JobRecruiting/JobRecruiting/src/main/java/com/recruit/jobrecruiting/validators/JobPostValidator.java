@@ -7,7 +7,6 @@ package com.recruit.jobrecruiting.validators;
 
 import com.recruit.jobrecruiting.util.Rules;
 import com.recruit.jobrecruiting.util.Util;
-import java.util.HashMap;
 
 /**
  *
@@ -24,8 +23,6 @@ public class JobPostValidator extends Validator {
     private String[] skills;
     private String type;
     private String salary;
-
-    private HashMap<String, String> messageBag;
 
     public JobPostValidator(String title, String description, String noOfPositionsAvailable, String noOfPositionsFilled, String department, String status, String[] skills, String type, String salary) {
         this.title = title;

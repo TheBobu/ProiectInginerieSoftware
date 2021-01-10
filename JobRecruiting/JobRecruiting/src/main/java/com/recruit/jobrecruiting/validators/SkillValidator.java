@@ -19,15 +19,15 @@ public class SkillValidator extends Validator {
         this.name = name;
     }
 
+    @Override
+    protected void validate() {
+        name();
+    }
+
     private void name() {
         if (!Rules.lengthGreaterThan(name, 2)) {
             messageBag.put("name", "Please provide a valid name");
         }
-    }
-
-    @Override
-    protected void validate() {
-        name();
     }
 
 }
