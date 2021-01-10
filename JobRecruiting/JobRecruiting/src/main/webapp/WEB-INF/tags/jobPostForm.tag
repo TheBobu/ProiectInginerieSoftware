@@ -35,6 +35,11 @@
     textarea.form-control {
         min-height: calc(5.4em + 0.85rem + 2px);
     }
+
+    .text-purple{
+        color: #5f72bd;
+    }
+
     .register-left input{
         border: none;
         border-radius: 1.5rem;
@@ -190,10 +195,12 @@
                         <t:displayError error="noOfPositionsAvailable"/>
                     </div>
 
-
-
                     <div class="form-group mb-4">
-                        <label for="skills" class="form-label">Skills</label>
+                        <label for="skills" class="form-label">
+                            Skills 
+                            <a href="${pageContext.request.contextPath}/Skills/Create" class="link text-purple">
+                                <i class="fas fa-plus-circle"></i></a> 
+                        </label>
                         <select class="form-select" id="skills" name="skills" multiple required>
                             <c:forEach var = "skill" items = "${skills}">
                                 <option value="${skill.id}"

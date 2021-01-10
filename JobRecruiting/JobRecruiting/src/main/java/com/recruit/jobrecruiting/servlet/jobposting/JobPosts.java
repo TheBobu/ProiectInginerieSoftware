@@ -41,18 +41,18 @@ public class JobPosts extends HttpServlet {
 
         request.setAttribute("types", Type.values());
 
-        String title = request.getParameter("title");
+        String keyword = request.getParameter("keyword");
         String type = request.getParameter("type");
         String salary = request.getParameter("salary");
         List<JobPostDetails> jobPosts = jobPostBean.filterJobPosts(
-                title,
+                keyword,
                 type,
                 salary
         );
 
-        request.getSession().setAttribute("title", title);
-        request.getSession().setAttribute("salary", salary);
-        request.getSession().setAttribute("type", type);
+        request.setAttribute("keyword", keyword);
+        request.setAttribute("salary", salary);
+        request.setAttribute("type", type);
 
         request.setAttribute("jobPosts", jobPosts);
         request.getRequestDispatcher("/WEB-INF/pages/jobpost/jobposts.jsp").forward(request, response);

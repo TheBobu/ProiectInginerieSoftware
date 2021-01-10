@@ -22,6 +22,7 @@
                     title="${jobpost.title}" 
                     description="${jobpost.description}" 
                     salary="${jobpost.salary}" 
+                    type="${jobpost.type.label}"
                     viewLink="${pageContext.request.contextPath}/JobPost?id=${jobpost.id}"
                     deleteLink="${pageContext.request.contextPath}/JobPost?id=${jobpost.id}"
                     editLink="${pageContext.request.contextPath}/JobPost/Edit?id=${jobpost.id}"

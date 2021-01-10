@@ -14,8 +14,8 @@
 
     <div class="row col-10">
         <div class="form-group col-md-4 mb-4">
-            <label for="type" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="title" value ="${title}">
+            <label for="keyword" class="form-label">Keyword</label>
+            <input type="text" class="form-control" id="keyword" name="keyword" value ="${keyword}">
         </div>
         <div class="form-group col-md-4 mb-4">
             <label for="type" class="form-label">Type</label>
