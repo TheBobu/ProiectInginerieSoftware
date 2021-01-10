@@ -15,6 +15,6 @@
             <h3 class="register-heading">Add a Skill</h3>
         </t:skillForm>
     </t:formTemplate>
-    <t:formValidate/>
+   
 </t:pageTemplate>
 
