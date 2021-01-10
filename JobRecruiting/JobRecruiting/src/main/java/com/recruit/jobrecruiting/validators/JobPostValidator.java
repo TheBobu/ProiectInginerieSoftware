@@ -13,7 +13,7 @@ import java.util.HashMap;
  *
  * @author DENISA
  */
-public class JobPostValidator implements Validator {
+public class JobPostValidator extends Validator {
 
     private String title;
     private String description;
@@ -40,11 +40,8 @@ public class JobPostValidator implements Validator {
         this.messageBag = messageBag;
     }
 
-
     @Override
-    public Boolean passes(HashMap<String, String> messageBag) {
-        this.messageBag = messageBag;
-
+    protected void validate() {
         title();
         description();
         noOfPositionsAvailable();
@@ -54,8 +51,6 @@ public class JobPostValidator implements Validator {
         skills();
         salary();
         type();
-
-        return messageBag.isEmpty();
     }
 
     private void title() {

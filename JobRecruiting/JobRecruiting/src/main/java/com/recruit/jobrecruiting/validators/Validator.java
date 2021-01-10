@@ -11,8 +11,16 @@ import java.util.HashMap;
  *
  * @author DENISA
  */
-public interface Validator {
+public abstract class Validator {
 
-    public Boolean passes(HashMap<String, String> messageBag);
+    HashMap<String, String> messageBag;
+
+    public Boolean passes(HashMap<String, String> messageBag) {
+        this.messageBag = messageBag;
+        validate();
+        return messageBag.size() == 0;
+    }
+
+    protected abstract void validate();
 
 }
