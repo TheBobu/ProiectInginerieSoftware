@@ -39,12 +39,28 @@ public class JobPostBean {
     private SkillBean skillBean;
 
     public List<JobPostDetails> getAllJobPosts() {
+        LOG.info("getAllJobPosts");
         try {
             Query query = em.createQuery("SELECT j FROM JobPost j");
             List<Detachable> jobPosts = (List<Detachable>) query.getResultList();
             return Util.detachEntities(jobPosts);
         } catch (Exception ex) {
             throw new EJBException(ex);
+        }
+    }
+
+    public List<JobPostDetails> filterJobPosts(String title, String type, String salary) {
+        LOG.info("filterJobPosts");
+
+        try {
+            Query query = em.createQuery("SELECT j FROM JobPost j where lower(j.title) like :title and  j.type = :type and j.salary >= :salary")
+                    .setParameter("title", "%" + Util.string(title).toLowerCase() + "%")
+                    .setParameter("salary", Util.number(salary))
+                    .setParameter("type", Type.valueOf(type));
+
+            return Util.detachEntities(query.getResultList());
+        } catch (Exception ex) {
+            return getAllJobPosts();
         }
     }
 

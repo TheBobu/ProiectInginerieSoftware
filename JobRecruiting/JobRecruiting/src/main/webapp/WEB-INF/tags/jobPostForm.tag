@@ -19,7 +19,6 @@
     }
 
     .register{
-
         margin-top: 3%;
         padding: 3%;
     }
@@ -89,32 +88,7 @@
         width: 50%;
         cursor: pointer;
     }
-    .register .nav-tabs{
-        margin-top: 3%;
-        border: none;
-        background: #0062cc;
-        border-radius: 1.5rem;
-        width: 28%;
-        float: right;
-    }
-    .register .nav-tabs .nav-link{
-        padding: 2%;
-        height: 34px;
-        font-weight: 600;
-        color: #fff;
-        border-top-right-radius: 1.5rem;
-        border-bottom-right-radius: 1.5rem;
-    }
-    .register .nav-tabs .nav-link:hover{
-        border: none;
-    }
-    .register .nav-tabs .nav-link.active{
-        width: 100px;
-        color: #0062cc;
-        border: 2px solid #0062cc;
-        border-top-left-radius: 1.5rem;
-        border-bottom-left-radius: 1.5rem;
-    }
+
     .register-heading{
         text-align: center;
         margin-top: 8%;
@@ -166,7 +140,7 @@
 
                     <div class="form-group mb-4">
                         <label for="description" class="form-label">Description</label>
-                        <textarea type="text" wrap="hard"  class="form-control" id="description" name="description" required>${jobPost.description}
+                        <textarea type="text" wrap="hard" min=20 class="form-control" id="description" name="description" required>${jobPost.description}
                         </textarea>
                         <t:displayError error="description"/>
                     </div>
@@ -204,7 +178,7 @@
                     </div>
 
                     <div class="form-group mb-4">
-                        
+
                         <label for="salary" class="form-label">Salary</label>
                         <input type="number" class="form-control" min=1 value ="${jobPost.salary}" id="salary" name="salary" required>
                         <t:displayError error="salary"/>

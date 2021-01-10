@@ -30,4 +30,8 @@ public class Util {
             return 0;
         }
     }
+
+    public static String string(String s) {
+        return s == null ? "" : s;
+    }
 }

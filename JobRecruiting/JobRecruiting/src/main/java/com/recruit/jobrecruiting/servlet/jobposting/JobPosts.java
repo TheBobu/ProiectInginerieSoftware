@@ -7,6 +7,7 @@ package com.recruit.jobrecruiting.servlet.jobposting;
 
 import com.recruit.jobrecruiting.common.JobPostDetails;
 import com.recruit.jobrecruiting.ejb.JobPostBean;
+import com.recruit.jobrecruiting.entity.Type;
 import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
@@ -38,7 +39,21 @@ public class JobPosts extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<JobPostDetails> jobPosts = jobPostBean.getAllJobPosts();
+        request.setAttribute("types", Type.values());
+
+        String title = request.getParameter("title");
+        String type = request.getParameter("type");
+        String salary = request.getParameter("salary");
+        List<JobPostDetails> jobPosts = jobPostBean.filterJobPosts(
+                title,
+                type,
+                salary
+        );
+
+        request.getSession().setAttribute("title", title);
+        request.getSession().setAttribute("salary", salary);
+        request.getSession().setAttribute("type", type);
+
         request.setAttribute("jobPosts", jobPosts);
         request.getRequestDispatcher("/WEB-INF/pages/jobpost/jobposts.jsp").forward(request, response);
     }

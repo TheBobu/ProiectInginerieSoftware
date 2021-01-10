@@ -49,6 +49,8 @@ public class AddJobPost extends HttpServlet {
         request.setAttribute("skills", skillBean.getAllSkills());
         request.setAttribute("statuses", Status.values());
         request.setAttribute("types", Type.values());
+        request.setAttribute("errors", request.getSession().getAttribute("errors"));
+        request.getSession().removeAttribute("errors");
         request.getRequestDispatcher("/WEB-INF/pages/jobpost/addjobpost.jsp").forward(request, response);
     }
 
@@ -64,7 +66,6 @@ public class AddJobPost extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        request.getSession().removeAttribute("errors");
 
         HashMap<String, String> messageBag = new HashMap<>();
         String title = request.getParameter("title");
