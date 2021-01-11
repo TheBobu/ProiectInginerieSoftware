@@ -11,15 +11,22 @@
 
 <t:pageTemplate pageTitle="Jobs">
 
-    <h1 class="mb-4">Jobs posts ee</h1>
+    <h1 class="mb-4">Jobs posts</h1>
+    <!-- Team item -->
+    <t:filterJobPostForm/>
+    <a class="btn btn-primary" href="${pageContext.request.contextPath}/JobPost/Create">create</a>
     <div class="row row-cols-1 row-cols-md-2 g-4 mt-4">
         <c:forEach var="jobpost" items="${jobPosts}">
             <div class="col">
-                <t:card 
-                title="${jobpost.title}" 
-                description="${jobpost.description}" 
-                link="${pageContext.request.contextPath}/JobPost?id=${jobpost.id}"
-               />
+                <t:jobCard 
+                    title="${jobpost.title}" 
+                    description="${jobpost.description}" 
+                    salary="${jobpost.salary}" 
+                    type="${jobpost.type.label}"
+                    viewLink="${pageContext.request.contextPath}/JobPost?id=${jobpost.id}"
+                    deleteLink="${pageContext.request.contextPath}/JobPost?id=${jobpost.id}"
+                    editLink="${pageContext.request.contextPath}/JobPost/Edit?id=${jobpost.id}"
+                    />
             </div>
         </c:forEach>
     </div>
