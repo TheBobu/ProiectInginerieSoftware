@@ -39,8 +39,7 @@ public class UserBean {
     private EntityManager em;
 
     /**
-     * Gets all users from the database. TODO: replace User class with
-     * UserDetails class.
+     * Gets all users from the database.
      *
      * @return Returns a complete list of users.
      */
@@ -52,6 +51,24 @@ public class UserBean {
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
+    }
+
+    /**
+     * Gets all usernames of the users.
+     *
+     * @return Returns a complete list of all usernames.
+     */
+    public List<String> getAllUsernames() {
+        return (List<String>) em.createQuery("SELECT u.username FROM User u").getResultList();
+    }
+
+    /**
+     * Gets all emails of the users.
+     *
+     * @return Returns a complete list of all emails.
+     */
+    public List<String> getAllEmails() {
+        return (List<String>) em.createQuery("SELECT u.email FROM User u").getResultList();
     }
 
     /**
@@ -125,8 +142,8 @@ public class UserBean {
     }
 
     /**
-     * Adds a CV to a specific user. 
-     * 
+     * Adds a CV to a specific user.
+     *
      * @param id the id of the user
      * @param fileName name of the file
      * @param fileType type of the file
@@ -147,8 +164,8 @@ public class UserBean {
     }
 
     /**
-     * Adds a profile photo to a specific user. 
-     * 
+     * Adds a profile photo to a specific user.
+     *
      * @param id the id of the user
      * @param fileName name of the file
      * @param fileType type of the file

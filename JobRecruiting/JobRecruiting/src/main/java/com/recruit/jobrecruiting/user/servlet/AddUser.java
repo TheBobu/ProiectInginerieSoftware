@@ -6,9 +6,12 @@
 package com.recruit.jobrecruiting.user.servlet;
 
 import com.recruit.jobrecruiting.user.ejb.UserBean;
+import com.recruit.jobrecruiting.validators.UserValidator;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
@@ -65,23 +68,31 @@ public class AddUser extends HttpServlet {
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
             String address = request.getParameter("address");
-            Integer id = userBean.createUser(username, email, password, birthDate, firstName, lastName, address);
+            HashMap<String, String> messageBag = new HashMap<>();
+            UserValidator validator = new UserValidator(username, email, password, birthDate, firstName, lastName, address, userBean);
 
-            Part filePart = request.getPart("profilePhoto");
-            String fileName = filePart.getSubmittedFileName();
-            String fileType = filePart.getContentType();
-            long fileSize = filePart.getSize();
-            byte[] fileContent = new byte[(int) fileSize];
-            filePart.getInputStream().read(fileContent);
-            userBean.addProfilePhoto(id, fileName, fileType, fileContent);
-            
-            filePart = request.getPart("cv");
-            fileName = filePart.getSubmittedFileName();
-            fileType = filePart.getContentType();
-            fileSize = filePart.getSize();
-            fileContent = new byte[(int) fileSize];
-            filePart.getInputStream().read(fileContent);
-            userBean.addCv(id, fileName, fileType, fileContent);
+            if (validator.passes(messageBag)) {
+                Integer id = userBean.createUser(username, email, password, birthDate, firstName, lastName, address);
+
+                Part filePart = request.getPart("profilePhoto");
+                String fileName = filePart.getSubmittedFileName();
+                String fileType = filePart.getContentType();
+                long fileSize = filePart.getSize();
+                byte[] fileContent = new byte[(int) fileSize];
+                filePart.getInputStream().read(fileContent);
+                userBean.addProfilePhoto(id, fileName, fileType, fileContent);
+
+                filePart = request.getPart("cv");
+                fileName = filePart.getSubmittedFileName();
+                fileType = filePart.getContentType();
+                fileSize = filePart.getSize();
+                fileContent = new byte[(int) fileSize];
+                filePart.getInputStream().read(fileContent);
+                userBean.addCv(id, fileName, fileType, fileContent);
+            } else {
+                request.getSession().setAttribute("errors", messageBag);
+                response.sendRedirect(request.getHeader("Referer"));
+            }
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(AddUser.class.getName()).log(Level.SEVERE, null, ex);
         }
