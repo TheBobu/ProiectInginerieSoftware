@@ -3,13 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.recruit.jobrecruiting.entity;
+package com.recruit.jobrecruiting.common;
 
 /**
- * An enum with 2 possible states: PROFILE_PHOTO, CV;
- * 
- * @author robert
+ *
+ * @author DENISA
  */
-public enum PhotoType {
-    PROFILE_PHOTO, CV;
+public class DetachedEntity {
 }

@@ -33,7 +33,7 @@ public class SkillBean {
         LOG.info("getAllSkills");
         try {
             Query query = em.createQuery("SELECT s FROM Skill s");
-            List<Detachable> skills = query.getResultList();
+            List<Detachable> skills = (List<Detachable>) query.getResultList();
             return Util.detachEntities(skills);
         } catch (Exception ex) {
             throw new EJBException(ex);
@@ -47,13 +47,5 @@ public class SkillBean {
                 .createQuery("SELECT s FROM Skill s where s.id IN ?1")
                 .setParameter(1, skillIds)
                 .getResultList();
-    }
-
-    public void createSkill(String name) {
-        LOG.info("createSkill");
-
-        Skill skill = new Skill();
-        skill.setName(name);
-        em.persist(skill);
     }
 }
