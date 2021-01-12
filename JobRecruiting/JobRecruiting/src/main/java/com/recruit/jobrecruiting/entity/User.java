@@ -32,7 +32,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "USERS")
-public class User implements Serializable, Detachable {
+public class User implements Serializable {
     
     private static final long serialVersionUID = 1L;
 
@@ -67,7 +67,7 @@ public class User implements Serializable, Detachable {
     private Status status;
 
     @Enumerated(EnumType.STRING)
-    private Position position;
+    private Position position = Position.CANDIDATE;
 
     @Enumerated(EnumType.STRING)
     private Department department;
@@ -300,10 +300,5 @@ public class User implements Serializable, Detachable {
     @Override
     public String toString() {
         return "User{" + "id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", birthDate=" + birthDate + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", profilePhoto=" + profilePhoto + ", cv=" + cv + ", status=" + status + ", position=" + position + ", department=" + department + ", interviewsAsCandidate=" + interviewsAsCandidate + ", interviewsAsInterviewer=" + interviewsAsInterviewer + ", jobPostsAsPoster=" + jobPostsAsPoster + '}';
-    }
-    
-    @Override
-    public UserDetails detach() {
-        return new UserDetails();
     }
 }

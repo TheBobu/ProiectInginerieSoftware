@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,9 +28,6 @@ import javax.persistence.Table;
 public class Photo implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    public Photo() {
-    }
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,6 +38,9 @@ public class Photo implements Serializable {
     private String fileType;
     
     private byte[] fileContent;
+    
+    @Enumerated(EnumType.STRING)
+    private PhotoType photoType;
 
     @OneToOne
     @JoinColumn(name = "USER_KEY")
@@ -76,6 +78,14 @@ public class Photo implements Serializable {
         this.fileContent = fileContent;
     }
 
+    public PhotoType getPhotoType() {
+        return photoType;
+    }
+
+    public void setPhotoType(PhotoType photoType) {
+        this.photoType = photoType;
+    }
+    
     public User getUser() {
         return user;
     }
@@ -86,11 +96,12 @@ public class Photo implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
+        int hash = 7;
         hash = 53 * hash + Objects.hashCode(this.id);
         hash = 53 * hash + Objects.hashCode(this.filename);
         hash = 53 * hash + Objects.hashCode(this.fileType);
         hash = 53 * hash + Arrays.hashCode(this.fileContent);
+        hash = 53 * hash + Objects.hashCode(this.photoType);
         hash = 53 * hash + Objects.hashCode(this.user);
         return hash;
     }
@@ -119,6 +130,9 @@ public class Photo implements Serializable {
         if (!Arrays.equals(this.fileContent, other.fileContent)) {
             return false;
         }
+        if (this.photoType != other.photoType) {
+            return false;
+        }
         if (!Objects.equals(this.user, other.user)) {
             return false;
         }
@@ -127,6 +141,6 @@ public class Photo implements Serializable {
 
     @Override
     public String toString() {
-        return "Photo{" + "id=" + id + ", filename=" + filename + ", fileType=" + fileType + ", fileContent=" + fileContent + ", user=" + user + '}';
+        return "Photo{" + "id=" + id + ", filename=" + filename + ", fileType=" + fileType + ", fileContent=" + fileContent + ", photoType=" + photoType + ", user=" + user + '}';
     }
 }

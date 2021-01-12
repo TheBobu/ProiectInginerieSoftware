@@ -16,6 +16,23 @@ import java.time.LocalDate;
  * @author andrei
  */
 public class UserDetails {
+
+    public UserDetails(Integer id, String username, String email, String password, LocalDate birthDate, String firstName, String lastName, String address, Photo profilePhoto, Photo cv, Status status, Position position, Department department) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.birthDate = birthDate;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.profilePhoto = profilePhoto;
+        this.cv = cv;
+        this.status = status;
+        this.position = position;
+        this.department = department;
+    }
+    
     private Integer id;
 
     private String username;
