@@ -7,9 +7,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<t:pageTemplate pageTitle="Jobs">
+<t:pageTemplate pageTitle="${jobPost.title}">
 
-    <h1>what</h1>
-   ${e}
+    <h1>${jobPost.title}</h1>
+   
+   
 
 </t:pageTemplate>
