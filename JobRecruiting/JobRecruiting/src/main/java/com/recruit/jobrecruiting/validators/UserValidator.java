@@ -107,7 +107,7 @@ public class UserValidator extends Validator {
      * Validator for lastName
      */
     private void lastName() {
-        if (username.equals(" ")) {
+        if (lastName.equals(" ")) {
             messageBag.put("lastName", "Please enter a valid lastName");
         }
     }
@@ -116,7 +116,7 @@ public class UserValidator extends Validator {
      * Validator for address
      */
     private void address() {
-        if(!Rules.lengthGreaterThan(address, 5)){
+        if(!Rules.lengthGreaterThan(address, 1)){
             messageBag.put("address", "Please enter a valid address");
         }
     }
