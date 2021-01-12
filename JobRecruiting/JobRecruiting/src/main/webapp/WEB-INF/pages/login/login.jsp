@@ -16,7 +16,7 @@
                         <input type="text" id="username" class="form-control" placeholder="Username" name="j_username" required autofocus>
                         <input type="password" id="password" class="form-control" name="j_password" placeholder="Password" required>
                         <a class="forgot text-muted" href="#">Forgot password?</a> 
-                        <input type="submit" name="" value="Login" >
+                        <input type="submit"  value="Login" >
                     </form>
                 </div>
             </div>
