@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col">
                 <div class="card">
-                    <form class="box" method="post" action="j_security_check">
+                    <form class="box form" method="post" action="j_security_check">
                         <h1>Login</h1>
                         <p class="text-muted"> Please enter your login and password!</p> 
                         <input type="text" id="username" class="form-control" placeholder="Username" name="j_username" required autofocus>
