@@ -56,6 +56,7 @@ public class CommentBean {
         Comment comment = em.find(Comment.class, id);
         em.remove(comment);
     }
+    
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 }
