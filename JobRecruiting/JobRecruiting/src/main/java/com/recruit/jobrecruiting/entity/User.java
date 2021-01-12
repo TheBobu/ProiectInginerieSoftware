@@ -5,6 +5,8 @@
  */
 package com.recruit.jobrecruiting.entity;
 
+import com.recruit.jobrecruiting.common.UserDetails;
+import com.recruit.jobrecruiting.util.Detachable;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -30,7 +32,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "USERS")
-public class User implements Serializable {
+public class User implements Serializable, Detachable {
     
     private static final long serialVersionUID = 1L;
 
@@ -298,5 +300,10 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User{" + "id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", birthDate=" + birthDate + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", profilePhoto=" + profilePhoto + ", cv=" + cv + ", status=" + status + ", position=" + position + ", department=" + department + ", interviewsAsCandidate=" + interviewsAsCandidate + ", interviewsAsInterviewer=" + interviewsAsInterviewer + ", jobPostsAsPoster=" + jobPostsAsPoster + '}';
+    }
+    
+    @Override
+    public UserDetails detach() {
+        return new UserDetails();
     }
 }

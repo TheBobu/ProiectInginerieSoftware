@@ -6,18 +6,16 @@
 package com.recruit.jobrecruiting.user.ejb;
 
 import com.recruit.jobrecruiting.common.UserDetails;
-import com.recruit.jobrecruiting.common.UserLightDetails;
-import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Photo;
-import com.recruit.jobrecruiting.entity.Position;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.User;
+import com.recruit.jobrecruiting.util.Detachable;
+import com.recruit.jobrecruiting.util.Util;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJBException;
@@ -45,20 +43,12 @@ public class UserBean {
      *
      * @return Returns a complete list of users.
      */
-    public List<UserLightDetails> getAllUsersLight() {
-        try {
-            Query query = em.createQuery("SELECT u FROM User u");
-            List<User> users = (List<User>) query.getResultList();
-            return copyUsersToLightDetails(users);
-        } catch (Exception ex) {
-            throw new EJBException(ex);
-        }
-    }
+
     public List<UserDetails> getAllUsers() {
         try {
-            Query query = em.createQuery("SELECT u FROM USERS u");
-            List<User> users = (List<User>) query.getResultList();
-            return copyUsersToDetails(users);
+            Query query = em.createQuery("SELECT u FROM User u");
+            List<Detachable> users = (List<Detachable>) query.getResultList();
+            return Util.detachEntities(users);
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
@@ -145,23 +135,5 @@ public class UserBean {
         
         photo.setUser(user);
         em.persist(photo);
-    }
-    
-    private List<UserDetails> copyUsersToDetails(List<User> users) {
-        List<UserDetails> detailsList = new ArrayList<>();
-        for(User user:users){
-            UserDetails userDetails = new UserDetails(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), user.getBirthDate(), user.getFirstName(), user.getLastName(), user.getAddress(), user.getProfilePhoto(), user.getCv(), user.getStatus(), user.getPosition(), user.getDepartment());
-            detailsList.add(userDetails);
-        }
-        return detailsList;
-    }
-    
-    private List<UserLightDetails> copyUsersToLightDetails(List<User> users) {
-        List<UserLightDetails> detailsList = new ArrayList<>();
-        for(User user:users){
-            UserLightDetails userDetails = new UserLightDetails(user.getId(), user.getUsername(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getPosition(), user.getStatus());
-            detailsList.add(userDetails);
-        }
-        return detailsList;
     }
 }

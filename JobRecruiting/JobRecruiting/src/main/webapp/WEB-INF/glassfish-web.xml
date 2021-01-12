@@ -37,12 +37,6 @@
     <group-name>RECRUITER</group-name>
     <group-name>CANDIDATE</group-name>
   </security-role-mapping>
-  <security-role-mapping>
-    <role-name>HRDirectorRole</role-name>
-    <group-name>ADMIN</group-name>
-    <group-name>GENERAL_DIRECTOR</group-name>
-    <group-name>HR_DIRECTOR</group-name>
-  </security-role-mapping>
   <resource-ref>
     <res-ref-name>jdbc/JobRecruiting</res-ref-name>
     <jndi-name>jdbc/JobRecruiting</jndi-name>
