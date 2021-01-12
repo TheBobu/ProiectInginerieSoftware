@@ -5,8 +5,10 @@
  */
 package com.recruit.jobrecruiting.comment.servlet;
 
+import com.recruit.jobrecruiting.comment.ejb.CommentBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "Comment", urlPatterns = {"/Comment"})
 public class Comment extends HttpServlet {
+    @Inject CommentBean commentBean;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -58,7 +61,9 @@ public class Comment extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        request.getSession().setAttribute("numberOfComments", 7);
+        request.getRequestDispatcher("/WEB-INF/pages/interview/comment-section.jsp").forward(request, response);
     }
 
     /**
