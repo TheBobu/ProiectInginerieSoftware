@@ -64,6 +64,13 @@
         </div>
         <div class="row">
             <div class="col-md-6 mb-3">
+                <label for="passwordAgain">Password again</label>
+                <input type="password" class="form-control" id="passwordAgain" name="passwordAgain" placeholder="" value="" required>
+                <t:displayError error="passwordAgain"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
                 <label for="profilePhoto">Profile Photo</label>
                 <br>
                 <input type="file" name="profilePhoto" required>

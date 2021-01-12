@@ -64,12 +64,13 @@ public class AddUser extends HttpServlet {
             String username = request.getParameter("username");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
+            String passwordAgain = request.getParameter("passwordAgain");
             LocalDate birthDate = LocalDate.parse(request.getParameter("birthDate"));
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
             String address = request.getParameter("address");
             HashMap<String, String> messageBag = new HashMap<>();
-            UserValidator validator = new UserValidator(username, email, password, birthDate, firstName, lastName, address, userBean);
+            UserValidator validator = new UserValidator(username, email, password, passwordAgain, birthDate, firstName, lastName, address, userBean);
 
             if (validator.passes(messageBag)) {
                 Integer id = userBean.createUser(username, email, password, birthDate, firstName, lastName, address);
