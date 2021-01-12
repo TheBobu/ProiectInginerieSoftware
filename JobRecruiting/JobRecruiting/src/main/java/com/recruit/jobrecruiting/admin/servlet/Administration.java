@@ -5,7 +5,7 @@
  */
 package com.recruit.jobrecruiting.admin.servlet;
 
-import com.recruit.jobrecruiting.common.UserDetails;
+import com.recruit.jobrecruiting.common.UserLightDetails;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
 import java.util.List;
@@ -38,6 +38,7 @@ public class Administration extends HttpServlet {
  
     @Inject
     private UserBean userBean;
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -50,7 +51,8 @@ public class Administration extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<UserDetails> users = userBean.getAllUsers();
+        List<UserLightDetails> users = userBean.getAllUsersLight();
+        
         request.getSession().setAttribute("users", users);
         request.getRequestDispatcher("/WEB-INF/pages/administration/userManagement.jsp").forward(request, response);
     }

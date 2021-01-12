@@ -12,5 +12,5 @@ package com.recruit.jobrecruiting.entity;
  * @author robert
  */
 public enum Position {
-    CANDIDATE, RECRUITER, DEPARTMENT_DIRECTOR, GENERAL_DIRECTOR, ADMIN;
+    CANDIDATE, RECRUITER, DEPARTMENT_DIRECTOR, GENERAL_DIRECTOR, ADMIN, HR_DIRECTOR;
 }
