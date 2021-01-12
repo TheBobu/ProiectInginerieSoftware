@@ -35,7 +35,6 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "JOBPOSTS")
-
 public class JobPost implements Serializable, Detachable {
 
     private static final long serialVersionUID = 1L;
@@ -63,7 +62,6 @@ public class JobPost implements Serializable, Detachable {
     @JoinColumn(name = "POSTER_KEY")
     private User poster;
 
-    @JsonbTransient
     @OneToMany(mappedBy = "jobPost")
     private Collection<Interview> interviewsForJobPost;
 

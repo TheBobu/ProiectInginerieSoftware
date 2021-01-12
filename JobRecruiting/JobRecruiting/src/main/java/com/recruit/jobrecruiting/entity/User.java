@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Objects;
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -31,7 +30,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "USERS")
 public class User implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
 
     public User() {
@@ -55,6 +54,11 @@ public class User implements Serializable {
 
     private String address;
 
+    private String shortBio;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private Collection<Skill> skills;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Photo profilePhoto;
 
@@ -70,16 +74,13 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private Department department;
 
-    @JsonbTransient
-    @OneToMany(mappedBy = "candidate")
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY)
     private Collection<Interview> interviewsAsCandidate;
 
-    @JsonbTransient
-    @OneToMany(mappedBy = "interviewer")
+    @OneToMany(mappedBy = "interviewer", fetch = FetchType.LAZY)
     private Collection<Interview> interviewsAsInterviewer;
 
-    @JsonbTransient
-    @OneToMany(mappedBy = "poster")
+    @OneToMany(mappedBy = "poster", fetch = FetchType.LAZY)
     private Collection<JobPost> jobPostsAsPoster;
 
     public Integer getId() {
@@ -210,25 +211,43 @@ public class User implements Serializable {
         this.jobPostsAsPoster = jobPostsAsPoster;
     }
 
+    public String getShortBio() {
+        return shortBio;
+    }
+
+    public void setShortBio(String shortBio) {
+        this.shortBio = shortBio;
+    }
+
+    public Collection<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(Collection<Skill> skills) {
+        this.skills = skills;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 11 * hash + Objects.hashCode(this.id);
-        hash = 11 * hash + Objects.hashCode(this.username);
-        hash = 11 * hash + Objects.hashCode(this.email);
-        hash = 11 * hash + Objects.hashCode(this.password);
-        hash = 11 * hash + Objects.hashCode(this.birthDate);
-        hash = 11 * hash + Objects.hashCode(this.firstName);
-        hash = 11 * hash + Objects.hashCode(this.lastName);
-        hash = 11 * hash + Objects.hashCode(this.address);
-        hash = 11 * hash + Objects.hashCode(this.profilePhoto);
-        hash = 11 * hash + Objects.hashCode(this.cv);
-        hash = 11 * hash + Objects.hashCode(this.status);
-        hash = 11 * hash + Objects.hashCode(this.position);
-        hash = 11 * hash + Objects.hashCode(this.department);
-        hash = 11 * hash + Objects.hashCode(this.interviewsAsCandidate);
-        hash = 11 * hash + Objects.hashCode(this.interviewsAsInterviewer);
-        hash = 11 * hash + Objects.hashCode(this.jobPostsAsPoster);
+        hash = 19 * hash + Objects.hashCode(this.id);
+        hash = 19 * hash + Objects.hashCode(this.username);
+        hash = 19 * hash + Objects.hashCode(this.email);
+        hash = 19 * hash + Objects.hashCode(this.password);
+        hash = 19 * hash + Objects.hashCode(this.birthDate);
+        hash = 19 * hash + Objects.hashCode(this.firstName);
+        hash = 19 * hash + Objects.hashCode(this.lastName);
+        hash = 19 * hash + Objects.hashCode(this.address);
+        hash = 19 * hash + Objects.hashCode(this.shortBio);
+        hash = 19 * hash + Objects.hashCode(this.skills);
+        hash = 19 * hash + Objects.hashCode(this.profilePhoto);
+        hash = 19 * hash + Objects.hashCode(this.cv);
+        hash = 19 * hash + Objects.hashCode(this.status);
+        hash = 19 * hash + Objects.hashCode(this.position);
+        hash = 19 * hash + Objects.hashCode(this.department);
+        hash = 19 * hash + Objects.hashCode(this.interviewsAsCandidate);
+        hash = 19 * hash + Objects.hashCode(this.interviewsAsInterviewer);
+        hash = 19 * hash + Objects.hashCode(this.jobPostsAsPoster);
         return hash;
     }
 
@@ -262,10 +281,16 @@ public class User implements Serializable {
         if (!Objects.equals(this.address, other.address)) {
             return false;
         }
+        if (!Objects.equals(this.shortBio, other.shortBio)) {
+            return false;
+        }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         if (!Objects.equals(this.birthDate, other.birthDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.skills, other.skills)) {
             return false;
         }
         if (!Objects.equals(this.profilePhoto, other.profilePhoto)) {
@@ -297,6 +322,6 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", birthDate=" + birthDate + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", profilePhoto=" + profilePhoto + ", cv=" + cv + ", status=" + status + ", position=" + position + ", department=" + department + ", interviewsAsCandidate=" + interviewsAsCandidate + ", interviewsAsInterviewer=" + interviewsAsInterviewer + ", jobPostsAsPoster=" + jobPostsAsPoster + '}';
+        return "User{" + "id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", birthDate=" + birthDate + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", shortBio=" + shortBio + ", skills=" + skills + ", profilePhoto=" + profilePhoto + ", cv=" + cv + ", status=" + status + ", position=" + position + ", department=" + department + ", interviewsAsCandidate=" + interviewsAsCandidate + ", interviewsAsInterviewer=" + interviewsAsInterviewer + ", jobPostsAsPoster=" + jobPostsAsPoster + '}';
     }
 }
