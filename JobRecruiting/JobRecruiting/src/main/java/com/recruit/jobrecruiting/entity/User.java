@@ -67,7 +67,7 @@ public class User implements Serializable, Detachable {
     private Status status;
 
     @Enumerated(EnumType.STRING)
-    private Position position = Position.CANDIDATE;
+    private Position position;
 
     @Enumerated(EnumType.STRING)
     private Department department;

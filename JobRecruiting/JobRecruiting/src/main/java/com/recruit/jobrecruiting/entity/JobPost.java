@@ -7,7 +7,6 @@ package com.recruit.jobrecruiting.entity;
 
 import com.recruit.jobrecruiting.common.JobPostDetails;
 import com.recruit.jobrecruiting.util.Detachable;
-import com.recruit.jobrecruiting.util.Util;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -29,7 +28,7 @@ import javax.persistence.Table;
 
 /**
  * The model for a JobPost.
- *
+ * 
  * @author denisa
  * @author robert
  */
@@ -40,20 +39,23 @@ public class JobPost implements Serializable, Detachable {
 
     private static final long serialVersionUID = 1L;
 
+    public JobPost() {
+    }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String title;
-
+    
     private String description;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(name = "JOBPOST_SKILL")
     private List<Skill> skills;
 
     private int noOfPositionsAvailable;
-
+    
     private int noOfPositionsFilled = 0;
 
     @Enumerated(EnumType.STRING)
@@ -66,14 +68,9 @@ public class JobPost implements Serializable, Detachable {
     @JsonbTransient
     @OneToMany(mappedBy = "jobPost")
     private Collection<Interview> interviewsForJobPost;
-
+        
     @Enumerated(EnumType.STRING)
     private Status status;
-
-    @Enumerated(EnumType.STRING)
-    private Type type;
-
-    private int salary;
 
     public Integer getId() {
         return id;
@@ -155,22 +152,6 @@ public class JobPost implements Serializable, Detachable {
         this.status = status;
     }
 
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
-    public int getSalary() {
-        return salary;
-    }
-
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
@@ -245,12 +226,10 @@ public class JobPost implements Serializable, Detachable {
                 description,
                 noOfPositionsAvailable,
                 noOfPositionsFilled,
-                Util.detachEntities(skills),
+                skills,
                 department,
                 poster,
-                status,
-                type,
-                salary
+                status
         );
     }
 }

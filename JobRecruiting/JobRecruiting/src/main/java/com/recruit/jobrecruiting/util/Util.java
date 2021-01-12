@@ -14,24 +14,12 @@ import java.util.List;
  */
 public class Util {
 
-    public static <T> List<T> detachEntities(List<? extends Detachable> inputArray) {
+    public static <T> List<T> detachEntities(List<Detachable> inputArray) {
 
         List<T> output = new ArrayList<>();
         inputArray.forEach((Detachable element) -> {
             output.add((T) element.detach());
         });
         return output;
-    }
-
-    public static int number(String number) {
-        try {
-            return Integer.parseInt(number);
-        } catch (NumberFormatException ex) {
-            return 0;
-        }
-    }
-
-    public static String string(String s) {
-        return s == null ? "" : s;
     }
 }
