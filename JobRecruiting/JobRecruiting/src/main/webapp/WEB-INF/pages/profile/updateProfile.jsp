@@ -18,7 +18,7 @@
                 <div class="row">
                     <div class="media-left col-sm-3">
                         <form method="post" action="${pageContext.request.contextPath}/Profile/Update">
-                            <label>Profile Image</label><input type="file" class="form-control-file" name="image" id="">
+                            <label>Profile Image</label><input type="file"  class="form-control-file" name="image" value="image" id="">
                             </div>                      
                             <div class="media-body col-sm-9">
                                 <h2 class="media-heading">${user.firstName} ${user.lastName}  
@@ -32,20 +32,29 @@
                                         </div>
                                         <div class="col-sm-9 text-secondary">
                                             <input type="hidden" id="id" name="id" value="${user.id}">
-                                            <h6 class="mb-0"> <input type="text" class="form-control" name="firstName"  placeholder="First Name"></h6>
-                                            <h6 class="mb-0"> <input type="text" class="form-control" name="lastName"  placeholder="Last Name"></h6>
+                                            <h6 class="mb-0"> <input type="text" class="form-control" name="firstName" value="firstName"  placeholder="First Name"></h6>
+                                            <h6 class="mb-0"> <input type="text" class="form-control" name="lastName" value="lastName" placeholder="Last Name"></h6>
                                         </div>
                                     </div>
                                     <hr />
                                     <div class="row">
                                         <div class="col-sm-3">
-                                            <h6 class="mb-0"> <input type="email" class="form-control" name="email"  placeholder="Email"></h6>
+                                          <h6 class="mb-0">Email</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            ${user.email} 
+                                           <h6 class="mb-0"> <input type="email" class="form-control" name="email" value="email"  placeholder="Email"></h6>
                                         </div>
                                     </div>
                                     <hr />
+                                      <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Birth Date</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                 <h6 class="mb-0"> <input type="date" class="form-control" name="birthDate"  value="birthDate" placeholder="Birth Date"></h6>
+                            </div>
+                        </div>
+                        <hr />
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <h6 class="mb-0">User Type</h6>
@@ -57,10 +66,10 @@
                                     <hr />
                                     <div class="row">
                                         <div class="col-sm-3">
-                                            <h6 class="mb-0"> <input type="text" class="form-control" name="address"  placeholder="Address"></h6>
+                                           <h6 class="mb-0">Address</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            ${ user.address }
+                                            <h6 class="mb-0"> <input type="text" class="form-control" name="address" value="address"  placeholder="Address"></h6>
                                         </div>
                                     </div>
                                     <hr />
@@ -69,7 +78,7 @@
                                             <h6 class="mb-0">Department</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <select multiple class="form-control" id="exampleFormControlSelect2">
+                                            <select class="form-control" >
                                                 <c:forEach var="department" items="${departments}" varStatus="status">
                                                     <option value="${department}"> ${department}</option>
                                                 </c:forEach>
@@ -80,13 +89,11 @@
                                     <div class="row">
                                         <input type="file" class="form-control-file" name="cv" id="">
                                         <div class="col-md-4"></div>
-                                        <button  type="submit" class="col-md-4 btn btn-primary">Update Profile</button>
-
+                                       
                                     </div>
+                                     <input type="submit" name="Update Profile" class="col-md-4 btn btn-primary">
                                     </form>
                                 </div>
-
-
                             </div>
 
                     </div>

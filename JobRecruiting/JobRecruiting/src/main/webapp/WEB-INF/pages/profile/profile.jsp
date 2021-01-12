@@ -38,12 +38,21 @@
                             </div>
                         </div>
                         <hr />
-                        <div class="row">
+                         <div class="row">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Email</h6>
+                                <h6 class="mb-0">Full Name</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                ${user.email} 
+                                ${user.firstName} ${user.lastName} 
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Birth Date</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                ${user.birthDate} 
                             </div>
                         </div>
                         <hr />
@@ -76,7 +85,7 @@
                          <div class="row">
                         <button class=" col-md-4 btn btn-primary">Download CV</button>
                          <div class="col-md-4"></div>
-                         <button class="col-md-4 btn btn-primary">Edit User</button>
+                         <button href="${pageContext.request.contextPath}/Profile/Update?id=${user.id}" class="col-md-4 btn btn-primary">Edit User</button>
                         
                          </div>
                     </div>
