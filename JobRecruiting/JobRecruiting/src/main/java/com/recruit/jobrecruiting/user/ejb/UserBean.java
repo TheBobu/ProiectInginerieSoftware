@@ -11,6 +11,7 @@ import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Photo;
 import com.recruit.jobrecruiting.entity.PhotoType;
 import com.recruit.jobrecruiting.entity.Position;
+import com.recruit.jobrecruiting.entity.Skill;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.User;
 import java.math.BigInteger;
@@ -26,11 +27,12 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  * Bean for the {@link User} entity.
  *
- * @author robert, andrei
+ * @author robert, andrei, Andreea Purta
  */
 @Stateless
 public class UserBean {
@@ -64,7 +66,7 @@ public class UserBean {
             throw new EJBException(ex);
         }
     }
-
+  
     /**
      * Gets all usernames of the users.
      *
@@ -97,7 +99,7 @@ public class UserBean {
      * @throws NoSuchAlgorithmException when the password cannot be hashed with
      * sha256
      */
-    public Integer createUser(String username, String email, String password, LocalDate birthDate, String firstName, String lastName, String address) throws NoSuchAlgorithmException {
+    public Integer createUser(String username, String email, String password, LocalDate birthDate, String firstName, String lastName, String address, String shortBio) throws NoSuchAlgorithmException {
         User user = new User();
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
@@ -118,7 +120,7 @@ public class UserBean {
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setAddress(address);
-        user.setStatus(Status.INACTIVE);
+        user.setShortBio(shortBio);
         em.persist(user);
 
         return user.getId();
@@ -142,18 +144,20 @@ public class UserBean {
         em.persist(user);
     }
 
-    public void updateUser(Integer id, String username, String email, String password, LocalDate birthDate, String firstName, String lastName, String address) {
+    public void updateUser(Integer id, String username, String email, Department department,String password, LocalDate birthDate, String firstName, String lastName, String address, String shortBio) {
         User user = getUserById(id);
         user.setAddress(address);
+        user.setDepartment(department);
         user.setBirthDate(birthDate);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
         user.setUsername(username);
         user.setPassword(password);
+        user.setShortBio(shortBio);
+     
     }
-
-    /**
+    /**asa 
      * Adds a CV to a specific user.
      *
      * @param id the id of the user
@@ -196,6 +200,29 @@ public class UserBean {
         photo.setUser(user);
         em.persist(photo);
     }
+    
+        public Photo findCvById(Integer id) {
+        TypedQuery<Photo> typedQuery = em.createQuery("SELECT p FROM photos p WHERE p.user.id = :id AND p.phototype=CV" , Photo.class)
+                .setParameter("id", id);
+        List<Photo> photos = typedQuery.getResultList();
+        if (photos.isEmpty()) {
+            return null;
+        }
+        Photo photo = photos.get(0);
+        return photo;
+    }
+        
+        public Photo findProfilePictureById(Integer id) {
+        TypedQuery<Photo> typedQuery = em.createQuery("SELECT p FROM photos p WHERE p.user.id = :id AND p.phototype=PROFILE_PHOTO ", Photo.class)
+                .setParameter("id", id);
+        List<Photo> photos = typedQuery.getResultList();
+        if (photos.isEmpty()) {
+            return null;
+        }
+        Photo photo = photos.get(0);
+        return photo;
+    }   
+        
     
     private List<UserDetails> copyUsersToDetails(List<User> users) {
         List<UserDetails> detailsList = new ArrayList<>();
