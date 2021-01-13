@@ -3,11 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.recruit.jobrecruiting.common;
+package com.recruit.jobrecruiting.mail;
 
 /**
  *
- * @author DENISA
+ * @author andrei
  */
-public class DetachedEntity {
+public enum Protocol {
+    SMTP,
+    SMTPS,
+    TLS
 }
