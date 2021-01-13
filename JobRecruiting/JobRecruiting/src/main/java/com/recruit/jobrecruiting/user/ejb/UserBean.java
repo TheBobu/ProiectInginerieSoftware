@@ -132,6 +132,8 @@ public class UserBean {
         User user = getUserById(id);
         user.setStatus(Status.ACTIVE);
 
+        User oldUser = getUserById(id);
+        em.remove(oldUser);
         em.persist(user);
     }
 
@@ -139,6 +141,8 @@ public class UserBean {
         User user = getUserById(id);
         user.setStatus(Status.INACTIVE);
 
+        User oldUser = getUserById(id);
+        em.remove(oldUser);
         em.persist(user);
     }
 
@@ -151,6 +155,17 @@ public class UserBean {
         user.setEmail(email);
         user.setUsername(username);
         user.setPassword(password);
+        User oldUser = getUserById(id);
+        em.remove(oldUser);
+        em.persist(user);
+    }
+    
+    public void updatePosition (Integer id, Position position) {
+        User user = getUserById(id);
+        user.setPosition(position);
+        User oldUser = getUserById(id);
+        em.remove(oldUser);
+        em.persist(user); 
     }
 
     /**
