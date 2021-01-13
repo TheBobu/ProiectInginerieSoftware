@@ -23,5 +23,5 @@
     </form>
         <a class="btn btn-secondary" href="${pageContext.request.contextPath}/UserActivator?id=${user.id}" role="button">Activate User</a>
         <a class="btn btn-secondary" href="${pageContext.request.contextPath}/UserDeactivator?id=${user.id}" role="button">Deactivate User</a>
-
+        <a class="btn btn-secondary" href="${pageContext.request.contextPath}/PasswordReseter?id=${user.id}" role="button">Send password reset link</a>
 </t:pageTemplate>
