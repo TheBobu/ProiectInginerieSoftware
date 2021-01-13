@@ -5,6 +5,7 @@
  */
 package com.recruit.jobrecruiting.user.servlet;
 
+import com.recruit.jobrecruiting.mail.EmailBean;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import com.recruit.jobrecruiting.validators.UserValidator;
 import java.io.IOException;
@@ -34,6 +35,8 @@ public class AddUser extends HttpServlet {
 
     @Inject
     UserBean userBean;
+    @Inject
+    EmailBean emailBean;
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -89,13 +92,18 @@ public class AddUser extends HttpServlet {
                 fileContent = new byte[(int) fileSize];
                 filePart.getInputStream().read(fileContent);
                 userBean.addCv(id, fileName, fileType, fileContent);
+                
+                emailBean.sendEmail(email, "Job Recruiting Platform", "Your account was succesfully created. Please wait for the administrator to activate your account. Thank you!");
+                response.sendRedirect(request.getContextPath());
             } else {
                 request.getSession().setAttribute("errors", messageBag);
                 response.sendRedirect(request.getHeader("Referer"));
             }
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(AddUser.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.print(ex);
         }
+        
     }
 
     /**

@@ -118,7 +118,7 @@ public class UserBean {
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setAddress(address);
-
+        user.setStatus(Status.INACTIVE);
         em.persist(user);
 
         return user.getId();
