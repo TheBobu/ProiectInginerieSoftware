@@ -34,16 +34,18 @@
                     <h3>${numberOfComments} Comments</h3>
 
                     <!-- COMMENT 1 - START -->
-                    <div class="media">
-                        <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""></a>
-                        <div class="media-body">
-                            <h4 class="media-heading">John Doe</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            <ul class="list-unstyled list-inline media-detail pull-left">
-                                <li><i class="fa fa-calendar"></i>27/02/2014</li>
-                            </ul>
+                    <c forEach var="comment" items="{comments}" varStatus="status">
+                        <div class="media">
+                            <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""></a>
+                            <div class="media-body">
+                                <h4 class="media-heading">${comment.username}</h4>
+                                <p>${comment.comment}</p>
+                                <ul class="list-unstyled list-inline media-detail pull-left">
+                                    <li><i class="fa fa-calendar"></i>${comment.date}</li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
+                    </c>
                     <!-- COMMENT 1 - END -->
                 </div>
             </div>
