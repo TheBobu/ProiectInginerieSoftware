@@ -6,8 +6,13 @@
 package com.recruit.jobrecruiting.comment.servlet;
 
 import com.recruit.jobrecruiting.comment.ejb.CommentBean;
+import com.recruit.jobrecruiting.common.CommentDetails;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +26,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "Comment", urlPatterns = {"/Comment"})
 public class Comment extends HttpServlet {
-    @Inject CommentBean commentBean;
+
+    @Inject
+    CommentBean commentBean;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,7 +47,7 @@ public class Comment extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Comment</title>");            
+            out.println("<title>Servlet Comment</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet Comment at " + request.getContextPath() + "</h1>");
@@ -63,6 +70,9 @@ public class Comment extends HttpServlet {
             throws ServletException, IOException {
         Integer id = Integer.parseInt(request.getParameter("id"));
         request.getSession().setAttribute("numberOfComments", 7);
+        List<CommentDetails> comments = commentBean.getAllComments(id);
+        request.getSession().setAttribute("comments", comments);
+        request.getSession().setAttribute("id", id);
         request.getRequestDispatcher("/WEB-INF/pages/interview/comment-section.jsp").forward(request, response);
     }
 
@@ -77,7 +87,11 @@ public class Comment extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String username = request.getRemoteUser().toString();
+        String comment = request.getParameter("comment");
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        commentBean.createComment(username, comment, id);
+        response.sendRedirect(request.getContextPath()+"/Comment?id="+id.toString());
     }
 
     /**

@@ -7,6 +7,7 @@ package com.recruit.jobrecruiting.comment.ejb;
 
 import com.recruit.jobrecruiting.common.CommentDetails;
 import com.recruit.jobrecruiting.entity.Comment;
+import com.recruit.jobrecruiting.entity.Interview;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -57,6 +58,16 @@ public class CommentBean {
         em.remove(comment);
     }
     
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    public void createComment(String username, String comment_text, Integer interviewId) {
+        LOG.info("createComment");
+        Comment comment = new Comment();
+
+        comment.setWrittenBy(username);
+        comment.setMessage(comment_text);
+        Interview interview = em.find(Interview.class, interviewId);
+        interview.getComments().add(comment);
+        comment.setInterview(interview);
+
+        em.persist(comment);
+    }
 }
