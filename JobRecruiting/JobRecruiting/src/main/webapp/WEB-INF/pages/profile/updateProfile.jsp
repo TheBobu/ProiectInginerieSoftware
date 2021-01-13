@@ -11,7 +11,7 @@
 <t:pageTemplate pageTitle="Login">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <section id="content" class="container">
+    <section id="content" style="    margin-top: 5%" class="container">
         <!-- Begin .page-heading -->
         <div class="page-heading">
             <div class="media clearfix">
@@ -32,8 +32,8 @@
                                         </div>
                                         <div class="col-sm-9 text-secondary">
                                             <input type="hidden" id="id" name="id" value="${user.id}">
-                                            <h6 class="mb-0"> <input type="text" class="form-control" name="firstName" value="firstName"  placeholder="First Name"></h6>
-                                            <h6 class="mb-0"> <input type="text" class="form-control" name="lastName" value="lastName" placeholder="Last Name"></h6>
+                                            <h6 class="mb-0"> <input type="text" class="form-control" name="firstName" value="${user.firstName}"  placeholder="First Name"></h6>
+                                            <h6 class="mb-0"> <input type="text" class="form-control" name="lastName" value="${user.lastName}" placeholder="Last Name"></h6>
                                         </div>
                                     </div>
                                     <hr />
@@ -42,7 +42,7 @@
                                           <h6 class="mb-0">Email</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                           <h6 class="mb-0"> <input type="email" class="form-control" name="email" value="email"  placeholder="Email"></h6>
+                                           <h6 class="mb-0"> <input type="email" class="form-control" name="email" value="${user.email}"  placeholder="Email"></h6>
                                         </div>
                                     </div>
                                     <hr />
@@ -51,7 +51,7 @@
                                 <h6 class="mb-0">Birth Date</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                 <h6 class="mb-0"> <input type="date" class="form-control" name="birthDate"  value="birthDate" placeholder="Birth Date"></h6>
+                                 <h6 class="mb-0"> <input type="date" class="form-control" name="birthDate"  value="${user.birthDate}" placeholder="Birth Date"></h6>
                             </div>
                         </div>
                         <hr />
@@ -69,7 +69,7 @@
                                            <h6 class="mb-0">Address</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <h6 class="mb-0"> <input type="text" class="form-control" name="address" value="address"  placeholder="Address"></h6>
+                                            <h6 class="mb-0"> <input type="text" class="form-control" name="address" value="${user.address}"  placeholder="Address"></h6>
                                         </div>
                                     </div>
                                     <hr />
@@ -91,7 +91,7 @@
                                         <div class="col-md-4"></div>
                                        
                                     </div>
-                                     <input type="submit" name="Update Profile" class="col-md-4 btn btn-primary">
+                                     <input type="submit" name="Update Profile" class="col-md-4 btn btn-profile btn-primary">
                                     </form>
                                 </div>
                             </div>

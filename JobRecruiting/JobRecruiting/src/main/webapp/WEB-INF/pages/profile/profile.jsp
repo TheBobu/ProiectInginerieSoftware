@@ -10,90 +10,86 @@
 
 <t:pageTemplate pageTitle="Login">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    
+       <section id="content" style="    margin-top: 5%" class="container">
 
-    <section id="content" class="container">
         <!-- Begin .page-heading -->
         <div class="page-heading">
             <div class="media clearfix">
                 <div class="row">
-                <div class="media-left col-sm-3">
-                    <a href="#">
-                        <img class="media-object mw150" 
-                             src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="...">
-                    </a>
-                </div>                      
-                <div class="media-body col-sm-9">
-                    
-                    <h2 class="media-heading">${user.firstName} ${user.lastName}  
-                        <small> - Profile</small>
-                    </h2>
-
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Full Name</h6>
+                    <div class="media-left col-sm-3">
+                        <a href="#">
+                            <img class="media-object" 
+                                 src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="...">
+                        </a>
+                    </div>                      
+                    <div class="media-body col-sm-9">
+                        <div class="card-body">
+                            <h2 class="media-heading">${user.firstName} ${user.lastName}  
+                                <small> - Profile</small>
+                            </h2>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 >Full Name</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    ${user.firstName} ${user.lastName} 
+                                </div>
                             </div>
-                            <div class="col-sm-9 text-secondary">
-                                ${user.firstName} ${user.lastName} 
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6>Email</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    ${user.email}
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 >Birth Date</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    ${user.birthDate} 
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6>User Type</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    ${user.position} 
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 >Address</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    ${ user.address }
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6>Department</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    ${user.department}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <a  target="_blank" href="${pageContext.request.contextPath}/ViewPdf" class="col-md-4 btn btn-profile btn-primary"  role="button">Download CV</a>
+                                <div class="col-md-4"></div>
+                                <a href="${pageContext.request.contextPath}/Profile/Update?id=${user.id}" role="button" class=" btn-profile col-md-4 btn btn-primary">Edit User</a>
                             </div>
                         </div>
-                        <hr />
-                         <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Full Name</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                ${user.firstName} ${user.lastName} 
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Birth Date</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                ${user.birthDate} 
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">User Type</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                ${user.position} 
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Address</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                ${ user.address }
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Department</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                               ${user.department}
-                            </div>
-                        </div>
-                         <div class="row">
-                        <button class=" col-md-4 btn btn-primary">Download CV</button>
-                         <div class="col-md-4"></div>
-                         <button href="${pageContext.request.contextPath}/Profile/Update?id=${user.id}" class="col-md-4 btn btn-primary">Edit User</button>
-                        
-                         </div>
                     </div>
 
-
                 </div>
-                           
-            </div>
             </div>                   
         </div>
 
@@ -104,44 +100,11 @@
                         <span class="panel-icon">
                             <i class="fa fa-star"></i>
                         </span>
-                        <span class="panel-title"> User Popularity</span>
+                        <span class="panel-title"> About Me</span>
                     </div>
                     <div class="panel-body pn">
-                        <table class="table mbn tc-icon-1 tc-med-2 tc-bold-last">
-                            <thead>
-                                <tr class="hidden">
-                                    <th class="mw30">#</th>
-                                    <th>First Name</th>
-                                    <th>Revenue</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <span class="fa fa-desktop text-warning"></span>
-                                    </td>
-                                    <td>Television</td>
-                                    <td>
-                                        <i class="fa fa-caret-up text-info pr10"></i>$855,913</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="fa fa-microphone text-primary"></span>
-                                    </td>
-                                    <td>Radio</td>
-                                    <td>
-                                        <i class="fa fa-caret-down text-danger pr10"></i>$349,712</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span class="fa fa-newspaper-o text-info"></span>
-                                    </td>
-                                    <td>Newspaper</td>
-                                    <td>
-                                        <i class="fa fa-caret-up text-info pr10"></i>$1,259,742</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <p> ${user.shortBio}
+</p>
                     </div>
                 </div>
                 <div class="panel">
@@ -211,7 +174,7 @@
                         <li>
                             <a href="#tab1" data-toggle="tab">My job Applications</a>
                         </li>
-                    
+
                     </ul>
                     <div class="tab-content p30" style="height: 730px;">
                         <div id="tab1" class="tab-pane active">

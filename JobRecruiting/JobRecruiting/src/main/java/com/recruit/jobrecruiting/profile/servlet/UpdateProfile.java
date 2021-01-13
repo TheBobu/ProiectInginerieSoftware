@@ -1,6 +1,7 @@
 package com.recruit.jobrecruiting.profile.servlet;
 
 import com.recruit.jobrecruiting.entity.Department;
+import com.recruit.jobrecruiting.entity.Photo;
 import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
@@ -49,7 +50,8 @@ public class UpdateProfile extends HttpServlet {
         String address = request.getParameter("address");
         Department department = Department.valueOf(request.getParameter("department"));
         Integer id = Integer.parseInt(request.getParameter("id"));
-
+        String shortBio = request.getParameter("shortBio");
+        
         Part filePart = request.getPart("image");
         String fileName = filePart.getSubmittedFileName();
         String fileType = filePart.getContentType();
@@ -66,7 +68,7 @@ public class UpdateProfile extends HttpServlet {
         filePart.getInputStream().read(fileContent);
         userBean.addCv(id, fileName, fileType, fileContent);
 
-            userBean.updateUser(id, username, email, department, password, birthDate, firstName, lastName, address);
+            userBean.updateUser(id, username, email, department, password, birthDate, firstName, lastName, address, shortBio);
         
        response.sendRedirect(request.getContextPath() + "/Profile?id="+id.toString());
     }

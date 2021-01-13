@@ -10,6 +10,7 @@ import com.recruit.jobrecruiting.util.Detachable;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -22,6 +23,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.TypedQuery;
 
 /**
  * The model for an user.
@@ -321,6 +323,9 @@ public class User implements Serializable {
         }
         return true;
     }
+    
+
+
 
     @Override
     public String toString() {
