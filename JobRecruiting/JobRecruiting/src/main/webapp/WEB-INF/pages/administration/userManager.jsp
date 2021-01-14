@@ -21,7 +21,11 @@
         <input type="hidden" name="id" value="${user.id}">
         <input type="submit">
     </form>
-        <a class="btn btn-secondary" href="${pageContext.request.contextPath}/UserActivator?id=${user.id}" role="button">Activate User</a>
-        <a class="btn btn-secondary" href="${pageContext.request.contextPath}/UserDeactivator?id=${user.id}" role="button">Deactivate User</a>
-        <a class="btn btn-secondary" href="${pageContext.request.contextPath}/PasswordReseter?id=${user.id}" role="button">Send password reset link</a>
+    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/UserActivator?id=${user.id}" role="button">Activate User</a>
+    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/UserDeactivator?id=${user.id}" role="button">Deactivate User</a>
+
+    <form method="POST" action="${pageContext.request.contextPath}/PasswordReseter">
+        <input type="hidden" name="id" value="${user.id}">
+        <input type="submit" value="Send Reset password link">
+    </form>
 </t:pageTemplate>

@@ -5,10 +5,12 @@
  */
 package com.recruit.jobrecruiting.admin.servlet;
 
-import com.recruit.jobrecruiting.mail.EmailBean;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,9 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Deea
  */
-@WebServlet(name = "PasswordReseter", urlPatterns = {"/PasswordReseter"})
-public class PasswordReseter extends HttpServlet {
-    @Inject EmailBean emailBean;
+@WebServlet(name = "UpdatePassword", urlPatterns = {"/UpdatePassword"})
+public class UpdatePassword extends HttpServlet {
     @Inject UserBean userBean;
 
     /**
@@ -48,8 +49,6 @@ public class PasswordReseter extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        request.getRequestDispatcher("/WEB-INF/pages/administration/passwordReset.jsp").forward(request, response);
     }
 
     /**
@@ -63,12 +62,13 @@ public class PasswordReseter extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Integer id = Integer.parseInt(request.getParameter("id"));
-        String to = userBean.getUserById(id).getEmail();
-        String subject = "Password reset";
-        String body = "Your password reset link is: "+ request.getServerName()+":"+request.getServerPort()+ request.getContextPath()+"/PasswordReseter?id="+id;
-        emailBean.sendEmail(to, subject, body);
-        response.sendRedirect(request.getContextPath()+"/Administration");
+         Integer id = Integer.parseInt(request.getParameter("id"));
+         String password = request.getParameter("password");
+        try {
+            userBean.updatePassword(id, password);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(UpdatePassword.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
