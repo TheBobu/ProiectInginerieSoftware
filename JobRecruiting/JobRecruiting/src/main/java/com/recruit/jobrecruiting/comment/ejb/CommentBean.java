@@ -48,7 +48,10 @@ public class CommentBean {
         List<CommentDetails> detailsList = new ArrayList<>();
         for (Comment comment: comments) {
             CommentDetails commentDetails = new CommentDetails();
-            commentDetails.setId(comment.getId());    
+            commentDetails.setId(comment.getId());
+            commentDetails.setComment(comment.getMessage());
+            commentDetails.setUsername(comment.getWrittenBy());
+            detailsList.add(commentDetails);
         }
         return detailsList;
     }
