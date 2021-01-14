@@ -5,5 +5,5 @@
     <h1>Job Recruiting</h1>
     <a href="${pageContext.request.contextPath}/Login"><button>Log in</button></a><br><br><br>
     <p>You don't have an account yet?</p>
-    <button>Register</button>
+    <a href="${pageContext.request.contextPath}/Users/Create"><button>Register</button></a><br><br><br>
 </t:pageTemplate>
