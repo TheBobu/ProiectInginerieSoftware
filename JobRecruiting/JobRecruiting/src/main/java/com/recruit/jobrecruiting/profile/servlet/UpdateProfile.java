@@ -44,7 +44,7 @@ public class UpdateProfile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
+        
         String email = request.getParameter("email");
         LocalDate birthDate = LocalDate.parse(request.getParameter("birthDate"));
         String firstName = request.getParameter("firstName");
@@ -52,6 +52,7 @@ public class UpdateProfile extends HttpServlet {
         String address = request.getParameter("address");
         Department department = Department.valueOf(request.getParameter("department"));
         Integer id = Integer.parseInt(request.getParameter("id"));
+        String username = userBean.getUserById(id).getUsername();
         Integer photoId = Integer.parseInt(request.getParameter("photoId"));
         String shortBio = request.getParameter("shortBio");
         
