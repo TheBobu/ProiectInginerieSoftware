@@ -7,6 +7,7 @@ package com.recruit.jobrecruiting.user.ejb;
 
 import com.recruit.jobrecruiting.common.UserDetails;
 import com.recruit.jobrecruiting.common.UserLightDetails;
+import com.recruit.jobrecruiting.ejb.SkillBean;
 import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Photo;
 import com.recruit.jobrecruiting.entity.PhotoType;
@@ -20,10 +21,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -39,6 +43,9 @@ public class UserBean {
 
     private static final Logger LOG = Logger.getLogger(UserBean.class.getName());
 
+    @Inject
+    private SkillBean skillBean;
+
     @PersistenceContext
     private EntityManager em;
 
@@ -47,7 +54,6 @@ public class UserBean {
      *
      * @return Returns a complete list of users.
      */
-
     public List<UserLightDetails> getAllUsersLight() {
         try {
             Query query = em.createQuery("SELECT u FROM User u");
@@ -57,6 +63,7 @@ public class UserBean {
             throw new EJBException(ex);
         }
     }
+
     public List<UserDetails> getAllUsers() {
         try {
             Query query = em.createQuery("SELECT u FROM USERS u");
@@ -66,7 +73,7 @@ public class UserBean {
             throw new EJBException(ex);
         }
     }
-  
+
     /**
      * Gets all usernames of the users.
      *
@@ -95,6 +102,7 @@ public class UserBean {
      * @param firstName
      * @param lastName
      * @param address
+     * @param shortBio
      * @return Returns the id of the new user.
      * @throws NoSuchAlgorithmException when the password cannot be hashed with
      * sha256
@@ -134,6 +142,8 @@ public class UserBean {
         User user = getUserById(id);
         user.setStatus(Status.ACTIVE);
 
+        User oldUser = getUserById(id);
+        em.remove(oldUser);
         em.persist(user);
     }
 
@@ -141,10 +151,12 @@ public class UserBean {
         User user = getUserById(id);
         user.setStatus(Status.INACTIVE);
 
+        User oldUser = getUserById(id);
+        em.remove(oldUser);
         em.persist(user);
     }
 
-    public void updateUser(Integer id, String username, String email, Department department,String password, LocalDate birthDate, String firstName, String lastName, String address, String shortBio) {
+    public void updateUser(Integer id, String username, String email, Department department, String password, LocalDate birthDate, String firstName, String lastName, String address, String shortBio) {
         User user = getUserById(id);
         user.setAddress(address);
         user.setDepartment(department);
@@ -155,10 +167,21 @@ public class UserBean {
         user.setUsername(username);
         user.setPassword(password);
         user.setShortBio(shortBio);
-     
+        User oldUser = getUserById(id);
+        em.remove(oldUser);
+        em.persist(user);
     }
-    /**asa 
-     * Adds a CV to a specific user.
+
+    public void updatePosition(Integer id, Position position) {
+        User user = getUserById(id);
+        user.setPosition(position);
+        User oldUser = getUserById(id);
+        em.remove(oldUser);
+        em.persist(user);
+    }
+
+    /**
+     * asa Adds a CV to a specific user.
      *
      * @param id the id of the user
      * @param fileName name of the file
@@ -200,10 +223,59 @@ public class UserBean {
         photo.setUser(user);
         em.persist(photo);
     }
+
+    public void updateProfilePhoto(Integer id, Integer userId, String fileName, String fileType, byte[] fileContent) {
+        Photo photo = findProfilePictureById(id);
+        if(photo == null)
+        { 
+            //daca nuu exista sa adauge una noua
+            this.addProfilePhoto(userId, fileName, fileType, fileContent);
+            return; 
+        }
+        photo.setFilename(fileName);
+        photo.setFileType(fileType);
+        photo.setFileContent(fileContent);
+        photo.setPhotoType(PhotoType.PROFILE_PHOTO);
+
+        User user = getUserById(userId);
+        user.setProfilePhoto(photo);
+
+        photo.setUser(user);
+        
+        Photo oldPhoto = findProfilePictureById(id);
+        em.remove(oldPhoto);
+        em.persist(photo);
+        
+    }
     
-        public Photo findCvById(Integer id) {
-        TypedQuery<Photo> typedQuery = em.createQuery("SELECT p FROM photos p WHERE p.user.id = :id AND p.phototype=CV" , Photo.class)
-                .setParameter("id", id);
+      public void updateCV(Integer id, Integer userId, String fileName, String fileType, byte[] fileContent) {
+        Photo photo = findCvById(id);
+        if(photo == null)
+        { 
+            //daca nuu exista sa adauge una noua
+            this.addCv(id, fileName, fileType, fileContent);
+            return; 
+        }
+        photo.setFilename(fileName);
+        photo.setFileType(fileType);
+        photo.setFileContent(fileContent);
+        photo.setPhotoType(PhotoType.CV);
+
+        User user = getUserById(userId);
+        user.setProfilePhoto(photo);
+
+        photo.setUser(user);
+        
+        Photo oldCv = findCvById(id);
+        em.remove(oldCv);
+        em.persist(photo);
+        
+    }
+    
+
+    public Photo findCvById(Integer id) {
+        TypedQuery<Photo> typedQuery = em.createQuery("SELECT p FROM Photo p WHERE p.user.id = :id AND p.photoType = :type", Photo.class)
+                .setParameter("id", id).setParameter("type", PhotoType.CV);
         List<Photo> photos = typedQuery.getResultList();
         if (photos.isEmpty()) {
             return null;
@@ -211,31 +283,30 @@ public class UserBean {
         Photo photo = photos.get(0);
         return photo;
     }
-        
-        public Photo findProfilePictureById(Integer id) {
-        TypedQuery<Photo> typedQuery = em.createQuery("SELECT p FROM photos p WHERE p.user.id = :id AND p.phototype=PROFILE_PHOTO ", Photo.class)
-                .setParameter("id", id);
+
+    public Photo findProfilePictureById(Integer id) {
+        TypedQuery<Photo> typedQuery = em.createQuery("SELECT p FROM Photo p WHERE p.user.id = :id AND p.photoType = :type", Photo.class)
+                .setParameter("id", id).setParameter("type", PhotoType.PROFILE_PHOTO);
         List<Photo> photos = typedQuery.getResultList();
         if (photos.isEmpty()) {
             return null;
         }
         Photo photo = photos.get(0);
         return photo;
-    }   
-        
-    
+    }
+
     private List<UserDetails> copyUsersToDetails(List<User> users) {
         List<UserDetails> detailsList = new ArrayList<>();
-        for(User user:users){
+        for (User user : users) {
             UserDetails userDetails = new UserDetails(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), user.getBirthDate(), user.getFirstName(), user.getLastName(), user.getAddress(), user.getProfilePhoto(), user.getCv(), user.getStatus(), user.getPosition(), user.getDepartment());
             detailsList.add(userDetails);
         }
         return detailsList;
     }
-    
+
     private List<UserLightDetails> copyUsersToLightDetails(List<User> users) {
         List<UserLightDetails> detailsList = new ArrayList<>();
-        for(User user:users){
+        for (User user : users) {
             UserLightDetails userDetails = new UserLightDetails(user.getId(), user.getUsername(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getPosition(), user.getStatus());
             detailsList.add(userDetails);
         }

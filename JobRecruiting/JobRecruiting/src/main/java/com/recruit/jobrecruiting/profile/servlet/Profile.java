@@ -25,7 +25,8 @@ public class Profile extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                Integer id = Integer.parseInt(request.getParameter("id"));
+
+        Integer id = Integer.parseInt(request.getParameter("id"));
                 User user = userBean.getUserById(id);
                 request.setAttribute("user", user);
                 request.getRequestDispatcher("/WEB-INF/pages/profile/profile.jsp").forward(request, response);

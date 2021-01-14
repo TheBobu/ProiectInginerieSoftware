@@ -9,17 +9,15 @@
 <style><%@include file="/WEB-INF/css/profile.css"%></style>
 <t:pageTemplate pageTitle="Login">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    
-       <section id="content" style="    margin-top: 5%" class="container">
+
+    <section id="content" style="    margin-top: 5%" class="container">
         <!-- Begin .page-heading -->
         <div class="page-heading">
             <div class="media clearfix">
                 <div class="row">
-                    <div class="media-left col-sm-3">
-                        <a href="#">
-                            <img class="media-object" 
-                                 src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="...">
-                        </a>
+                    <div class="media-left col-sm-3 col-2">
+                        <img class="media-object" 
+                             src="${pageContext.request.contextPath}/ProfilePicture?id=${user.id}&typeId=0" width="300px" alt="...">
                     </div>                      
                     <div class="media-body col-sm-9">
                         <div class="card-body">
@@ -80,7 +78,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <a  target="_blank" href="${pageContext.request.contextPath}/ViewPdf" class="col-md-4 btn btn-profile btn-primary"  role="button">Download CV</a>
+                                <a  target="_blank" href="${pageContext.request.contextPath}/ProfilePicture?id=${user.id}&typeId=1" class="col-md-4 btn btn-profile btn-primary"  role="button">Download CV</a>
                                 <div class="col-md-4"></div>
                                 <a href="${pageContext.request.contextPath}/Profile/Update?id=${user.id}" role="button" class=" btn-profile col-md-4 btn btn-primary">Edit User</a>
                             </div>
@@ -100,7 +98,7 @@
                     </div>
                     <div class="panel-body pn">
                         <p> ${user.shortBio}
-</p>
+                        </p>
                     </div>
                 </div>
                 <div class="panel">
@@ -111,15 +109,11 @@
                         <span class="panel-title"> My Skills</span>
                     </div>
                     <div class="panel-body pb5">
-                        <span class="label label-warning mr5 mb10 ib lh15">Default</span>
-                        <span class="label label-primary mr5 mb10 ib lh15">Primary</span>
-                        <span class="label label-info mr5 mb10 ib lh15">Success</span>
-                        <span class="label label-success mr5 mb10 ib lh15">Info</span>
-                        <span class="label label-alert mr5 mb10 ib lh15">Warning</span>
-                        <span class="label label-system mr5 mb10 ib lh15">Danger</span>
-                        <span class="label label-info mr5 mb10 ib lh15">Success</span>
-                        <span class="label label-success mr5 mb10 ib lh15">Ui Design</span>
-                        <span class="label label-primary mr5 mb10 ib lh15">Primary</span>
+                        <ul id="faves">
+                            <li>C#</li>
+                            <li>Java</li>
+                            <li>C</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="panel">
@@ -127,7 +121,7 @@
                         <span class="panel-icon">
                             <i class="fa fa-pencil"></i>
                         </span>
-                        <span class="panel-title">About Me</span>
+                        <span class="panel-title">My Experience</span>
                     </div>
                     <div class="panel-body pb5">
                         <h6>Experience</h6>

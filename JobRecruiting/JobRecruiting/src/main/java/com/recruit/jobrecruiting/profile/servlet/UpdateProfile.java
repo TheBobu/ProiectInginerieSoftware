@@ -1,16 +1,20 @@
 package com.recruit.jobrecruiting.profile.servlet;
 
+import com.recruit.jobrecruiting.ejb.SkillBean;
 import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Photo;
+import com.recruit.jobrecruiting.entity.Skill;
 import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +25,7 @@ import javax.servlet.http.Part;
  *
  * @author Andreea Purta
  */
+@MultipartConfig
 @WebServlet(name = "UpdateProfile", urlPatterns = {"/Profile/Update"})
 public class UpdateProfile extends HttpServlet {
 
@@ -32,6 +37,7 @@ public class UpdateProfile extends HttpServlet {
             throws ServletException, IOException {
         Integer id = Integer.parseInt(request.getParameter("id"));
         User user = userBean.getUserById(id);
+        Photo photo =userBean.findProfilePictureById(id);
         request.setAttribute("user", user);
         List<Department> listOfDepartments = new ArrayList<Department>(EnumSet.allOf(Department.class));
         request.setAttribute("departments", listOfDepartments);
@@ -50,6 +56,7 @@ public class UpdateProfile extends HttpServlet {
         String address = request.getParameter("address");
         Department department = Department.valueOf(request.getParameter("department"));
         Integer id = Integer.parseInt(request.getParameter("id"));
+        Integer photoId = Integer.parseInt(request.getParameter("photoId"));
         String shortBio = request.getParameter("shortBio");
         
         Part filePart = request.getPart("image");
@@ -58,7 +65,7 @@ public class UpdateProfile extends HttpServlet {
         long fileSize = filePart.getSize();
         byte[] fileContent = new byte[(int) fileSize];
         filePart.getInputStream().read(fileContent);
-        userBean.addProfilePhoto(id, fileName, fileType, fileContent);
+        userBean.updateProfilePhoto(photoId,id, fileName, fileType, fileContent);
 
         filePart = request.getPart("cv");
         fileName = filePart.getSubmittedFileName();

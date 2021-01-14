@@ -6,18 +6,21 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <style><%@include file="/WEB-INF/css/profile.css"%></style>
 <t:pageTemplate pageTitle="Login">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <section id="content" style="    margin-top: 5%" class="container">
         <!-- Begin .page-heading -->
         <div class="page-heading">
-                <form method="POST"  class="needs-validation" action="${pageContext.request.contextPath}/Profile/Update">
-            <div class="media clearfix">
-                <div class="row">
-                
+            <form method="POST" enctype="multipart/form-data" class="needs-validation" action="${pageContext.request.contextPath}/Profile/Update">
+                <div class="media clearfix">
+                    <div class="row">
+
                         <div class="media-left col-sm-3">
-                            <label>Profile Image</label><input type="file"  class="form-control-file" name="image" value="image" id="">
+                            <label>Profile Image</label>
+                            <input type="hidden" id="photoId" name="photoId" value="${user.id}">
+                            <input type="file"  class="form-control-file" name="image" value="image" id="">
                         </div>                      
                         <div class="media-body col-sm-9">
                             <h2 class="media-heading">${user.firstName} ${user.lastName}  
@@ -76,7 +79,7 @@
                                         <h6 class="mb-0">Department</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <select class="form-control" >
+                                        <select name="department" class="form-control" >
                                             <c:forEach var="department" items="${departments}" varStatus="status">
                                                 <option value="${department}"> ${department}</option>
                                             </c:forEach>
@@ -92,9 +95,9 @@
                                 <button class="col-md-4 btn btn-profile btn-primary" type="submit">Save</button>
                             </div>
                         </div>
-                
-                </div>
-            </div>                   
+
+                    </div>
+                </div>                   
         </div>
         <div class="row">
 
@@ -108,11 +111,11 @@
                     </div>
                     <div class="panel-body pn">
                         <p> 
-                        <h6 class="mb-0"> <input type="text" class="form-control" name="address" value="${user.shortBio}"  placeholder="Address"></h6>
+                        <h6 class="mb-0"> <input type="text" class="form-control" name="shortBio" value="${user.shortBio}"  placeholder="Short Description"></h6>
                         </p>
                     </div>
                 </div>
-                    </form>
+    </form>
                 <div class="panel">
                     <div class="panel-heading">
                         <span class="panel-icon">
@@ -121,15 +124,21 @@
                         <span class="panel-title"> My Skills</span>
                     </div>
                     <div class="panel-body pb5">
-                        <span class="label label-warning mr5 mb10 ib lh15">Default</span>
-                        <span class="label label-primary mr5 mb10 ib lh15">Primary</span>
-                        <span class="label label-info mr5 mb10 ib lh15">Success</span>
-                        <span class="label label-success mr5 mb10 ib lh15">Info</span>
-                        <span class="label label-alert mr5 mb10 ib lh15">Warning</span>
-                        <span class="label label-system mr5 mb10 ib lh15">Danger</span>
-                        <span class="label label-info mr5 mb10 ib lh15">Success</span>
-                        <span class="label label-success mr5 mb10 ib lh15">Ui Design</span>
-                        <span class="label label-primary mr5 mb10 ib lh15">Primary</span>
+
+                        <ul id="faves">
+                            <li>C#</li>
+                            <li>Java</li>
+                            <li>C</li>
+                        </ul>
+                        <div class="form-group mb-4">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" minlength=6 class="form-control" id="add" name="name"  required>
+                            <input type="button" id="btnAdd" value="Add" onclick="addItem()">
+
+                            <t:displayError error="name"/>
+                        </div>
+
+
                     </div>
                 </div>
                 <div class="panel">
@@ -271,4 +280,18 @@
             }, false)
         })()
     </script>
+
+
+    <script>
+        function addItem() {
+            var li = document.createElement("LI");
+            var input = document.getElementById("add");
+            li.innerHTML = input.value;
+            input.value = "";
+
+            document.getElementById("faves").appendChild(li);
+        }
+    </script>
+
+    <input type="button" id="btnAdd" value="Add" onclick="addItem()">
 </t:pageTemplate>

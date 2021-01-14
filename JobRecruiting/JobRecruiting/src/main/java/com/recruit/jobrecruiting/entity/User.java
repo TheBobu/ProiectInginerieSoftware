@@ -59,7 +59,8 @@ public class User implements Serializable {
     private String address;
 
     private String shortBio;
-
+    
+   
     @OneToMany(fetch = FetchType.LAZY)
     private Collection<Skill> skills;
 
