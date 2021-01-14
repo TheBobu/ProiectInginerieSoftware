@@ -31,8 +31,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "USERS")
 public class User implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
+
+    public User() {
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -62,7 +65,7 @@ public class User implements Serializable {
     private Status status;
 
     @Enumerated(EnumType.STRING)
-    private Position position;
+    private Position position = Position.CANDIDATE;
 
     @Enumerated(EnumType.STRING)
     private Department department;

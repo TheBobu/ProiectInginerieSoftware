@@ -5,8 +5,12 @@
  */
 package com.recruit.jobrecruiting.entity;
 
+import com.recruit.jobrecruiting.common.JobPostDetails;
+import com.recruit.jobrecruiting.util.Detachable;
+import com.recruit.jobrecruiting.util.Util;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
@@ -17,36 +21,40 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
  * The model for a JobPost.
- * 
+ *
  * @author denisa
  * @author robert
  */
 @Entity
 @Table(name = "JOBPOSTS")
-public class JobPost implements Serializable /*, Detachable*/ {
+
+public class JobPost implements Serializable, Detachable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String title;
-    
+
     private String description;
 
-    @Enumerated(EnumType.STRING)
-    private Skill skills;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "JOBPOST_SKILL")
+    private List<Skill> skills;
 
     private int noOfPositionsAvailable;
-    
-    private int noOfPositionsFilled;
+
+    private int noOfPositionsFilled = 0;
 
     @Enumerated(EnumType.STRING)
     private Department department;
@@ -58,9 +66,14 @@ public class JobPost implements Serializable /*, Detachable*/ {
     @JsonbTransient
     @OneToMany(mappedBy = "jobPost")
     private Collection<Interview> interviewsForJobPost;
-        
+
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Enumerated(EnumType.STRING)
+    private Type type;
+
+    private int salary;
 
     public Integer getId() {
         return id;
@@ -78,11 +91,11 @@ public class JobPost implements Serializable /*, Detachable*/ {
         this.title = title;
     }
 
-    public Skill getSkills() {
+    public List<Skill> getSkills() {
         return skills;
     }
 
-    public void setSkills(Skill skills) {
+    public void setSkills(List<Skill> skills) {
         this.skills = skills;
     }
 
@@ -140,6 +153,22 @@ public class JobPost implements Serializable /*, Detachable*/ {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
     }
 
     @Override
@@ -203,25 +232,25 @@ public class JobPost implements Serializable /*, Detachable*/ {
         return true;
     }
 
-    //Model
-
-//     @Override
-//    public JobPostDetails detach() {
-//        return new JobPostDetails(
-//                id,
-//                title,
-//                description,
-//                noOfPositionsAvailable,
-//                noOfPositionsFilled,
-//                skills,
-//                department,
-//                poster,
-//                status
-//        );
-//    }
-
     @Override
     public String toString() {
         return "JobPost{" + "id=" + id + ", title=" + title + ", description=" + description + ", skills=" + skills + ", noOfPositionsAvailable=" + noOfPositionsAvailable + ", noOfPositionsFilled=" + noOfPositionsFilled + ", department=" + department + ", poster=" + poster + ", interviewsForJobPost=" + interviewsForJobPost + ", status=" + status + '}';
+    }
+
+    @Override
+    public JobPostDetails detach() {
+        return new JobPostDetails(
+                id,
+                title,
+                description,
+                noOfPositionsAvailable,
+                noOfPositionsFilled,
+                Util.detachEntities(skills),
+                department,
+                poster,
+                status,
+                type,
+                salary
+        );
     }
 }

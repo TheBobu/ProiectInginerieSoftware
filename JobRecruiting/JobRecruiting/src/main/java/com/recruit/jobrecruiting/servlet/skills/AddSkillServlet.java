@@ -3,9 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.recruit.jobrecruiting.login.servlet;
+package com.recruit.jobrecruiting.servlet.skills;
 
+import com.recruit.jobrecruiting.ejb.SkillBean;
+import com.recruit.jobrecruiting.validators.SkillValidator;
 import java.io.IOException;
+import java.util.HashMap;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,22 +18,14 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author andrei
+ * @author DENISA
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login"})
-public class Login extends HttpServlet {
+@WebServlet(name = "AddSkillServlet", urlPatterns = {"/Skills/Create"})
+public class AddSkillServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    @Inject
+    private SkillBean skillBean;
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -41,7 +37,7 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/pages/login/login.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/skills/addskill.jsp").forward(request, response);
     }
 
     /**
@@ -55,8 +51,18 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("message", "Username or password incorrect");
-        request.getRequestDispatcher("/WEB-INF/pages/login/login.jsp").forward(request, response);
+
+        HashMap<String, String> messageBag = new HashMap<>();
+
+        String name = request.getParameter("name");
+
+        if (new SkillValidator(name).passes(messageBag)) {
+            skillBean.createSkill(name);
+            response.sendRedirect(request.getContextPath() + "/JobPost/Create");
+        } else {
+            request.getSession().setAttribute("errors", messageBag);
+            response.sendRedirect(request.getHeader("Referer"));
+        }
     }
 
     /**
@@ -67,6 +73,6 @@ public class Login extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

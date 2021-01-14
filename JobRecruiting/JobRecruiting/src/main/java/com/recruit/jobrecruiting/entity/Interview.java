@@ -33,6 +33,9 @@ public class Interview implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public Interview() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;

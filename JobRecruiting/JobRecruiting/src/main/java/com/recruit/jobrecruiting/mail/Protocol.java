@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.recruit.jobrecruiting.entity;
+package com.recruit.jobrecruiting.mail;
 
 /**
- * An enum with the possible states: HR, JAVA, C, EMBEDDED.
- * 
- * @author robert
+ *
+ * @author andrei
  */
-public enum Department {
-    HR, JAVA, C, EMBEDDED, IT;
+public enum Protocol {
+    SMTP,
+    SMTPS,
+    TLS
 }

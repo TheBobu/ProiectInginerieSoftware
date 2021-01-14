@@ -6,17 +6,16 @@
 package com.recruit.jobrecruiting.entity;
 
 /**
- * An enum with 3 possible states: INACTIVE, ACTIVE.
- * 
- * @author robert
+ *
+ * @author DENISA
  */
-public enum Status {
-    INACTIVE("Inactive"),
-    ACTIVE("Active");
+public enum Type {
+    FULL_TIME("Full-time"),
+    PART_TIME("Part-time");
 
     public final String label;
 
-    private Status(String label) {
+    private Type(String label) {
         this.label = label;
     }
 
