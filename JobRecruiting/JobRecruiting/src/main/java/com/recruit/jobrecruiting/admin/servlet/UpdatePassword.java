@@ -66,6 +66,7 @@ public class UpdatePassword extends HttpServlet {
          String password = request.getParameter("password");
         try {
             userBean.updatePassword(id, password);
+            response.sendRedirect(request.getContextPath()+"/Administration");
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(UpdatePassword.class.getName()).log(Level.SEVERE, null, ex);
         }

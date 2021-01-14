@@ -48,7 +48,8 @@ public class PasswordReseter extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        request.getSession().setAttribute("id", id);
         request.getRequestDispatcher("/WEB-INF/pages/administration/passwordReset.jsp").forward(request, response);
     }
 
