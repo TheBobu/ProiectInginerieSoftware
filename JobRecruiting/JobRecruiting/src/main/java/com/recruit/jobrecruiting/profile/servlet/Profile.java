@@ -1,6 +1,7 @@
 package com.recruit.jobrecruiting.profile.servlet;
 
 import com.recruit.jobrecruiting.common.UserDetails;
+import com.recruit.jobrecruiting.entity.Interview;
 import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
@@ -21,7 +22,6 @@ public class Profile extends HttpServlet {
 
 
     @Inject UserBean userBean;
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

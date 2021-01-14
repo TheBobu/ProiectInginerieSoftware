@@ -115,7 +115,7 @@
                         </p>
                     </div>
                 </div>
-    </form>
+
                 <div class="panel">
                     <div class="panel-heading">
                         <span class="panel-icon">
@@ -132,7 +132,7 @@
                         </ul>
                         <div class="form-group mb-4">
                             <label for="name" class="form-label">Name</label>
-                            <input type="text" minlength=6 class="form-control" id="add" name="name"  required>
+                            <input type="text" minlength=6 class="form-control" id="add" name="name"  >
                             <input type="button" id="btnAdd" value="Add" onclick="addItem()">
 
                             <t:displayError error="name"/>
@@ -150,25 +150,11 @@
                     </div>
                     <div class="panel-body pb5">
                         <h6>Experience</h6>
-                        <h4>Facebook Internship</h4>
-                        <p class="text-muted"> University of Missouri, Columbia
-                            <br> Student Health Center, June 2010 - 2012
-                        </p>
-                        <hr class="short br-lighter">
-                        <h6>Education</h6>
-                        <h4>Bachelor of Science, PhD</h4>
-                        <p class="text-muted"> University of Missouri, Columbia
-                            <br> Student Health Center, June 2010 through Aug 2011
-                        </p>
-                        <hr class="short br-lighter">
-                        <h6>Accomplishments</h6>
-                        <h4>Successful Business</h4>
-                        <p class="text-muted pb10"> University of Missouri, Columbia
-                            <br> Student Health Center, June 2010 through Aug 2011
-                        </p>
+                        <h6 class="mb-0"> <input type="text" class="form-control" name="userExperience" value="${user.userExperience}"  placeholder="Experience"></h6>
                     </div>
                 </div>
             </div>
+            </form>
             <div class="col-md-8">
                 <div class="tab-block">
                     <ul class="nav nav-tabs">

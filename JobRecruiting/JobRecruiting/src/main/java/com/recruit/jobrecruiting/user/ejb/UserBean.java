@@ -156,7 +156,7 @@ public class UserBean {
         em.persist(user);
     }
 
-    public void updateUser(Integer id, String username, String email, Department department, String password, LocalDate birthDate, String firstName, String lastName, String address, String shortBio) {
+    public void updateUser(Integer id, String username, String email, Department department, String password, LocalDate birthDate, String firstName, String lastName, String address, String shortBio,String userExperience) {
         User user = getUserById(id);
         user.setAddress(address);
         user.setDepartment(department);
@@ -167,6 +167,7 @@ public class UserBean {
         user.setUsername(username);
         user.setPassword(password);
         user.setShortBio(shortBio);
+        user.setUserExperience(userExperience);
         User oldUser = getUserById(id);
         em.remove(oldUser);
         em.persist(user);
