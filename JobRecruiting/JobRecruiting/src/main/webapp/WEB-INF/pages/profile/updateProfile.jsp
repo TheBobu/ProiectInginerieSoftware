@@ -115,7 +115,7 @@
                         </p>
                     </div>
                 </div>
-    </form>
+                </form>
                 <div class="panel">
                     <div class="panel-heading">
                         <span class="panel-icon">
