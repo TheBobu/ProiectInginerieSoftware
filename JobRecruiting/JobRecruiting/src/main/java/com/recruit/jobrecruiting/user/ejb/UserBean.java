@@ -118,6 +118,7 @@ public class UserBean {
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setAddress(address);
+        user.setPosition(Position.CANDIDATE);
         user.setStatus(Status.INACTIVE);
         em.persist(user);
 

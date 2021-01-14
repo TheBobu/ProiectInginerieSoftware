@@ -69,7 +69,7 @@ public class User implements Serializable {
     private Status status;
 
     @Enumerated(EnumType.STRING)
-    private Position position = Position.CANDIDATE;
+    private Position position;
 
     @Enumerated(EnumType.STRING)
     private Department department;
