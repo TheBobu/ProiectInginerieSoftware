@@ -3,11 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package com.recruit.jobrecruiting.servlet.jobpost;
 
-package com.recruit.jobrecruiting.servlet.jobposting;
-
-import com.recruit.jobrecruiting.common.JobPostDetails;
-import com.recruit.jobrecruiting.ejb.JobPostBean;
+import com.recruit.jobrecruiting.ejb.InterviewBean;
 import java.io.IOException;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -20,14 +18,16 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DENISA
  */
-@WebServlet(name = "JobPost", urlPatterns = {"/JobPost"})
-public class JobPost extends HttpServlet {
+@WebServlet(name = "ApplyForJob", urlPatterns = {"/ApplyForJob"})
+public class ApplyForJob extends HttpServlet {
 
     @Inject
-    private JobPostBean jobPostBean;
+    InterviewBean interviewBean;
 
-    /** 
+
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -37,15 +37,16 @@ public class JobPost extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int id = Integer.parseInt(request.getParameter("id"));
-        JobPostDetails jobPost = jobPostBean.getJobPost(id);
-        request.setAttribute("jobPost", jobPost);
+        String username = request.getRemoteUser();
+        String jobPost_id = request.getParameter("jobpostid");
 
-        request.getRequestDispatcher("/WEB-INF/pages/jobpost/jobpost.jsp").forward(request, response);
-    } 
+        interviewBean.createInterview(jobPost_id, username);
 
-    /** 
+    }
+
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -55,13 +56,11 @@ public class JobPost extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int id = Integer.parseInt(request.getParameter("id"));
-        jobPostBean.deleteJobPost(id);
-        response.sendRedirect(request.getContextPath() + "/JobPosts");
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

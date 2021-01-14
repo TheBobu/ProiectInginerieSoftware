@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.recruit.jobrecruiting.servlet.jobposting;
+package com.recruit.jobrecruiting.servlet.jobpost;
 
-import com.recruit.jobrecruiting.common.JobPostDetails;
 import com.recruit.jobrecruiting.ejb.JobPostBean;
 import com.recruit.jobrecruiting.ejb.SkillBean;
 import com.recruit.jobrecruiting.entity.Department;
@@ -25,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DENISA
  */
-@WebServlet(name = "EditJobPost", urlPatterns = {"/JobPost/Edit"})
-public class EditJobPost extends HttpServlet {
+@WebServlet(name = "AddJobPost", urlPatterns = {"/JobPost/Create"})
+public class AddJobPost extends HttpServlet {
 
     @Inject
     private JobPostBean jobPostBean;
@@ -46,18 +45,13 @@ public class EditJobPost extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int id = Integer.parseInt(request.getParameter("id"));
-        JobPostDetails jobPost = jobPostBean.getJobPost(id);
-        request.setAttribute("jobPost", jobPost);
         request.setAttribute("departments", Department.values());
         request.setAttribute("skills", skillBean.getAllSkills());
         request.setAttribute("statuses", Status.values());
         request.setAttribute("types", Type.values());
-
         request.setAttribute("errors", request.getSession().getAttribute("errors"));
         request.getSession().removeAttribute("errors");
-
-        request.getRequestDispatcher("/WEB-INF/pages/jobpost/editjobpost.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/jobpost/addjobpost.jsp").forward(request, response);
     }
 
     /**
@@ -72,25 +66,28 @@ public class EditJobPost extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HashMap<String, String> messageBag = new HashMap<>();
 
-        int id = Integer.parseInt(request.getParameter("id"));
+        HashMap<String, String> messageBag = new HashMap<>();
         String title = request.getParameter("title");
         String description = request.getParameter("description");
         String department = request.getParameter("department");
         String[] skills = request.getParameterValues("skills");
+
         String status = request.getParameter("status");
         String nopositionsAvailable = request.getParameter("noOfPositionsAvailable");
         String noOfPositionsFilled = request.getParameter("noOfPositionsFilled");
         String type = request.getParameter("type");
         String salary = request.getParameter("salary");
 
+        int poster = 1;
+
         JobPostValidator validator = new JobPostValidator(title, description, nopositionsAvailable, noOfPositionsFilled, department, status, skills, type, salary);
 
         if (validator.passes(messageBag)) {
-            jobPostBean.editJobPost(id, title, description, noOfPositionsFilled, nopositionsAvailable, skills, department, status, type, salary);
+            jobPostBean.createJobPost(title, description, noOfPositionsFilled, nopositionsAvailable, skills, department, poster, status, type, salary);
             response.sendRedirect(request.getContextPath() + "/JobPosts");
         } else {
+
             request.getSession().setAttribute("errors", messageBag);
             response.sendRedirect(request.getHeader("Referer"));
         }

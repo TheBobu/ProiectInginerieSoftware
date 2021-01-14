@@ -34,6 +34,9 @@
         <p class="card-text mt-4">${description}</p>
         <div class="card-text">
             <p class="card-text mt-1 ">Salary: <span style="font-weight:bold">${salary}$</span></p>
+            <a href="${pageContext.request.contextPath}/ApplyForJob?jobid=${id}" class=" mt-1 me-3 btn  btn-success fs-5">
+                Apply
+            </a>
         </div>
     </div>
 </div>

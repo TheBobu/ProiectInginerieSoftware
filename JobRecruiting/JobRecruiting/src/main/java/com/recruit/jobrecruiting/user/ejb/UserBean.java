@@ -7,10 +7,8 @@ package com.recruit.jobrecruiting.user.ejb;
 
 import com.recruit.jobrecruiting.common.UserDetails;
 import com.recruit.jobrecruiting.common.UserLightDetails;
-import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Photo;
 import com.recruit.jobrecruiting.entity.PhotoType;
-import com.recruit.jobrecruiting.entity.Position;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.User;
 import java.math.BigInteger;
@@ -39,6 +37,7 @@ public class UserBean {
 
     @PersistenceContext
     private EntityManager em;
+
 
     /**
      * Gets all users from the database.
@@ -126,6 +125,12 @@ public class UserBean {
 
     public User getUserById(Integer id) {
         return em.find(User.class, id);
+    }
+
+    public User getUserByUsername(String username) {
+        return (User) em.createQuery("SELECT u FROM User u WHERE u.username=:username")
+                .setParameter("username", username)
+                .getResultList().get(0);
     }
 
     public void activateUser(Integer id) {

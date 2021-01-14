@@ -50,18 +50,27 @@ public class JobPostValidator extends Validator {
         type();
     }
 
+    /**
+     * Validator for jobpost title
+     */
     private void title() {
         if (!Rules.lengthGreaterThan(title, 5)) {
             messageBag.put("title", "Please provide a valid title");
         }
     }
 
+    /**
+     * Validator for jobpost description
+     */
     private void description() {
         if (!Rules.lengthGreaterThan(description, 20)) {
             messageBag.put("description", "Please provide a valid description");
         }
     }
 
+    /**
+     * Validator for jobpost number of positions available
+     */
     private void noOfPositionsAvailable() {
         boolean result = Rules.isNumber(noOfPositionsAvailable)
                 && Rules.greaterThan(Util.number(noOfPositionsAvailable), 0);
@@ -71,6 +80,9 @@ public class JobPostValidator extends Validator {
         }
     }
 
+    /**
+     * Validator for jobpost number of positions filled
+     */
     private void noOfPositionsFilled() {
 
         Boolean result = (noOfPositionsFilled.equals("")) || Rules.isNumber(noOfPositionsFilled) && Rules.greaterThan(Util.number(noOfPositionsFilled), -1);
@@ -80,6 +92,9 @@ public class JobPostValidator extends Validator {
         }
     }
 
+    /**
+     * Validator for jobpost status
+     */
     private void status() {
 
         Boolean result = Rules.isStatus(status);
@@ -89,6 +104,9 @@ public class JobPostValidator extends Validator {
         }
     }
 
+    /**
+     * Validator for jobpost department
+     */
     private void department() {
 
         Boolean result = Rules.isDepartment(department);
@@ -98,6 +116,9 @@ public class JobPostValidator extends Validator {
         }
     }
 
+    /**
+     * Validator for jobpost type
+     */
     private void type() {
 
         Boolean result = Rules.isType(type);
@@ -107,6 +128,9 @@ public class JobPostValidator extends Validator {
         }
     }
 
+    /**
+     * Validator for jobpost salary
+     */
     private void salary() {
 
         Boolean result = Rules.isNumber(salary) && Rules.greaterThan(Util.number(salary), 0);
@@ -116,6 +140,9 @@ public class JobPostValidator extends Validator {
         }
     }
 
+    /**
+     * Validator for jobpost skills
+     */
     private void skills() {
 
         if (!Rules.arrayNotEmpty(skills)) {

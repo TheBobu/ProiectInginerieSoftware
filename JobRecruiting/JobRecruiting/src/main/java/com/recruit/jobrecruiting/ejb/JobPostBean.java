@@ -65,9 +65,18 @@ public class JobPostBean {
     }
 
     public JobPostDetails getJobPost(int id) {
-        LOG.info("getCar");
+        LOG.info("getJobPost");
         try {
             return em.find(JobPost.class, id).detach();
+        } catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+    }
+
+    public JobPost getJobPostEntity(int id) {
+        LOG.info("getJobPostEntity");
+        try {
+            return em.find(JobPost.class, id);
         } catch (Exception ex) {
             throw new EJBException(ex);
         }

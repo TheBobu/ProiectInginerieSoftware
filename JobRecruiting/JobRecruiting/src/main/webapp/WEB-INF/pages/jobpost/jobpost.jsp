@@ -10,7 +10,5 @@
 <t:pageTemplate pageTitle="${jobPost.title}">
 
     <h1>${jobPost.title}</h1>
-   
-   
 
 </t:pageTemplate>
