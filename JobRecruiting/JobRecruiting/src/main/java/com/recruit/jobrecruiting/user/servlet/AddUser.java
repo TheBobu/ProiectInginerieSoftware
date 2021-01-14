@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -49,6 +50,7 @@ public class AddUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.getSession().removeAttribute("errors");
         request.getRequestDispatcher("/WEB-INF/pages/user/addUser.jsp").forward(request, response);
     }
 
@@ -93,18 +95,18 @@ public class AddUser extends HttpServlet {
                 fileContent = new byte[(int) fileSize];
                 filePart.getInputStream().read(fileContent);
                 userBean.addCv(id, fileName, fileType, fileContent);
-                
+
                 emailBean.sendEmail(email, "Job Recruiting Platform", "Your account was succesfully created. Please wait for the administrator to activate your account. Thank you!");
                 response.sendRedirect(request.getContextPath());
             } else {
                 request.getSession().setAttribute("errors", messageBag);
-                response.sendRedirect(request.getHeader("Referer"));
+                request.getRequestDispatcher("/WEB-INF/pages/user/addUser.jsp").include(request, response);
             }
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(AddUser.class.getName()).log(Level.SEVERE, null, ex);
             System.out.print(ex);
         }
-        
+
     }
 
     /**
