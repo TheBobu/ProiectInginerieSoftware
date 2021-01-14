@@ -3,17 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.recruit.jobrecruiting.admin.servlet;
+package com.recruit.jobrecruiting.mail;
 
-import com.recruit.jobrecruiting.common.UserLightDetails;
-import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
-import java.util.List;
-import javax.annotation.security.DeclareRoles;
+import java.io.PrintWriter;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.HttpConstraint;
-import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,11 +18,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author andrei
  */
-@DeclareRoles({"AdminRole"})
-@ServletSecurity(value = @HttpConstraint(rolesAllowed={"AdminRole"}))
-@WebServlet(name = "Administration", urlPatterns = {"/Administration"})
-public class Administration extends HttpServlet {
+@WebServlet(name = "Email", urlPatterns = {"/Email"})
+public class Email extends HttpServlet {
 
+    @Inject EmailBean emailBean;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,10 +31,23 @@ public class Administration extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
- 
-    @Inject
-    private UserBean userBean;
-    
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Email</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet Email at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -53,10 +60,8 @@ public class Administration extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<UserLightDetails> users = userBean.getAllUsersLight();
-        
-        request.getSession().setAttribute("users", users);
-        request.getRequestDispatcher("/WEB-INF/pages/administration/userManagement.jsp").forward(request, response);
+        emailBean.sendEmail("andrei.florescu.00@gmail.com", "Job Recruiting Platform", "Your account was succesfully created. Please wait for the administrator to activate your account. Thank you!");
+        processRequest(request,response);
     }
 
     /**
@@ -70,7 +75,7 @@ public class Administration extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        processRequest(request, response);
     }
 
     /**
