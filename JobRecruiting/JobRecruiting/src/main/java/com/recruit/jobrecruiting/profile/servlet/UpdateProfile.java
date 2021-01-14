@@ -1,15 +1,12 @@
 package com.recruit.jobrecruiting.profile.servlet;
 
-import com.recruit.jobrecruiting.ejb.SkillBean;
 import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Photo;
-import com.recruit.jobrecruiting.entity.Skill;
 import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
 import javax.inject.Inject;
@@ -47,19 +44,17 @@ public class UpdateProfile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
+        
         String email = request.getParameter("email");
-        String password = request.getParameter("password");
         LocalDate birthDate = LocalDate.parse(request.getParameter("birthDate"));
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String address = request.getParameter("address");
         Department department = Department.valueOf(request.getParameter("department"));
         Integer id = Integer.parseInt(request.getParameter("id"));
+        String username = userBean.getUserById(id).getUsername();
         Integer photoId = Integer.parseInt(request.getParameter("photoId"));
         String shortBio = request.getParameter("shortBio");
-        String userExperience = request.getParameter("userExperience");
-        
         
         Part filePart = request.getPart("image");
         String fileName = filePart.getSubmittedFileName();
@@ -67,6 +62,7 @@ public class UpdateProfile extends HttpServlet {
         long fileSize = filePart.getSize();
         byte[] fileContent = new byte[(int) fileSize];
         filePart.getInputStream().read(fileContent);
+        
         userBean.updateProfilePhoto(photoId,id, fileName, fileType, fileContent);
 
         filePart = request.getPart("cv");
@@ -77,7 +73,7 @@ public class UpdateProfile extends HttpServlet {
         filePart.getInputStream().read(fileContent);
         userBean.addCv(id, fileName, fileType, fileContent);
 
-            userBean.updateUser(id, username, email, department, password, birthDate, firstName, lastName, address, shortBio,userExperience);
+        userBean.updateUser(id, username, email, department, birthDate, firstName, lastName, address, shortBio);
         
        response.sendRedirect(request.getContextPath() + "/Profile?id="+id.toString());
     }

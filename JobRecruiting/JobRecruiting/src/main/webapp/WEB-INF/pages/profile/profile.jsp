@@ -16,8 +16,7 @@
             <div class="media clearfix">
                 <div class="row">
                     <div class="media-left col-sm-3 col-2">
-                        <img class="media-object" 
-                             src="${pageContext.request.contextPath}/ProfilePicture?id=${user.id}&typeId=0" width="300px" alt="...">
+                        <img class="media-object" src="${pageContext.request.contextPath}/ProfilePicture?id=${user.id}&typeId=0" width="300" alt="...">
                     </div>                      
                     <div class="media-body col-sm-9">
                         <div class="card-body">

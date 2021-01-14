@@ -38,7 +38,7 @@
             </div>
 
             <div class="col-md">
-                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/Profile?id=${user.id}" role="button">View User</a>
+                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/UserManager?id=${user.id}" role="button">View User</a>
             </div>
         </div>
     </c:forEach>

@@ -91,6 +91,26 @@ public class UserBean {
     public List<String> getAllEmails() {
         return (List<String>) em.createQuery("SELECT u.email FROM User u").getResultList();
     }
+    
+    public void updatePassword(Integer id, String password) throws NoSuchAlgorithmException{
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+        BigInteger number = new BigInteger(1, hash);
+
+        // Convert message digest into hex value  
+        StringBuilder hexString = new StringBuilder(number.toString(16));
+
+        // Pad with leading zeros 
+        while (hexString.length() < 32) {
+            hexString.insert(0, '0');
+        }
+        String pass = hexString.toString();
+        User user = getUserById(id);
+        User oldUser = getUserById(id);
+        user.setPassword(pass);
+        em.remove(oldUser);
+        em.persist(user);
+    }
 
     /**
      * Adds a new user entry in the database.
@@ -156,7 +176,11 @@ public class UserBean {
         em.persist(user);
     }
 
-    public void updateUser(Integer id, String username, String email, Department department, String password, LocalDate birthDate, String firstName, String lastName, String address, String shortBio,String userExperience) {
+
+  
+
+    public void updateUser(Integer id, String username, String email, Department department, LocalDate birthDate, String firstName, String lastName, String address, String shortBio) {
+
         User user = getUserById(id);
         user.setAddress(address);
         user.setDepartment(department);
@@ -165,20 +189,21 @@ public class UserBean {
         user.setLastName(lastName);
         user.setEmail(email);
         user.setUsername(username);
-        user.setPassword(password);
+
         user.setShortBio(shortBio);
-        user.setUserExperience(userExperience);
+
         User oldUser = getUserById(id);
         em.remove(oldUser);
         em.persist(user);
     }
 
     public void updatePosition(Integer id, Position position) {
+
         User user = getUserById(id);
         user.setPosition(position);
         User oldUser = getUserById(id);
         em.remove(oldUser);
-        em.persist(user);
+        em.persist(user); 
     }
 
     /**

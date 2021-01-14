@@ -5,15 +5,11 @@
  */
 package com.recruit.jobrecruiting.admin.servlet;
 
-import com.recruit.jobrecruiting.common.UserLightDetails;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
-import java.util.List;
-import javax.annotation.security.DeclareRoles;
+import java.io.PrintWriter;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.HttpConstraint;
-import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,12 +17,11 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author andrei
+ * @author Deea
  */
-@DeclareRoles({"AdminRole"})
-@ServletSecurity(value = @HttpConstraint(rolesAllowed={"AdminRole"}))
-@WebServlet(name = "Administration", urlPatterns = {"/Administration"})
-public class Administration extends HttpServlet {
+@WebServlet(name = "UserActivator", urlPatterns = {"/UserActivator"})
+public class UserActivator extends HttpServlet {
+    @Inject UserBean userBean;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +32,8 @@ public class Administration extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
- 
-    @Inject
-    private UserBean userBean;
     
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -53,10 +46,9 @@ public class Administration extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<UserLightDetails> users = userBean.getAllUsersLight();
-        
-        request.getSession().setAttribute("users", users);
-        request.getRequestDispatcher("/WEB-INF/pages/administration/userManagement.jsp").forward(request, response);
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        userBean.activateUser(id);
+        response.sendRedirect(request.getContextPath()+"/Administration");
     }
 
     /**
@@ -70,7 +62,6 @@ public class Administration extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
     }
 
     /**
