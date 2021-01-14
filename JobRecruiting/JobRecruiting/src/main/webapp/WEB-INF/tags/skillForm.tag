@@ -14,6 +14,9 @@
 <jsp:doBody />
 
 <form class="needs-validation row register-form" action="${action}" method="POST" novalidate>
+    <c:if test="${skill.id != null }">
+        <input type="hidden" name="skill_id" value="${skill.id}" />
+    </c:if>
 
     <div class="col-md-6 mx-auto">
         <div class="form-group mb-4">
