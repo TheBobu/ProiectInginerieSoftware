@@ -15,13 +15,11 @@ public class CommentDetails implements java.io.Serializable {
     private Integer id;
     private String username;
     private String comment;
-    private Date date;
     
-    public CommentDetails (Integer id, String username, String comment, Date date){
+    public CommentDetails (Integer id, String username, String comment){
         this.id = id;
         this.username = username;
         this.comment = comment;
-        this.date = date;
     }
 
     public CommentDetails() {
@@ -49,13 +47,5 @@ public class CommentDetails implements java.io.Serializable {
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 }

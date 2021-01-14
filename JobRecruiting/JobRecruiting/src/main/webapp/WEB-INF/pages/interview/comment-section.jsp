@@ -16,13 +16,22 @@
         <div class="container">   
             <div class="row">
                 <div class="col-sm-8">   
+                   
+                    <!-- COMMENT - START -->
+                    <c:forEach var="comment" items="${comments}" varStatus="status">
+                        <div class="media">
+                            <div class="media-body">
+                                <h4 class="media-heading">${comment.username}</h4>
+                                <p>${comment.comment}</p>
+                            </div>
+                        </div>
+                    </c:forEach>
+                    <!-- COMMENT - END -->
+                    
                     <form method="POST" action="${pageContext.request.contextPath}/Comment?id=${id}">
                         <h3 class="pull-left">New Comment</h3>
                         <fieldset>
                             <div class="row">
-                                <div class="col-sm-3 col-lg-2 hidden-xs">
-                                    <img class="img-responsive" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
-                                </div>
                                 <div class="form-group col-xs-12 col-sm-9 col-lg-10">
                                     <textarea name="comment" class="form-control" id="message" placeholder="Your message" required=""></textarea>
                                 </div>
@@ -30,23 +39,6 @@
                         </fieldset>
                         <button type="submit" class="btn btn-normal pull-right">Submit</button>
                     </form>
-
-                    <h3>${numberOfComments} Comments</h3>
-
-                    <!-- COMMENT - START -->
-                    <c forEach var="comment" items="${comments}" varStatus="status">
-                        <div class="media">
-                            <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""></a>
-                            <div class="media-body">
-                                <h4 class="media-heading">${comment.username}</h4>
-                                <p>${comment.comment}</p>
-                                <ul class="list-unstyled list-inline media-detail pull-left">
-                                    <li><i class="fa fa-calendar"></i>${comment.date}</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </c>
-                    <!-- COMMENT - END -->
                 </div>
             </div>
         </div>

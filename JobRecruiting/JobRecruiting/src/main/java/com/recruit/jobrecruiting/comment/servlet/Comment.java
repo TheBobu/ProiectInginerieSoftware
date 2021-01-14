@@ -13,8 +13,11 @@ import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.security.DeclareRoles;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +27,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Deea
  */
+@DeclareRoles({"AdminRole", "CandidateRole", "DepartmentDirectorRole", "GeneralDirectorRole", "HRDirectorRole", "RecruiterRole"})
+@ServletSecurity(value = @HttpConstraint(rolesAllowed={"AdminRole", "CandidateRole", "DepartmentDirectorRole", "GeneralDirectorRole", "HRDirectorRole", "RecruiterRole"}))
 @WebServlet(name = "Comment", urlPatterns = {"/Comment"})
 public class Comment extends HttpServlet {
 
@@ -69,7 +74,6 @@ public class Comment extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Integer id = Integer.parseInt(request.getParameter("id"));
-        request.getSession().setAttribute("numberOfComments", 7);
         List<CommentDetails> comments = commentBean.getAllComments(id);
         request.getSession().setAttribute("comments", comments);
         request.getSession().setAttribute("id", id);
@@ -87,7 +91,7 @@ public class Comment extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getRemoteUser().toString();
+        String username = request.getRemoteUser();
         String comment = request.getParameter("comment");
         Integer id = Integer.parseInt(request.getParameter("id"));
         commentBean.createComment(username, comment, id);
