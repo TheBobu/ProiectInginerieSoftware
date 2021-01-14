@@ -9,6 +9,7 @@ import com.recruit.jobrecruiting.common.UserLightDetails;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
 import java.util.List;
+import javax.annotation.security.DeclareRoles;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.HttpConstraint;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author andrei
  */
+@DeclareRoles({"AdminRole"})
 @ServletSecurity(value = @HttpConstraint(rolesAllowed={"AdminRole"}))
 @WebServlet(name = "Administration", urlPatterns = {"/Administration"})
 public class Administration extends HttpServlet {
