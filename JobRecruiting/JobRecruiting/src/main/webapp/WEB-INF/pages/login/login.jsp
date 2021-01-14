@@ -1,3 +1,9 @@
+<%-- 
+    Document   : profile
+    Created on : 12-Jan-2021, 12:13:31
+    Author     : Andreea Purta
+--%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
