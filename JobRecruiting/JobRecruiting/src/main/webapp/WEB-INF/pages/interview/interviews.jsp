@@ -11,7 +11,7 @@
 <t:pageTemplate pageTitle="Interviews">
 
     <h1 class="mb-4">Interviews</h1>
-    <c:forEach var="interview" items="${interviews}" varStatus="status">
+    <c:forEach var="interview" items="${interviews}">
         <div class="row">
             <div class="col-md">
                 ${interview.jobpost.title}
