@@ -26,7 +26,7 @@
             </div>
             
             <div class="col-md"> <%-------------------TO DO---------------------------------%>
-                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/Profile?id=${candidate.candidate.id}" role="button">Schedule interview</a>
+                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/Comment?id=${candidate.id}" role="button">Schedule interview</a>
             </div>
         </div>
     </c:forEach>
