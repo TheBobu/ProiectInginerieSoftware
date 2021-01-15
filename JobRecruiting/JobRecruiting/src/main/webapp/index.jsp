@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Start Page</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-    <body>
-        <h1>Job Recruiting</h1>
-    </body>
-</html>
+  
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+
+<t:pageTemplate pageTitle="Jobs">
+
+    <h1 >Jobs</h1>
+    <p> Welcome! </p>
+    
+</t:pageTemplate>
