@@ -21,5 +21,5 @@
         <div class="col-md">${job.description}</div>
 
     </div>
-    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/JobActivatorDeactivator?id=${job.id}" role="button">Activate/Deactivate Job</a>
+    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/JobActivatorDeactivator?id=${job.id}" role="button">Activate/Deactivatesss Job</a>
 </t:pageTemplate>
