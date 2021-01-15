@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Deea
  */
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"AdminRole"}))
 @WebServlet(name = "PasswordReseter", urlPatterns = {"/PasswordReseter"})
 public class PasswordReseter extends HttpServlet {
     @Inject EmailBean emailBean;

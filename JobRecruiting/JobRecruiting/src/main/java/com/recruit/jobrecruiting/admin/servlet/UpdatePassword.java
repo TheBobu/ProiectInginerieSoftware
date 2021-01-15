@@ -13,6 +13,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Deea
  */
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"AdminRole"}))
 @WebServlet(name = "UpdatePassword", urlPatterns = {"/UpdatePassword"})
 public class UpdatePassword extends HttpServlet {
     @Inject UserBean userBean;

@@ -35,6 +35,8 @@ import javax.persistence.TypedQuery;
 @Table(name = "USERS")
 public class User implements Serializable {
 
+    
+
     private static final long serialVersionUID = 1L;
 
     public User() {
@@ -59,6 +61,8 @@ public class User implements Serializable {
     private String address;
 
     private String shortBio;
+    
+    private String userExperience;
     
    
     @OneToMany(fetch = FetchType.LAZY)
@@ -224,6 +228,14 @@ public class User implements Serializable {
         this.shortBio = shortBio;
     }
 
+    public String getUserExperience() {
+        return userExperience;
+    }
+
+    public void setUserExperience(String userExperience) {
+        this.userExperience = userExperience;
+    }
+    
     public Collection<Skill> getSkills() {
         return skills;
     }

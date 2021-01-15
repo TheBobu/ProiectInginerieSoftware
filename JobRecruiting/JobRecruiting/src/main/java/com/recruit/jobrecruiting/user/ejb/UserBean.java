@@ -5,9 +5,11 @@
  */
 package com.recruit.jobrecruiting.user.ejb;
 
+import com.recruit.jobrecruiting.common.CommentDetails;
 import com.recruit.jobrecruiting.common.UserDetails;
 import com.recruit.jobrecruiting.common.UserLightDetails;
 import com.recruit.jobrecruiting.ejb.SkillBean;
+import com.recruit.jobrecruiting.entity.Comment;
 import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Photo;
 import com.recruit.jobrecruiting.entity.PhotoType;
@@ -25,6 +27,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
+import javax.activation.MimetypesFileTypeMap;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -66,7 +69,7 @@ public class UserBean {
 
     public List<UserDetails> getAllUsers() {
         try {
-            Query query = em.createQuery("SELECT u FROM USERS u");
+            Query query = em.createQuery("SELECT u FROM User u");
             List<User> users = (List<User>) query.getResultList();
             return copyUsersToDetails(users);
         } catch (Exception ex) {
@@ -91,8 +94,8 @@ public class UserBean {
     public List<String> getAllEmails() {
         return (List<String>) em.createQuery("SELECT u.email FROM User u").getResultList();
     }
-    
-    public void updatePassword(Integer id, String password) throws NoSuchAlgorithmException{
+
+    public void updatePassword(Integer id, String password) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
         BigInteger number = new BigInteger(1, hash);
@@ -176,10 +179,7 @@ public class UserBean {
         em.persist(user);
     }
 
-
-  
-
-    public void updateUser(Integer id, String username, String email, Department department, LocalDate birthDate, String firstName, String lastName, String address, String shortBio) {
+    public void updateUser(Integer id, String email, Department department, LocalDate birthDate, String firstName, String lastName, String address, String shortBio, String userExperience) {
 
         User user = getUserById(id);
         user.setAddress(address);
@@ -188,8 +188,7 @@ public class UserBean {
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
-        user.setUsername(username);
-
+        user.setUserExperience(userExperience);
         user.setShortBio(shortBio);
 
         User oldUser = getUserById(id);
@@ -203,7 +202,7 @@ public class UserBean {
         user.setPosition(position);
         User oldUser = getUserById(id);
         em.remove(oldUser);
-        em.persist(user); 
+        em.persist(user);
     }
 
     /**
@@ -252,12 +251,12 @@ public class UserBean {
 
     public void updateProfilePhoto(Integer id, Integer userId, String fileName, String fileType, byte[] fileContent) {
         Photo photo = findProfilePictureById(id);
-        if(photo == null)
-        { 
+        if (photo == null) {
             //daca nuu exista sa adauge una noua
             this.addProfilePhoto(userId, fileName, fileType, fileContent);
-            return; 
+            return;
         }
+
         photo.setFilename(fileName);
         photo.setFileType(fileType);
         photo.setFileContent(fileContent);
@@ -267,20 +266,21 @@ public class UserBean {
         user.setProfilePhoto(photo);
 
         photo.setUser(user);
-        
+
         Photo oldPhoto = findProfilePictureById(id);
         em.remove(oldPhoto);
+
         em.persist(photo);
-        
+
     }
-    
-      public void updateCV(Integer id, Integer userId, String fileName, String fileType, byte[] fileContent) {
+
+    public void updateCV(Integer id, Integer userId, String fileName, String fileType, byte[] fileContent) {
         Photo photo = findCvById(id);
-        if(photo == null)
-        { 
+        MimetypesFileTypeMap fileTypeMap = new MimetypesFileTypeMap();
+        if (photo == null) {
             //daca nuu exista sa adauge una noua
             this.addCv(id, fileName, fileType, fileContent);
-            return; 
+            return;
         }
         photo.setFilename(fileName);
         photo.setFileType(fileType);
@@ -291,13 +291,12 @@ public class UserBean {
         user.setProfilePhoto(photo);
 
         photo.setUser(user);
-        
+
         Photo oldCv = findCvById(id);
         em.remove(oldCv);
         em.persist(photo);
-        
+
     }
-    
 
     public Photo findCvById(Integer id) {
         TypedQuery<Photo> typedQuery = em.createQuery("SELECT p FROM Photo p WHERE p.user.id = :id AND p.photoType = :type", Photo.class)
@@ -338,4 +337,16 @@ public class UserBean {
         }
         return detailsList;
     }
+
+    public User getUserByUsername(String username) {
+        try {
+            TypedQuery<User> typedQuery = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+                    .setParameter("username", username).setParameter("username", username);
+            User user = typedQuery.getResultList().get(0);
+            return user;
+        } catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+    }
+
 }

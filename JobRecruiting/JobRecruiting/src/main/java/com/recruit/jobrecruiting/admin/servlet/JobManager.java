@@ -5,12 +5,14 @@
  */
 package com.recruit.jobrecruiting.admin.servlet;
 
+import com.recruit.jobrecruiting.common.JobPostDetails;
+import com.recruit.jobrecruiting.ejb.JobPostBean;
+import com.recruit.jobrecruiting.entity.JobPost;
 import com.recruit.jobrecruiting.entity.Position;
 import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -25,37 +27,36 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Deea
+ * @author Andreea Purta
  */
 @ServletSecurity(value = @HttpConstraint(rolesAllowed={"AdminRole"}))
-@WebServlet(name = "UserManager", urlPatterns = {"/UserManager"})
-public class UserManager extends HttpServlet {
-    @Inject UserBean userBean;
+@WebServlet(name = "JobManager", urlPatterns = {"/JobManager"})
+public class JobManager extends HttpServlet {
+    @Inject JobPostBean jobPostBean;
 
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Position> listOfPositions = new ArrayList<Position>(EnumSet.allOf(Position.class));
-        request.setAttribute("positions", listOfPositions);
-        Integer id = Integer.parseInt(request.getParameter("id"));
-        User user = userBean.getUserById(id);
-        request.getSession().setAttribute("user", user);
-        request.getRequestDispatcher("/WEB-INF/pages/administration/userManager.jsp").forward(request, response);
-        
+            Integer id = Integer.parseInt(request.getParameter("id"));
+            JobPostDetails job = jobPostBean.getJobPost(id);
+            request.getSession().setAttribute("job", job);
+            request.getRequestDispatcher("/WEB-INF/pages/administration/jobManager.jsp").forward(request, response);
     }
 
- 
+   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Integer id = Integer.parseInt(request.getParameter("id"));
-        Position position = Position.valueOf(request.getParameter("position"));
-        userBean.updatePosition(id, position);
-        response.sendRedirect(request.getContextPath()+"/Administration");
+        
+        
     }
 
-    
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
         return "Short description";

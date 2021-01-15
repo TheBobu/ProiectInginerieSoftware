@@ -9,9 +9,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import javax.annotation.security.DeclareRoles;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpConstraint;
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +25,8 @@ import javax.servlet.http.Part;
  *
  * @author Andreea Purta
  */
+@DeclareRoles({"AdminRole", "CandidateRole", "DepartmentDirectorRole", "GeneralDirectorRole", "HRDirectorRole", "RecruiterRole"})
+@ServletSecurity(value = @HttpConstraint(rolesAllowed={"AdminRole", "CandidateRole", "DepartmentDirectorRole", "GeneralDirectorRole", "HRDirectorRole", "RecruiterRole"}))
 @MultipartConfig
 @WebServlet(name = "UpdateProfile", urlPatterns = {"/Profile/Update"})
 public class UpdateProfile extends HttpServlet {
@@ -52,10 +57,10 @@ public class UpdateProfile extends HttpServlet {
         String address = request.getParameter("address");
         Department department = Department.valueOf(request.getParameter("department"));
         Integer id = Integer.parseInt(request.getParameter("id"));
-        String username = userBean.getUserById(id).getUsername();
+
         Integer photoId = Integer.parseInt(request.getParameter("photoId"));
         String shortBio = request.getParameter("shortBio");
-        
+        String userExperience = request.getParameter("userExperience");
         Part filePart = request.getPart("image");
         String fileName = filePart.getSubmittedFileName();
         String fileType = filePart.getContentType();
@@ -63,17 +68,19 @@ public class UpdateProfile extends HttpServlet {
         byte[] fileContent = new byte[(int) fileSize];
         filePart.getInputStream().read(fileContent);
         
+         if (fileName != "") {
         userBean.updateProfilePhoto(photoId,id, fileName, fileType, fileContent);
-
+         }
         filePart = request.getPart("cv");
         fileName = filePart.getSubmittedFileName();
         fileType = filePart.getContentType();
         fileSize = filePart.getSize();
         fileContent = new byte[(int) fileSize];
         filePart.getInputStream().read(fileContent);
+        if (fileName != "") {
         userBean.addCv(id, fileName, fileType, fileContent);
-
-        userBean.updateUser(id, username, email, department, birthDate, firstName, lastName, address, shortBio);
+        }
+        userBean.updateUser(id, email, department, birthDate, firstName, lastName, address, shortBio,userExperience);
         
        response.sendRedirect(request.getContextPath() + "/Profile?id="+id.toString());
     }
