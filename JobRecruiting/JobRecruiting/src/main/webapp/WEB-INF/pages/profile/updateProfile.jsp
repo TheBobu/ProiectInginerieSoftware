@@ -20,7 +20,7 @@
                         <div class="media-left col-sm-3">
                             <label>Profile Image</label>
                             <input type="hidden" id="photoId" name="photoId" value="${user.id}">
-                            <input type="file"  class="form-control-file" name="image" value="image" id="">
+                            <input type="file"  class="form-control-file" name="image" >
                         </div>                      
                         <div class="media-body col-sm-9">
                             <h2 class="media-heading">${user.firstName} ${user.lastName}  
@@ -81,7 +81,7 @@
                                     <div class="col-sm-9 text-secondary">
                                         <select name="department" class="form-control" >
                                             <c:forEach var="department" items="${departments}" varStatus="status">
-                                                <option value="${department}"> ${department}</option>
+                                                <option value="${department}" ${user.department eq department ? 'selected' : ''}> ${department}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -154,7 +154,7 @@
                     </div>
                 </div>
             </div>
-            </form>
+       </form>
             <div class="col-md-8">
                 <div class="tab-block">
                     <ul class="nav nav-tabs">

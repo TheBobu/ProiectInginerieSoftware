@@ -10,7 +10,7 @@
     </session-config>
     <login-config>
         <auth-method>FORM</auth-method>
-        <realm-name>JobRecruitingRealm</realm-name>
+        <realm-name>jobRecruitingRealm</realm-name>
         <form-login-config>
             <form-login-page>/Login</form-login-page>
             <form-error-page>/Login</form-error-page>
