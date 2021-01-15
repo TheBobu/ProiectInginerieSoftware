@@ -5,11 +5,15 @@
  */
 package com.recruit.jobrecruiting.admin.servlet;
 
-import com.recruit.jobrecruiting.common.UserLightDetails;
+import com.recruit.jobrecruiting.entity.Position;
+import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
-import javax.annotation.security.DeclareRoles;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.HttpConstraint;
@@ -21,12 +25,12 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author andrei
+ * @author Deea
  */
-@DeclareRoles({"AdminRole"})
 @ServletSecurity(value = @HttpConstraint(rolesAllowed={"AdminRole"}))
-@WebServlet(name = "Administration", urlPatterns = {"/Administration"})
-public class Administration extends HttpServlet {
+@WebServlet(name = "UserManager", urlPatterns = {"/UserManager"})
+public class UserManager extends HttpServlet {
+    @Inject UserBean userBean;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,9 +41,6 @@ public class Administration extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
- 
-    @Inject
-    private UserBean userBean;
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -53,10 +54,13 @@ public class Administration extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<UserLightDetails> users = userBean.getAllUsersLight();
+        List<Position> listOfPositions = new ArrayList<Position>(EnumSet.allOf(Position.class));
+        request.setAttribute("positions", listOfPositions);
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        User user = userBean.getUserById(id);
+        request.getSession().setAttribute("user", user);
+        request.getRequestDispatcher("/WEB-INF/pages/administration/userManager.jsp").forward(request, response);
         
-        request.getSession().setAttribute("users", users);
-        request.getRequestDispatcher("/WEB-INF/pages/administration/userManagement.jsp").forward(request, response);
     }
 
     /**
@@ -70,7 +74,10 @@ public class Administration extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        Position position = Position.valueOf(request.getParameter("position"));
+        userBean.updatePosition(id, position);
+        response.sendRedirect(request.getContextPath()+"/Administration");
     }
 
     /**
