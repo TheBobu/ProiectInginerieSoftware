@@ -26,16 +26,16 @@ import javax.persistence.Query;
 
 /**
  *
- * @author DENISA
+ * @author DENISA, Andreea Purta
  */
 @Stateless
 public class JobPostBean {
-
+    
     private static final Logger LOG = Logger.getLogger(JobPostBean.class.getName());
-
+    
     @PersistenceContext
     private EntityManager em;
-
+    
     @Inject
     private SkillBean skillBean;
 
@@ -66,6 +66,7 @@ public class JobPostBean {
 
     public List<JobPostDetails> filterJobPosts(String keyword, String type, String salary, String status) {
         LOG.info("filterJobPosts" + status);
+
         try {
             Query query = em.createQuery("SELECT j FROM JobPost j where (lower(j.title) like :keyword or lower(j.description) like :keyword ) and j.type in :types  and j.salary >= :salary and j.status in :statuses")
                     .setParameter("keyword", "%" + Util.string(keyword).toLowerCase() + "%")
@@ -80,7 +81,7 @@ public class JobPostBean {
             //return getAllJobPosts();
         }
     }
-
+    
     public JobPostDetails getJobPost(int id) {
         LOG.info("getJobPost");
         try {
@@ -100,28 +101,29 @@ public class JobPostBean {
     }
 
     public JobPostDetails createJobPost(String title, String description, String noOfPositionsFilled, String noOfPositionsAvailable, String[] skillIds, String department, int poster, String status, String type, String salary) {
+
         LOG.info("createJobPost");
         JobPost jobPost = new JobPost();
-
+        
         jobPost.setTitle(title);
         jobPost.setDescription(description);
         User user = em.find(User.class, poster);
         jobPost.setPoster(user);
         jobPost.setNoOfPositionsFilled(Util.number(noOfPositionsFilled));
-
+        
         jobPost.setNoOfPositionsAvailable(Util.number(noOfPositionsAvailable));
         jobPost.setDepartment(Department.valueOf(department));
         jobPost.setStatus(Status.valueOf(status));
         jobPost.setType(Type.valueOf(type));
         jobPost.setSalary(Util.number(salary));
-
+        
         jobPost.setSkills(skillBean.findSkills(Arrays.asList(skillIds)));
-
+        
         em.persist(jobPost);
 
         return jobPost.detach();
     }
-
+    
     public void deleteJobPost(int id) {
         LOG.info("deleteJobPost");
         try {
@@ -132,6 +134,7 @@ public class JobPostBean {
     }
 
     public JobPostDetails editJobPost(int id, String title, String description, String noOfPositionsFilled, String noOfPositionsAvailable, String[] skillIds, String department, String status, String type, String salary) {
+
         LOG.info("editJobPost");
         try {
             JobPost jobPost = em.find(JobPost.class, id);
@@ -166,5 +169,19 @@ public class JobPostBean {
         } else {
             jobPost.setStatus(Status.valueOf(status));
         }
+    }
+    
+    public void activateDeactivateJobPost(Integer id) {
+        JobPost jobPost = em.find(JobPost.class, id);
+        
+        if (jobPost.getStatus() == Status.ACTIVE) {
+            jobPost.setStatus(Status.INACTIVE);
+        } else {
+            jobPost.setStatus(Status.ACTIVE);
+        }
+        JobPost oldJobPost = em.find(JobPost.class, id);
+        em.remove(oldJobPost);
+        em.persist(jobPost);
+        
     }
 }

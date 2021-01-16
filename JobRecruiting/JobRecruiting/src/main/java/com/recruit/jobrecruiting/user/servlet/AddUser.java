@@ -71,11 +71,12 @@ public class AddUser extends HttpServlet {
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
             String address = request.getParameter("address");
+             String shortBio = request.getParameter("shortBio");
             HashMap<String, String> messageBag = new HashMap<>();
             UserValidator validator = new UserValidator(username, email, password, birthDate, firstName, lastName, address, userBean);
 
             if (validator.passes(messageBag)) {
-                Integer id = userBean.createUser(username, email, password, birthDate, firstName, lastName, address);
+                Integer id = userBean.createUser(username, email, password, birthDate, firstName, lastName, address,shortBio);
 
                 Part filePart = request.getPart("profilePhoto");
                 String fileName = filePart.getSubmittedFileName();
