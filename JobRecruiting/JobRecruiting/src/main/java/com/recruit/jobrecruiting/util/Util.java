@@ -44,7 +44,11 @@ public class Util {
         try {
             statuses.add(Status.valueOf(status));
         } catch (Exception ex) {
-            statuses = Arrays.asList(Status.values());
+            if (status != null) {
+                statuses = Arrays.asList(Status.values());
+            } else {
+                statuses.add(Status.ACTIVE);
+            }
         }
         return statuses;
     }

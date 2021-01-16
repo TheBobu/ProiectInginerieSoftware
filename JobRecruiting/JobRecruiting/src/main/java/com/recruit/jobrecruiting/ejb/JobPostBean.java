@@ -61,7 +61,7 @@ public class JobPostBean {
     }
 
     public List<JobPostDetails> filterJobPosts(String keyword, String type, String salary, String status) {
-        LOG.info("filterJobPosts");
+        LOG.info("filterJobPosts" + status);
         try {
             Query query = em.createQuery("SELECT j FROM JobPost j where (lower(j.title) like :keyword or lower(j.description) like :keyword ) and j.type in :types  and j.salary >= :salary and j.status in :statuses")
                     .setParameter("keyword", "%" + Util.string(keyword).toLowerCase() + "%")
