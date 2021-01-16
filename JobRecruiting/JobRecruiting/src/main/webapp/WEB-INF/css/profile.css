@@ -632,3 +632,11 @@ background-size:cover;
     font-size: 1.2em !important;
 
 }
+
+.interview-title, .interview-status{
+    padding:3%;
+}
+
+.tab-pane{
+    padding:5%;
+}
