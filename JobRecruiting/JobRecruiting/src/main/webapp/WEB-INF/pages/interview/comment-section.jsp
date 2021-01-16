@@ -23,6 +23,9 @@
                             <div class="media-body">
                                 <h4 class="media-heading">${comment.username}</h4>
                                 <p>${comment.comment}</p>
+                                <c:if test = "${comment.username == pageContext.request.getRemoteUser()}">
+                                    <a href="${pageContext.request.contextPath}/DeleteComment?id=${comment.id}&interview=${id}">Delete Comment</a>
+                                </c:if>
                             </div>
                         </div>
                     </c:forEach>
