@@ -349,4 +349,21 @@ public class UserBean {
         }
     }
 
+    /**
+     * Gets the department of a specific user.
+     * 
+     * @param username the username of the user whose department you want to get
+     * @return Returns the department of the user
+     */
+    public Department getDepartment(String username) {
+        try {
+            TypedQuery<Department> typedQuery = em.createQuery("SELECT u.department FROM User u WHERE u.username = :username", Department.class)
+                    .setParameter("username", username);
+            
+            return typedQuery.getSingleResult();
+        } catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+    }
+
 }
