@@ -12,16 +12,15 @@ and open the template in the editor.
 body {
     font: 100% / 1.414 "Open Sans", "Roboto", arial, sans-serif;
     background: url('http://andreeapurta.com/proiectIngSoftware/6172-min.png');
-    background-size: cover !important;
 }
 
 .main-title-homepage{
     text-align:right;
     color:#fafafa;
-    margin-top: 20%;
+    margin-top: 26%;
     margin-right: 20%;
     margin-bottom:0%;
-
+    font-size: 3em;
 }
 
 .main-subtitle-homepage{
