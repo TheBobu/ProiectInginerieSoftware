@@ -101,8 +101,7 @@ public class AddJobPost extends HttpServlet {
         if (validator.passes(messageBag)) {
             int jobpost_id = jobPostBean.createJobPost(title, description, noOfPositionsFilled, nopositionsAvailable, skills, department, poster, status, type, salary).getId();
             if (!request.isUserInRole("GeneralDirectorRole")) {
-                String url = Util.getBaseUrl(request) + "/JobPost?id=" + jobpost_id;
-                emailBean.sendEmail("denisa.halmaghi@ulbsibiu.ro", "New jobpost created", url);
+                sendEmail(request, jobpost_id);
             }
             response.sendRedirect(request.getContextPath() + "/JobPosts");
         } else {
@@ -120,6 +119,13 @@ public class AddJobPost extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
+    }
+
+    protected void sendEmail(HttpServletRequest request, int jobpost_id) {
+        new Thread(() -> {
+            String url = Util.getBaseUrl(request) + "/JobPost?id=" + jobpost_id;
+            emailBean.sendEmail("denisa.halmaghi@ulbsibiu.ro", "New jobpost created", url);
+        }).start();
     }
 
 }

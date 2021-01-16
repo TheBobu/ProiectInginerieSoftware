@@ -90,7 +90,10 @@ public class EditJobPost extends HttpServlet {
         JobPostValidator validator = new JobPostValidator(title, description, nopositionsAvailable, noOfPositionsFilled, department, status, skills, type, salary);
 
         if (validator.passes(messageBag)) {
-            jobPostBean.editJobPost(id, title, description, noOfPositionsFilled, nopositionsAvailable, skills, department, status, type, salary);
+            JobPostDetails jobPost = jobPostBean.editJobPost(id, title, description, noOfPositionsFilled, nopositionsAvailable, skills, department, status, type, salary);
+            if (jobPost.getStatus() == Status.INACTIVE) {
+                //Email all users who applied
+            }
             response.sendRedirect(request.getContextPath() + "/JobPosts");
         } else {
             request.getSession().setAttribute("errors", messageBag);

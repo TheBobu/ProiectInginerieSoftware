@@ -11,6 +11,7 @@ import com.recruit.jobrecruiting.entity.JobPost;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.Type;
 import com.recruit.jobrecruiting.entity.User;
+import com.recruit.jobrecruiting.mail.EmailBean;
 import com.recruit.jobrecruiting.util.Detachable;
 import com.recruit.jobrecruiting.util.Util;
 import java.util.Arrays;
@@ -37,6 +38,9 @@ public class JobPostBean {
 
     @Inject
     private SkillBean skillBean;
+
+    @Inject
+    private EmailBean emailBean;
 
     public List<JobPostDetails> getAllJobPosts() {
         LOG.info("getAllJobPosts");
@@ -95,7 +99,7 @@ public class JobPostBean {
         }
     }
 
-    public JobPost createJobPost(String title, String description, String noOfPositionsFilled, String noOfPositionsAvailable, String[] skillIds, String department, int poster, String status, String type, String salary) {
+    public JobPostDetails createJobPost(String title, String description, String noOfPositionsFilled, String noOfPositionsAvailable, String[] skillIds, String department, int poster, String status, String type, String salary) {
         LOG.info("createJobPost");
         JobPost jobPost = new JobPost();
 
@@ -115,7 +119,7 @@ public class JobPostBean {
 
         em.persist(jobPost);
 
-        return jobPost;
+        return jobPost.detach();
     }
 
     public void deleteJobPost(int id) {
@@ -127,7 +131,7 @@ public class JobPostBean {
         }
     }
 
-    public void editJobPost(int id, String title, String description, String noOfPositionsFilled, String noOfPositionsAvailable, String[] skillIds, String department, String status, String type, String salary) {
+    public JobPostDetails editJobPost(int id, String title, String description, String noOfPositionsFilled, String noOfPositionsAvailable, String[] skillIds, String department, String status, String type, String salary) {
         LOG.info("editJobPost");
         try {
             JobPost jobPost = em.find(JobPost.class, id);
@@ -142,6 +146,7 @@ public class JobPostBean {
             jobPost.setType(Type.valueOf(type));
             jobPost.setSalary(Util.number(salary));
             jobPost.setSkills(skillBean.findSkills(Arrays.asList(skillIds)));
+            return jobPost.detach();
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
