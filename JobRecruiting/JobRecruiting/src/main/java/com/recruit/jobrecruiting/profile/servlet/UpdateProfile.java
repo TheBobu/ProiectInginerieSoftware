@@ -26,7 +26,7 @@ import javax.servlet.http.Part;
  * @author Andreea Purta
  */
 @DeclareRoles({"AdminRole", "CandidateRole", "DepartmentDirectorRole", "GeneralDirectorRole", "HRDirectorRole", "RecruiterRole"})
-@ServletSecurity(value = @HttpConstraint(rolesAllowed={"AdminRole", "CandidateRole", "DepartmentDirectorRole", "GeneralDirectorRole", "HRDirectorRole", "RecruiterRole"}))
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"AdminRole", "CandidateRole", "DepartmentDirectorRole", "GeneralDirectorRole", "HRDirectorRole", "RecruiterRole"}))
 @MultipartConfig
 @WebServlet(name = "UpdateProfile", urlPatterns = {"/Profile/Update"})
 public class UpdateProfile extends HttpServlet {
@@ -37,9 +37,9 @@ public class UpdateProfile extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Integer id = Integer.parseInt(request.getParameter("id"));
-        User user = userBean.getUserById(id);
-        Photo photo =userBean.findProfilePictureById(id);
+        String username = request.getRemoteUser();
+        User user = userBean.getUserByUsername(username);
+        Photo photo = userBean.findProfilePictureById(user.getId());
         request.setAttribute("user", user);
         List<Department> listOfDepartments = new ArrayList<Department>(EnumSet.allOf(Department.class));
         request.setAttribute("departments", listOfDepartments);
@@ -49,7 +49,7 @@ public class UpdateProfile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String email = request.getParameter("email");
         LocalDate birthDate = LocalDate.parse(request.getParameter("birthDate"));
         String firstName = request.getParameter("firstName");
@@ -67,10 +67,10 @@ public class UpdateProfile extends HttpServlet {
         long fileSize = filePart.getSize();
         byte[] fileContent = new byte[(int) fileSize];
         filePart.getInputStream().read(fileContent);
-        
-         if (fileName != "") {
-        userBean.updateProfilePhoto(photoId,id, fileName, fileType, fileContent);
-         }
+
+        if (fileName != "") {
+            userBean.updateProfilePhoto(photoId, id, fileName, fileType, fileContent);
+        }
         filePart = request.getPart("cv");
         fileName = filePart.getSubmittedFileName();
         fileType = filePart.getContentType();
@@ -78,11 +78,11 @@ public class UpdateProfile extends HttpServlet {
         fileContent = new byte[(int) fileSize];
         filePart.getInputStream().read(fileContent);
         if (fileName != "") {
-        userBean.addCv(id, fileName, fileType, fileContent);
+            userBean.updateCV(photoId, id, fileName, fileType, fileContent);
         }
-        userBean.updateUser(id, email, department, birthDate, firstName, lastName, address, shortBio,userExperience);
-        
-       response.sendRedirect(request.getContextPath() + "/Profile?id="+id.toString());
+        userBean.updateUser(id, email, department, birthDate, firstName, lastName, address, shortBio, userExperience);
+
+        response.sendRedirect(request.getContextPath() + "/Profile" );
     }
 
     @Override

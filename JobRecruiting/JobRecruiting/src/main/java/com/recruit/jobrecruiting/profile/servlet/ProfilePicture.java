@@ -24,30 +24,27 @@ import javax.servlet.http.HttpServletResponse;
  * @author Andreea Purta
  */
 @DeclareRoles({"AdminRole", "CandidateRole", "DepartmentDirectorRole", "GeneralDirectorRole", "HRDirectorRole", "RecruiterRole"})
-@ServletSecurity(value = @HttpConstraint(rolesAllowed={"AdminRole", "CandidateRole", "DepartmentDirectorRole", "GeneralDirectorRole", "HRDirectorRole", "RecruiterRole"}))
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"AdminRole", "CandidateRole", "DepartmentDirectorRole", "GeneralDirectorRole", "HRDirectorRole", "RecruiterRole"}))
 @WebServlet(name = "ProfilePicture", urlPatterns = {"/ProfilePicture"})
 public class ProfilePicture extends HttpServlet {
 
     @Inject
     UserBean userBean;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer id = Integer.parseInt(request.getParameter("id"));
         Integer typeId = Integer.parseInt(request.getParameter("typeId"));
-        Photo photo=new Photo();
-        if(typeId==1)
-        {
-              photo = userBean.findCvById(id);
-               response.setContentType("application/x-pdf");
+        Photo photo = new Photo();
+        if (typeId == 1) {
+            photo = userBean.findCvById(id);
+
+        } else if (typeId == 0) {
+            photo = userBean.findProfilePictureById(id);
         }
-        else if(typeId==0)
-        {
-                photo = userBean.findProfilePictureById(id);
-                 response.setContentType(photo.getFileType());
-        }
-   
-        if (photo != null ) {
-           
+
+        if (photo != null) {
+            response.setContentType(photo.getFileType());
             response.setContentLength(photo.getFileContent().length);
             response.getOutputStream().write(photo.getFileContent());
         } else {
@@ -55,12 +52,12 @@ public class ProfilePicture extends HttpServlet {
         }
 
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-    }
 
+    }
 
     @Override
     public String getServletInfo() {
