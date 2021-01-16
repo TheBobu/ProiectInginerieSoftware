@@ -632,6 +632,9 @@ background-size:cover;
     font-size: 1.2em !important;
 
 }
+btn-profile-application{
+    font-size: 1em !important;
+}
 
 .interview-title, .interview-status{
     padding:3%;

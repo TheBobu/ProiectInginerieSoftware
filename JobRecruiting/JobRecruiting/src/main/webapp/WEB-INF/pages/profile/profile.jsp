@@ -149,26 +149,46 @@
                         <div class="tab-pane fade show active" id="interviews" role="tabpanel" aria-labelledby="interviews">
 
                             <c:forEach var="interview" items="${interviews}" varStatus="status">
-                                <div class="row">
-                                    <div class="col-sm-3 interview-title">
-                                        <h6 class="mb-0">${interview.jobpost.title}</h6>
+                                <c:if test="${interview.interviewStatus!='APPLIED_FOR'}" >
+                                    <div class="row">
+                                        <div class="col-sm-3 interview-title">
+                                            <h6 class="mb-0">${interview.jobpost.title}</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <div class="row">
+                                                <div class="col-md-8 interview-status">
+                                                    ${interview.interviewStatus}
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <a href="#" role="button" class=" btn-profile col-xl btn btn-primary">View Interview</a>
+                                                </div></div>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <div class="row">
-                                            <div class="col-md-8 interview-status">
-                                                ${interview.interviewStatus}
-                                            </div>
-                                            <div class="col-md-4">
-                                                <a href="#" role="button" class=" btn-profile col-xl btn btn-primary">View Interview</a>
-                                            </div></div>
-                                    </div>
-                                </div>
-                                <hr />
+                                    <hr />
+                                </c:if>
                             </c:forEach>
                         </div>
 
                         <div class="tab-pane fade" id="applications" role="tabpanel" aria-labelledby="applications">
-                            <h2>Sunt!!!</h2>
+                            <c:forEach var="interview" items="${interviews}" varStatus="status">
+                                <c:if test="${interview.interviewStatus=='APPLIED_FOR'}" >
+                                    <div class="row">
+                                        <div class="col-sm-3 interview-title">
+                                            <h6 class="mb-0">${interview.jobpost.title}</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <div class="row">
+                                                <div class="col-md-7 interview-status">
+                                                    ${interview.interviewStatus}
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <a href="#" role="button" class=" btn-profile col-xl btn btn-primary">View Application</a>
+                                                </div></div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                </c:if>
+                            </c:forEach>
 
                         </div>
                     </div>
@@ -176,7 +196,7 @@
                 </div>
             </div>
         </div>
-</section>
+    </section>
 </t:pageTemplate>
 
 
