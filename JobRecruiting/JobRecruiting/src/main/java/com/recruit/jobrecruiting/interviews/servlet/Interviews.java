@@ -6,6 +6,7 @@
 package com.recruit.jobrecruiting.interviews.servlet;
 
 import com.recruit.jobrecruiting.common.InterviewDetails;
+import com.recruit.jobrecruiting.entity.Position;
 import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
@@ -80,7 +81,11 @@ public class Interviews extends HttpServlet {
         //String requestedBy=request.getParameter("requestedBy");/////////////////////params
         
         List<InterviewDetails> interviews;
-        if(request.isUserInRole("CandidateRole"))
+//        if(request.isUserInRole("CandidateRole"))
+//            interviews = interviewBean.getAllInterviewsAsCandidate(userId);
+//        else
+//            interviews = interviewBean.getAllInterviewsAsInterviewer(userId);
+        if(user.getPosition().compareTo(Position.CANDIDATE)==0)
             interviews = interviewBean.getAllInterviewsAsCandidate(userId);
         else
             interviews = interviewBean.getAllInterviewsAsInterviewer(userId);
