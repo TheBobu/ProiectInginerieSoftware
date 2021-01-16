@@ -8,6 +8,7 @@ package com.recruit.jobrecruiting.interviews.ejb;
 import com.recruit.jobrecruiting.common.InterviewDetails;
 import com.recruit.jobrecruiting.ejb.JobPostBean;
 import com.recruit.jobrecruiting.entity.Interview;
+import com.recruit.jobrecruiting.entity.InterviewStatus;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +42,9 @@ public class InterviewBean {  //DB->
     public List<InterviewDetails> getAllInterviewsAsInterviewer(Integer userId)///////////doar cele pt care s-a stabilit interviul
     {
         try {
-            TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM Interview i WHERE i.interviewer.id = :id", Interview.class)
-                .setParameter("id", userId);
+            TypedQuery<Interview> typedQuery = em.createQuery
+                ("SELECT i FROM Interview i WHERE (i.interviewer.id = :id AND i.status <> :st)", Interview.class)
+                .setParameter("id", userId).setParameter("st", InterviewStatus.APPLIED_FOR);
         List<Interview> interviews = (List<Interview>)typedQuery.getResultList();
         List<InterviewDetails> x = copyInterviewToDetails(interviews);
         return x;
@@ -67,7 +69,7 @@ public class InterviewBean {  //DB->
     private List<InterviewDetails> copyInterviewToDetails(List<Interview> interviews) {
         List<InterviewDetails> detailsList = new ArrayList<>();
         for (Interview interview : interviews) {
-            InterviewDetails interviewDetails = new InterviewDetails(interview.getId(), interview.getJobPost(), interview.getCandidate(), interview.getStatus());
+            InterviewDetails interviewDetails = new InterviewDetails(interview.getId(), interview.getJobPost(), interview.getCandidate(), interview.getInterviewer(), interview.getStatus());
             detailsList.add(interviewDetails);
         }
         return detailsList;

@@ -44,7 +44,7 @@ public class ViewCandidatesBean {
         LOG.info("getAllCandidates");
         try {
             TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM Interview i WHERE i.status = :interviewStatus", Interview.class)
-                .setParameter("interviewStatus", InterviewStatus.WAITING_INTERVIEW_DATE);
+                .setParameter("interviewStatus", InterviewStatus.APPLIED_FOR);
             
         List<Interview> candidates = (List<Interview>)typedQuery.getResultList();
 //        Query query = em.createQuery("SELECT i FROM Interviews i WHERE i.status = :interviewStatus")
@@ -74,7 +74,7 @@ public class ViewCandidatesBean {
     private List<InterviewDetails> copyCandidateToDetails(List<Interview> candidates) {
         List<InterviewDetails> detailsList = new ArrayList<>();
         for (Interview candidate : candidates) {
-            InterviewDetails candidateDetails = new InterviewDetails(candidate.getId(), candidate.getJobPost(), candidate.getCandidate(), candidate.getStatus());
+            InterviewDetails candidateDetails = new InterviewDetails(candidate.getId(), candidate.getJobPost(), candidate.getCandidate(), candidate.getInterviewer(), candidate.getStatus());
             detailsList.add(candidateDetails);
         }
         return detailsList;

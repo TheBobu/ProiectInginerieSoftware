@@ -17,20 +17,31 @@
                 ${interview.jobpost.title}
             </div>
             
-            
-            <c:choose>
-                <c:when test="${candidate==TRUE}">    
-                </c:when>
-                <c:otherwise>
-                    <div class="col-md">
+            <div class="col-md">
+                <c:choose>
+                    <c:when test="${candidate}">    
+                        ${interview.getInterviewerFullName()}
+                    </c:when>
+                    <c:otherwise>
                         ${interview.getCandidateFullName()}
-                    </div>
-                </c:otherwise>
-            </c:choose>
+                    </c:otherwise>
+                </c:choose>
+            </div>
             
             <div class="col-md">
                 ${interview.interviewStatus}
             </div>
+            
+            <div class="col-md">
+            <c:choose>
+                <c:when test="${interview.isAppliedFor()}">    
+                </c:when>
+                <c:otherwise>      
+                        <a class="btn btn-secondary" href="${pageContext.request.contextPath}/Comment?id=${interview.id}" role="button">View conversation</a>               
+                </c:otherwise>
+            </c:choose>
+            </div>
+            
         </div>
     </c:forEach>
 </t:pageTemplate>

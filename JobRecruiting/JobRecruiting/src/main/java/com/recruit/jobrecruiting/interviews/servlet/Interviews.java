@@ -97,7 +97,7 @@ public class Interviews extends HttpServlet {
         //interv as candidate
          
         request.getSession().setAttribute("interviews", interviews);   
-        request.getSession().setAttribute("role", candidate);
+        request.getSession().setAttribute("candidate", candidate);
         request.getRequestDispatcher("/WEB-INF/pages/interview/interviews.jsp").forward(request, response);
 
     }

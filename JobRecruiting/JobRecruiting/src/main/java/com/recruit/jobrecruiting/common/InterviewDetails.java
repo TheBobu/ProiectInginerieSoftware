@@ -17,13 +17,15 @@ public class InterviewDetails{// implements java.io.Serializable{
     private Integer id;
     private JobPost jobpost;
     private User candidate;
+    private User interviewer;
     private InterviewStatus interviewStatus;
 
-    public InterviewDetails(Integer id, JobPost jobpost, User candidate, InterviewStatus interviewStatus) {
+    public InterviewDetails(Integer id, JobPost jobpost, User candidate, User interviewer, InterviewStatus interviewStatus) {
         this.id = id;
         this.jobpost = jobpost;
         this.candidate = candidate;
         this.interviewStatus = interviewStatus;
+        this.interviewer = interviewer;
     }
 
     public Integer getId() {
@@ -61,6 +63,24 @@ public class InterviewDetails{// implements java.io.Serializable{
     public void setInterviewStatus(InterviewStatus interviewStatus) {
         this.interviewStatus = interviewStatus;
     }
+
+    public User getInterviewer() {
+        return interviewer;
+    }
     
+    public String getInterviewerFullName(){
+        return interviewer.getFirstName()+" "+interviewer.getLastName();
+    }
+
+    public void setInterviewer(User interviewer) {
+        this.interviewer = interviewer;
+    }
+    
+    public Boolean isAppliedFor(){
+        //System.out.println("DIN METODA");
+        if(interviewStatus==InterviewStatus.APPLIED_FOR)
+            return Boolean.TRUE;
+        return Boolean.FALSE;  
+    }
     
 }

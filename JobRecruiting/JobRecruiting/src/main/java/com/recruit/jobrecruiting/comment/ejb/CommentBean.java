@@ -70,8 +70,8 @@ public class CommentBean {
         comment.setMessage(comment_text);
         Interview interview = em.find(Interview.class, interviewId);
         interview.getComments().add(comment);
-        if(interview.getStatus().compareTo(InterviewStatus.WAITING_INTERVIEW_DATE)==0){
-            interview.setStatus(InterviewStatus.BEFORE_INTERVIEW);
+        if(interview.getStatus().compareTo(InterviewStatus.APPLIED_FOR)==0){
+            interview.setStatus(InterviewStatus.WAITING_INTERVIEW_DATE);
         }
         comment.setInterview(interview);
 
