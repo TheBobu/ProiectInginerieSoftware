@@ -78,7 +78,7 @@ public class UpdateProfile extends HttpServlet {
         fileContent = new byte[(int) fileSize];
         filePart.getInputStream().read(fileContent);
         if (fileName != "") {
-        userBean.addCv(id, fileName, fileType, fileContent);
+        userBean.updateCV(photoId, id, fileName, fileType, fileContent);
         }
         userBean.updateUser(id, email, department, birthDate, firstName, lastName, address, shortBio,userExperience);
         

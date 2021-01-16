@@ -38,16 +38,16 @@ public class ProfilePicture extends HttpServlet {
         if(typeId==1)
         {
               photo = userBean.findCvById(id);
-               response.setContentType("application/x-pdf");
+              
         }
         else if(typeId==0)
         {
                 photo = userBean.findProfilePictureById(id);
-                 response.setContentType(photo.getFileType());
+                
         }
    
         if (photo != null ) {
-           
+            response.setContentType(photo.getFileType());
             response.setContentLength(photo.getFileContent().length);
             response.getOutputStream().write(photo.getFileContent());
         } else {
