@@ -45,6 +45,7 @@ public class EditJobPost extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.getSession().setAttribute("previous", request.getHeader("referer"));
 
         int id = Integer.parseInt(request.getParameter("id"));
         JobPostDetails jobPost = jobPostBean.getJobPost(id);
@@ -89,7 +90,7 @@ public class EditJobPost extends HttpServlet {
 
         if (validator.passes(messageBag)) {
             jobPostBean.editJobPost(id, title, description, noOfPositionsFilled, nopositionsAvailable, skills, department, status, type, salary);
-            response.sendRedirect(request.getContextPath() + "/JobPosts");
+            response.sendRedirect(request.getParameter("previous"));
         } else {
             request.getSession().setAttribute("errors", messageBag);
             response.sendRedirect(request.getHeader("Referer"));

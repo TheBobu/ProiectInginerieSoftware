@@ -16,6 +16,7 @@
     <c:if test="${jobPost.id != null }">
         <input type="hidden" name="id" value="${jobPost.id }">
     </c:if>
+    <input type="hidden" name="previous" value="${previous}">
 
     <div class="col-md-6 ">
         <div class="form-group mb-4">
