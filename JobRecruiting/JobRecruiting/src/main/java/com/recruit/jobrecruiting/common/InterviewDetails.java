@@ -13,7 +13,7 @@ import com.recruit.jobrecruiting.entity.User;
  *
  * @author Doly
  */
-public class InterviewDetails {
+public class InterviewDetails{// implements java.io.Serializable{
     private Integer id;
     private JobPost jobpost;
     private User candidate;

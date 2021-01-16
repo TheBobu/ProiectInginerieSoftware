@@ -6,11 +6,15 @@
 package com.recruit.jobrecruiting.interviews.ejb;
 
 import com.recruit.jobrecruiting.common.InterviewDetails;
+import com.recruit.jobrecruiting.ejb.JobPostBean;
 import com.recruit.jobrecruiting.entity.Interview;
+import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -22,14 +26,22 @@ import javax.persistence.TypedQuery;
 
 @Stateless
 public class InterviewBean {  //DB->
+    
+    private static final Logger LOG = Logger.getLogger(InterviewBean.class.getName());
 
+    @Inject
+    private JobPostBean jobPostBean;
+    
+    @Inject
+    private UserBean userBean;
+    
     @PersistenceContext
     private EntityManager em;
     
     public List<InterviewDetails> getAllInterviewsAsInterviewer(Integer userId)
     {
         try {
-            TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM interviews i WHERE i.interviewer_key = :id", Interview.class)
+            TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM Interview i WHERE i.interviewer.id = :id", Interview.class)
                 .setParameter("id", userId);
         List<Interview> interviews = (List<Interview>)typedQuery.getResultList();
         List<InterviewDetails> x = copyInterviewToDetails(interviews);
@@ -42,7 +54,7 @@ public class InterviewBean {  //DB->
     public List<InterviewDetails> getAllInterviewsAsCandidate(Integer userId)
     {
         try {
-            TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM interviews i WHERE i.candidate_key = :id", Interview.class)
+            TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM Interview i WHERE i.candidate.id = :id", Interview.class)
                 .setParameter("id", userId);
         List<Interview> interviews = (List<Interview>)typedQuery.getResultList();
         List<InterviewDetails> x = copyInterviewToDetails(interviews);

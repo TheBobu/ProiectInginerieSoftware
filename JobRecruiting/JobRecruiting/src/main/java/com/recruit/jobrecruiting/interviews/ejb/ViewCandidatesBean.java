@@ -10,10 +10,12 @@ import com.recruit.jobrecruiting.entity.Interview;
 import com.recruit.jobrecruiting.entity.InterviewStatus;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -23,15 +25,23 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class ViewCandidatesBean {
 
+    private static final Logger LOG = Logger.getLogger(ViewCandidatesBean.class.getName());
+
     @PersistenceContext
     private EntityManager em;
     
     public List<InterviewDetails> getAllCandidates()
     {
+        LOG.info("getAllCandidates");
         try {
-            TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM interviews i WHERE i.status = :interviewStatus", Interview.class)
+//            TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM interviews i WHERE i.status = :interviewStatus", Interview.class)
+//                .setParameter("interviewStatusid", InterviewStatus.WAITING_INTERVIEW_DATE);
+//            
+//        List<Interview> candidates = (List<Interview>)typedQuery.getResultList();
+        Query query = em.createQuery("SELECT i FROM Interviews i WHERE i.status = :interviewStatus")
                 .setParameter("interviewStatusid", InterviewStatus.WAITING_INTERVIEW_DATE);
-        List<Interview> candidates = (List<Interview>)typedQuery.getResultList();
+
+        List<Interview> candidates = (List<Interview>)query.getResultList();
         List<InterviewDetails> x = copyCandidateToDetails(candidates);
         return x;
         } catch (Exception ex) {

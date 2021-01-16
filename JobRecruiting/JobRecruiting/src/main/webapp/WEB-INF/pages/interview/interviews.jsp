@@ -18,16 +18,13 @@
             </div>
             
             <c:choose>
-                <c:when test="${pageContext.request.isUserInRole(RecruiterRole)}">
+                <c:when test="${pageContext.request.isUserInRole(CandidateRole)}">
+                </c:when>
+                <c:otherwise>
                     <div class="col-md">
                         ${interview.getCandidateFullName()}
                     </div>
-                </c:when>
-<%--            <c:otherwise>
-                    <div class="col-md">
-                        ${interview.getCandidateFullName()}----------------------
-                    </div>
-                </c:otherwise> --%>
+                </c:otherwise>
             </c:choose>
             
             <div class="col-md">

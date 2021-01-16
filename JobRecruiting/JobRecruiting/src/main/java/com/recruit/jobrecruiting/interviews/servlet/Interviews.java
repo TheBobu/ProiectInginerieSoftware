@@ -6,7 +6,9 @@
 package com.recruit.jobrecruiting.interviews.servlet;
 
 import com.recruit.jobrecruiting.common.InterviewDetails;
+import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
+import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -37,6 +39,9 @@ public class Interviews extends HttpServlet {
     @Inject
     private InterviewBean interviewBean;
     
+    @Inject
+    private UserBean userBean;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -66,15 +71,19 @@ public class Interviews extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String userId=request.getParameter("id");
-        Integer userIdInt=Integer.parseInt(userId);
-        String requestedBy=request.getParameter("requestedBy");
+        String username=request.getRemoteUser();
+        User user=userBean.getUserByUsername(username);
+        Integer userId=user.getId();
+        //String userId=request.getParameter("id");
+        //userId=request.
+        //Integer userIdInt=Integer.parseInt(userId);
+        //String requestedBy=request.getParameter("requestedBy");/////////////////////params
         
         List<InterviewDetails> interviews;
-        if(requestedBy.equalsIgnoreCase("interviewer"))
-            interviews = interviewBean.getAllInterviewsAsInterviewer(userIdInt);
+        if(request.isUserInRole("CandidateRole"))
+            interviews = interviewBean.getAllInterviewsAsCandidate(userId);
         else
-            interviews = interviewBean.getAllInterviewsAsCandidate(userIdInt);
+            interviews = interviewBean.getAllInterviewsAsInterviewer(userId);
         
         //interv as candidate
          
