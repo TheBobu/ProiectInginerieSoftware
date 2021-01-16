@@ -92,6 +92,25 @@
         cursor: pointer;
     }
 
+    .btnGoBack{
+        text-decoration: none;
+        float: left;
+        margin-top: 32px;
+        text-align: center;
+        border: none;
+        border-radius: 1.5rem;
+        padding: 2%;
+        background: #9A9A9A;
+        color: #fff;
+        font-weight: 600;
+        width: 30%;
+        cursor: pointer;
+    }
+
+    .btnGoBack:hover{
+        color: #fff;
+    }
+
     .register-heading{
         text-align: center;
         margin-top: 8%;

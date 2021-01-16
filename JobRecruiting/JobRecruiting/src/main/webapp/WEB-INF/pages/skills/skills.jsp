@@ -10,19 +10,20 @@
 
 <t:pageTemplate pageTitle="Skills">
     <h1>Skills</h1>
-    
-    <a class="btn btn-primary btn-lg" href="${pageContext.request.contextPath}/Skills/Create" role="button">Add Skill</a>
-    
+
+    <a class="btn btn-primary w-25" href="${pageContext.request.contextPath}/Skills/Create" role="button">Add new skill</a>
+    <br><br>
+
     <c:forEach var="skill" items="${skills}">
-        <div class="row">
-            <div class="col-md-2">
-                ${skill.name}
-            </div>
-            <div class="col-md-2">
-                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/Skills/Update?id=${skill.id}" role="button">Edit Skill</a>
+        <div class="card w-25">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col"> ${skill.name}</div>
+                    <div class="col"><a class="btn btn-secondary" href="${pageContext.request.contextPath}/Skills/Update?id=${skill.id}" role="button">Edit Skill</a>
+                    </div>
+                </div>
             </div>
         </div>
-        <br>
     </c:forEach>
 
 </t:pageTemplate>

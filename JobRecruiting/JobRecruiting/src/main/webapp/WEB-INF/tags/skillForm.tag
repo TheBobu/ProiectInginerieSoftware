@@ -17,7 +17,8 @@
     <c:if test="${skill.id != null }">
         <input type="hidden" name="skill_id" value="${skill.id}" />
     </c:if>
-
+    <input type="hidden" name="previous" value="${previous}">
+    
     <div class="col-md-6 mx-auto">
         <div class="form-group mb-4">
             <label for="name" class="form-label">Name</label>
@@ -26,5 +27,6 @@
         </div>
         
         <input type="submit" class="btnRegister"  value="Save"/>
+        <a type="submit" class="btnGoBack" href="${previous}" role="button">Go back</a>
     </div>
 </form>

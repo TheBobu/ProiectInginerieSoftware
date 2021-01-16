@@ -18,8 +18,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 /**
- * EJB for {@link Skill} Entity. 
- * 
+ * EJB for {@link Skill} Entity.
+ *
  * @author DENISA, robert
  */
 @Stateless
@@ -57,8 +57,8 @@ public class SkillBean {
         skill.setName(name);
         em.persist(skill);
     }
-    
-     /**
+
+    /**
      * Gets a specific skill based on its id
      *
      * @param id the id of the skill you want to get
@@ -75,7 +75,7 @@ public class SkillBean {
 
     /**
      * Edits a skill
-     * 
+     *
      * @param id the id of the skill to be edited
      * @param updatedName the new name of the skill
      * @throws EJBException when the id could not be found

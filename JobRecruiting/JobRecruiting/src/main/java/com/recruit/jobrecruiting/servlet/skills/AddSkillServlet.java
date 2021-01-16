@@ -37,6 +37,7 @@ public class AddSkillServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.getSession().setAttribute("previous", request.getHeader("referer"));
         request.getRequestDispatcher("/WEB-INF/pages/skills/addskill.jsp").forward(request, response);
     }
 
@@ -58,10 +59,10 @@ public class AddSkillServlet extends HttpServlet {
 
         if (new SkillValidator(name).passes(messageBag)) {
             skillBean.createSkill(name);
-            response.sendRedirect(request.getContextPath() + "/JobPost/Create");
+            response.sendRedirect(request.getParameter("previous"));
         } else {
             request.getSession().setAttribute("errors", messageBag);
-            response.sendRedirect(request.getHeader("Referer"));
+            request.getRequestDispatcher("/WEB-INF/pages/skills/addskill.jsp").forward(request, response);
         }
     }
 
