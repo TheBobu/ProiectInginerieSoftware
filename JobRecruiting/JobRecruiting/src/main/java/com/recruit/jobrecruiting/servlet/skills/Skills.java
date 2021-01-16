@@ -5,10 +5,11 @@
  */
 package com.recruit.jobrecruiting.servlet.skills;
 
+import com.recruit.jobrecruiting.common.SkillDetails;
 import com.recruit.jobrecruiting.ejb.SkillBean;
-import com.recruit.jobrecruiting.validators.SkillValidator;
 import java.io.IOException;
-import java.util.HashMap;
+import java.io.PrintWriter;
+import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,12 +18,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
- * @author DENISA
+ * Servlet class for accessing all skills. 
+ * 
+ * @author robert
  */
-@WebServlet(name = "AddSkillServlet", urlPatterns = {"/Skills/Create"})
-public class AddSkillServlet extends HttpServlet {
-
+@WebServlet(name = "Skills", urlPatterns = {"/Skills"})
+public class Skills extends HttpServlet {
+    
     @Inject
     private SkillBean skillBean;
 
@@ -37,8 +39,9 @@ public class AddSkillServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().setAttribute("previous", request.getHeader("referer"));
-        request.getRequestDispatcher("/WEB-INF/pages/skills/addskill.jsp").forward(request, response);
+        List<SkillDetails> skills = skillBean.getAllSkills();
+        request.setAttribute("skills", skills);
+        request.getRequestDispatcher("/WEB-INF/pages/skills/skills.jsp").forward(request, response);
     }
 
     /**
@@ -52,18 +55,7 @@ public class AddSkillServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        HashMap<String, String> messageBag = new HashMap<>();
-
-        String name = request.getParameter("name");
-
-        if (new SkillValidator(name).passes(messageBag)) {
-            skillBean.createSkill(name);
-            response.sendRedirect(request.getParameter("previous"));
-        } else {
-            request.getSession().setAttribute("errors", messageBag);
-            request.getRequestDispatcher("/WEB-INF/pages/skills/addskill.jsp").forward(request, response);
-        }
+//        processRequest(request, response);
     }
 
     /**
@@ -73,7 +65,7 @@ public class AddSkillServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "getSkills Servlet";
     }
 
 }

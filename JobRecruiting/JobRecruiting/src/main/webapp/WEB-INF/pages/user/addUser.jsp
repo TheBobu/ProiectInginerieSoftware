@@ -21,21 +21,21 @@
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="lastName">Last Name</label>
-                <input type="text" class="form-control" id="lastName" name="lastName" placeholder="" value="" required>
+                <input type="text" class="form-control" id="lastName" name="lastName" placeholder="" value="${param.lastName}" required>
                 <t:displayError error="lastName"/>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="birthDate">Date of Birth</label>
-                <input type="date" class="form-control" id="birthDate" name="birthDate" placeholder="" value="" required>
+                <input type="date" class="form-control" id="birthDate" name="birthDate" placeholder="" value="${param.birthDate}" required>
                 <t:displayError error="birthDate"/>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="address">Address</label>
-                <input type="text" class="form-control" id="address" name="address" placeholder="" value="" required>
+                <input type="text" class="form-control" id="address" name="address" placeholder="" value="${param.address}" required>
                 <div class="invalid-feedback">
                     <t:displayError error="address"/>
                 </div>
@@ -44,22 +44,29 @@
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="" value="" required>
+                <input type="email" class="form-control" id="email" name="email" placeholder="" value="${param.email}" required>
                 <t:displayError error="email"/>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="" value="" required>
+                <input type="text" class="form-control" id="username" name="username" placeholder="" value="${param.username}" required>
                 <t:displayError error="username"/>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="" value="" required>
+                <input type="password" class="form-control" id="password" name="password" placeholder="" value="${param.password}" required>
                 <t:displayError error="password"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="passwordAgain">Password again</label>
+                <input type="password" class="form-control" id="passwordAgain" name="passwordAgain" placeholder="" value="${param.passwordAgain}" required>
+                <t:displayError error="passwordAgain"/>
             </div>
         </div>
         <div class="row">

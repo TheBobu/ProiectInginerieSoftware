@@ -5,9 +5,11 @@
  */
 package com.recruit.jobrecruiting.servlet.skills;
 
+import com.recruit.jobrecruiting.common.SkillDetails;
 import com.recruit.jobrecruiting.ejb.SkillBean;
 import com.recruit.jobrecruiting.validators.SkillValidator;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -17,11 +19,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * Servlet for editing a skill.
  *
- * @author DENISA
+ * @author robert
  */
-@WebServlet(name = "AddSkillServlet", urlPatterns = {"/Skills/Create"})
-public class AddSkillServlet extends HttpServlet {
+@WebServlet(name = "EditSkill", urlPatterns = {"/Skills/Update"})
+public class EditSkill extends HttpServlet {
 
     @Inject
     private SkillBean skillBean;
@@ -37,8 +40,11 @@ public class AddSkillServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().setAttribute("previous", request.getHeader("referer"));
-        request.getRequestDispatcher("/WEB-INF/pages/skills/addskill.jsp").forward(request, response);
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        SkillDetails skill = skillBean.getSkill(id);
+        request.setAttribute("skill", skill);
+        request.getSession().removeAttribute("errors");
+        request.getRequestDispatcher("/WEB-INF/pages/skills/editSkill.jsp").forward(request, response);
     }
 
     /**
@@ -52,17 +58,17 @@ public class AddSkillServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        Integer id = Integer.parseInt(request.getParameter("skill_id"));
+        String updatedSkillName = request.getParameter("name");
+        SkillValidator validator = new SkillValidator(updatedSkillName);
         HashMap<String, String> messageBag = new HashMap<>();
-
-        String name = request.getParameter("name");
-
-        if (new SkillValidator(name).passes(messageBag)) {
-            skillBean.createSkill(name);
-            response.sendRedirect(request.getParameter("previous"));
+        
+        if (new SkillValidator(updatedSkillName).passes(messageBag)) {
+            skillBean.updateSkill(id, updatedSkillName);
+            response.sendRedirect(request.getContextPath() + "/Skills");
         } else {
             request.getSession().setAttribute("errors", messageBag);
-            request.getRequestDispatcher("/WEB-INF/pages/skills/addskill.jsp").forward(request, response);
+            response.sendRedirect(request.getHeader("Referer"));
         }
     }
 
@@ -73,7 +79,6 @@ public class AddSkillServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }
-
+        return "Edit skill";
+    }// </editor-fold>
 }

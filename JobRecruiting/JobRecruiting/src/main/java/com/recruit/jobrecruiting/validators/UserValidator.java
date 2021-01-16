@@ -26,16 +26,18 @@ public class UserValidator extends Validator {
     private String username;
     private String email;
     private String password;
+    private String passwordAgain;
     private LocalDate birthDate;
     private String firstName;
     private String lastName;
     private String address;
     private UserBean userBean;
 
-    public UserValidator(String username, String email, String password, LocalDate birthDate, String firstName, String lastName, String address, UserBean userBean) {
+    public UserValidator(String username, String email, String password, String passwordAgain, LocalDate birthDate, String firstName, String lastName, String address, UserBean userBean) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.passwordAgain = passwordAgain;
         this.birthDate = birthDate;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -48,6 +50,7 @@ public class UserValidator extends Validator {
         username();
         email();
         password();
+        passwordAgain();
         birthDate();
         firstName();
         lastName();
@@ -77,11 +80,20 @@ public class UserValidator extends Validator {
     }
 
     /**
-     * Validator for password
+     * Validator for password. Password must have length greater than 5 and should contain lowercase letter, uppercase letter, digit, special character.
      */
     private void password() {
         if (!Pattern.matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$", password)) {
             messageBag.put("password", "Password must have length greater than 5 and should contain lowercase letter, uppercase letter, digit, special character");
+        }
+    }
+    
+    /**
+     * Validator for passwordAgain. Checks if the first entered password is the same as the second entered password.
+     */
+    private void passwordAgain() {
+        if(!password.equals(passwordAgain)) {
+            messageBag.put("passwordAgain", "Password does not match");
         }
     }
 
