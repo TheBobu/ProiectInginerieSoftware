@@ -136,4 +136,8 @@ public class JobPostDetails {
     public String getjobCode() {
         return department.toString() + "_" + type.getAbbreviation() + "_" + id;
     }
+
+    public boolean statusShouldBeEditable() {
+        return status != Status.WAITING_FOR_APPROVAL;
+    }
 }

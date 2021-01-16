@@ -95,7 +95,7 @@ public class JobPostBean {
         }
     }
 
-    public void createJobPost(String title, String description, String noOfPositionsFilled, String noOfPositionsAvailable, String[] skillIds, String department, int poster, String status, String type, String salary) {
+    public JobPost createJobPost(String title, String description, String noOfPositionsFilled, String noOfPositionsAvailable, String[] skillIds, String department, int poster, String status, String type, String salary) {
         LOG.info("createJobPost");
         JobPost jobPost = new JobPost();
 
@@ -108,13 +108,14 @@ public class JobPostBean {
         jobPost.setNoOfPositionsAvailable(Util.number(noOfPositionsAvailable));
         jobPost.setDepartment(Department.valueOf(department));
         jobPost.setStatus(Status.valueOf(status));
-        jobPost.setStatus(Status.valueOf(status));
         jobPost.setType(Type.valueOf(type));
         jobPost.setSalary(Util.number(salary));
 
         jobPost.setSkills(skillBean.findSkills(Arrays.asList(skillIds)));
 
         em.persist(jobPost);
+
+        return jobPost;
     }
 
     public void deleteJobPost(int id) {

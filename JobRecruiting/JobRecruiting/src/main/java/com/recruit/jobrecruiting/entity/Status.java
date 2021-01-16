@@ -12,7 +12,8 @@ package com.recruit.jobrecruiting.entity;
  */
 public enum Status {
     INACTIVE("Inactive"),
-    ACTIVE("Active");
+    ACTIVE("Active"),
+    WAITING_FOR_APPROVAL("Waiting for approval");
 
     public final String label;
 
@@ -22,5 +23,10 @@ public enum Status {
 
     public String getLabel() {
         return label;
+    }
+
+    public static Status[] getJobPostChoosable() {
+        Status[] accepted = {ACTIVE, INACTIVE};
+        return accepted;
     }
 }

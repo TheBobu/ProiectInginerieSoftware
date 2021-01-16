@@ -26,7 +26,6 @@
         <div class="form-group mb-4">
             <label for="department" class="form-label">Department</label>
             <select class="form-select" id="department" name="department" required>
-                <option value="" disabled selected>Choose...</option>
                 <c:forEach var = "department" items = "${departments}">
                     <option value="${department}"
                             <c:if test="${department eq jobPost.department}">
@@ -49,28 +48,26 @@
             </textarea>
             <t:displayError error="description"/>
         </div>
-
-
-        <div class="form-group mb-4">
-            <label for="status" class="form-label">Status</label>
-            <select class="form-select" id="status" name="status" required>
-                <option value="" disabled selected>Choose...</option>
-                <c:forEach var = "status" items = "${statuses}">
-                    <option value="${status}"
-                            <c:if test="${status eq jobPost.status}">
-                                selected
-                            </c:if>
-                            >${status.label}</option>
-                </c:forEach>
-            </select>
-            <t:displayError error="status"/>
-        </div>
+        <c:if test="${isEdit&&jobPost.statusShouldBeEditable()}">
+            <div class="form-group mb-4">
+                <label for="status" class="form-label">Status</label>
+                <select class="form-select" id="status" name="status" required>
+                    <c:forEach var = "status" items = "${statuses}">
+                        <option value="${status}"
+                                <c:if test="${status eq jobPost.status}">
+                                    selected
+                                </c:if>
+                                >${status.label}</option>
+                        <t:displayError error="status"/>
+                    </c:forEach>
+                </select>
+            </div>
+        </c:if>
     </div>
     <div class="col-md-6">
         <div class="form-group mb-4">
             <label for="type" class="form-label">Type</label>
             <select class="form-select" id="type" name="type" required>
-                <option value="" disabled selected>Choose...</option>
                 <c:forEach var = "type" items = "${types}">
                     <option value="${type}"
                             <c:if test="${type eq jobPost.type}">

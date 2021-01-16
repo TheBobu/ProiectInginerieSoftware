@@ -10,6 +10,7 @@ import com.recruit.jobrecruiting.entity.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -56,5 +57,13 @@ public class Util {
             statuses = Arrays.asList(Type.values());
         }
         return statuses;
+    }
+
+    public static String getBaseUrl(HttpServletRequest request) {
+        String scheme = request.getScheme() + "://";
+        String serverName = request.getServerName();
+        String serverPort = (request.getServerPort() == 80) ? "" : ":" + request.getServerPort();
+        String contextPath = request.getContextPath();
+        return scheme + serverName + serverPort + contextPath;
     }
 }

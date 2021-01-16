@@ -51,8 +51,10 @@ public class EditJobPost extends HttpServlet {
         request.setAttribute("jobPost", jobPost);
         request.setAttribute("departments", Department.values());
         request.setAttribute("skills", skillBean.getAllSkills());
-        request.setAttribute("statuses", Status.values());
+        request.setAttribute("statuses", Status.getJobPostChoosable());
         request.setAttribute("types", Type.values());
+
+        request.setAttribute("isEdit", true);
 
         request.setAttribute("errors", request.getSession().getAttribute("errors"));
         request.getSession().removeAttribute("errors");
