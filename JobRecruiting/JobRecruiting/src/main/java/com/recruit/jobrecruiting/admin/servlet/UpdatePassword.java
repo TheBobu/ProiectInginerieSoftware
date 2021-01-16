@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Deea
  */
-@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"AdminRole"}))
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"ClientRole"}))
 @WebServlet(name = "UpdatePassword", urlPatterns = {"/UpdatePassword"})
 public class UpdatePassword extends HttpServlet {
     @Inject UserBean userBean;
