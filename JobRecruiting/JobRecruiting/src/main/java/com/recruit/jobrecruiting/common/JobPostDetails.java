@@ -132,4 +132,8 @@ public class JobPostDetails {
     public void setSalary(int salary) {
         this.salary = salary;
     }
+
+    public String getjobCode() {
+        return department.toString() + "_" + type.getAbbreviation() + "_" + id;
+    }
 }

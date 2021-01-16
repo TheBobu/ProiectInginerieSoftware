@@ -7,6 +7,7 @@ package com.recruit.jobrecruiting.servlet.jobpost;
 
 import com.recruit.jobrecruiting.common.JobPostDetails;
 import com.recruit.jobrecruiting.ejb.JobPostBean;
+import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.Type;
 import java.io.IOException;
 import java.util.List;
@@ -44,15 +45,26 @@ public class JobPosts extends HttpServlet {
         String keyword = request.getParameter("keyword");
         String type = request.getParameter("type");
         String salary = request.getParameter("salary");
+        String status = request.getParameter("status");
+
+        if (request.isUserInRole("CandidateRole")) {
+            status = Status.ACTIVE.toString();
+        }
         List<JobPostDetails> jobPosts = jobPostBean.filterJobPosts(
                 keyword,
                 type,
-                salary
+                salary,
+                status
         );
 
         request.setAttribute("keyword", keyword);
         request.setAttribute("salary", salary);
         request.setAttribute("type", type);
+        request.setAttribute("status", status);
+
+        System.out.println(status);
+
+        request.setAttribute("statuses", Status.values());
 
         request.setAttribute("jobPosts", jobPosts);
         request.getRequestDispatcher("/WEB-INF/pages/jobpost/jobposts.jsp").forward(request, response);

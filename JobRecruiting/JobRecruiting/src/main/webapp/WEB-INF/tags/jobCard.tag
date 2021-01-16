@@ -35,7 +35,6 @@
         <div class="card-text">
             <p class="card-text mt-1 ">Salary: <span style="font-weight:bold">${salary}$</span></p>
             <c:choose>
-                   user.interviews.contains(id)
                 <c:when test="${pageContext.request.getRemoteUser()==null}">
                     <a href="${pageContext.request.contextPath}/ApplyForJob?jobid=${id}" class="mt-1 me-3 btn  btn-success fs-5">
                         Apply
