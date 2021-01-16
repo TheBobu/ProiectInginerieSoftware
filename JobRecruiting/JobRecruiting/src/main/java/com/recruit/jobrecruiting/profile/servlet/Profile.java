@@ -1,8 +1,11 @@
 package com.recruit.jobrecruiting.profile.servlet;
 
+import com.recruit.jobrecruiting.common.InterviewDetails;
 import com.recruit.jobrecruiting.entity.User;
+import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
+import java.util.List;
 import javax.annotation.security.DeclareRoles;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -24,6 +27,9 @@ public class Profile extends HttpServlet {
 
     @Inject
     UserBean userBean;
+    
+    @Inject
+    InterviewBean interviewBean;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -37,6 +43,11 @@ public class Profile extends HttpServlet {
             String username = request.getRemoteUser();
             User user = userBean.getUserByUsername(username);
             request.setAttribute("user", user);
+            
+            //My interviews
+            List<InterviewDetails> interviews = interviewBean.getAllInterviewsAsCandidate(user.getId());
+              request.setAttribute("interviews", interviews);
+              
             request.getRequestDispatcher("/WEB-INF/pages/profile/profile.jsp").forward(request, response);
         }
     }

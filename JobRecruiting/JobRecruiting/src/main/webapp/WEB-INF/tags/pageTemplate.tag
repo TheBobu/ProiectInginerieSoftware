@@ -10,8 +10,12 @@
 <%@attribute name="pageTitle"%>
 
 <%-- any content can be specified here e.g.: --%>
+
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}}"/>
+<fmt:setBundle basename="messages" />
 <!DOCTYPE html>
-<html>
+<html lang="${sessionScope.lang}">
     <head>
         <title>${pageTitle}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,10 +25,8 @@
     <body>
         <jsp:include page="/WEB-INF/menu.jsp"></jsp:include>
             <main role="main" class="container-fluid">
-
-            <jsp:doBody />
-
-        </main>
+                <jsp:doBody />
+            </main>
         <script src="https://kit.fontawesome.com/9a44d3e024.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
