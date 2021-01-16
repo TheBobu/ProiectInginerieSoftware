@@ -77,9 +77,15 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <a  target="_blank" href="${pageContext.request.contextPath}/ProfilePicture?id=${user.id}&typeId=1" class="col-md-4 btn btn-profile btn-primary"  role="button">Download CV</a>
-                                <div class="col-md-4"></div>
-                                <a href="${pageContext.request.contextPath}/Profile/Update" role="button" class=" btn-profile col-md-4 btn btn-primary">Edit User</a>
+                                <div class="col-xl">
+                                <a  target="_blank" href="${pageContext.request.contextPath}/ProfilePicture?id=${user.id}&typeId=1" class="col-xl btn btn-profile btn-primary"  role="button">Download CV</a>
+                                </div>
+                                <div class="col-xl">
+                                <a href="${pageContext.request.contextPath}/PasswordReseter?id=${user.id}" role="button" class=" btn-profile col-xl btn btn-warning">Change Password</a>
+                                </div>
+                                <div class="col-xl">
+                                <a href="${pageContext.request.contextPath}/Profile/Update" role="button" class=" btn-profile col-xl btn btn-primary">Edit User</a>
+                                </div>
                             </div>
                         </div>
                     </div>
