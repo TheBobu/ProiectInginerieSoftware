@@ -38,7 +38,7 @@ public class InterviewBean {  //DB->
     @PersistenceContext
     private EntityManager em;
     
-    public List<InterviewDetails> getAllInterviewsAsInterviewer(Integer userId)
+    public List<InterviewDetails> getAllInterviewsAsInterviewer(Integer userId)///////////doar cele pt care s-a stabilit interviul
     {
         try {
             TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM Interview i WHERE i.interviewer.id = :id", Interview.class)

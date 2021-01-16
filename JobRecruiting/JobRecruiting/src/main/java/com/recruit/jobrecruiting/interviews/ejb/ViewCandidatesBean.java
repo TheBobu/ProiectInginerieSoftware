@@ -6,13 +6,16 @@
 package com.recruit.jobrecruiting.interviews.ejb;
 
 import com.recruit.jobrecruiting.common.InterviewDetails;
+import com.recruit.jobrecruiting.ejb.JobPostBean;
 import com.recruit.jobrecruiting.entity.Interview;
 import com.recruit.jobrecruiting.entity.InterviewStatus;
+import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -27,6 +30,12 @@ public class ViewCandidatesBean {
 
     private static final Logger LOG = Logger.getLogger(ViewCandidatesBean.class.getName());
 
+    @Inject
+    private JobPostBean jobPostBean;
+    
+    @Inject
+    private UserBean userBean;
+    
     @PersistenceContext
     private EntityManager em;
     
@@ -34,14 +43,14 @@ public class ViewCandidatesBean {
     {
         LOG.info("getAllCandidates");
         try {
-//            TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM interviews i WHERE i.status = :interviewStatus", Interview.class)
+            TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM Interview i WHERE i.status = :interviewStatus", Interview.class)
+                .setParameter("interviewStatus", InterviewStatus.WAITING_INTERVIEW_DATE);
+            
+        List<Interview> candidates = (List<Interview>)typedQuery.getResultList();
+//        Query query = em.createQuery("SELECT i FROM Interviews i WHERE i.status = :interviewStatus")
 //                .setParameter("interviewStatusid", InterviewStatus.WAITING_INTERVIEW_DATE);
-//            
-//        List<Interview> candidates = (List<Interview>)typedQuery.getResultList();
-        Query query = em.createQuery("SELECT i FROM Interviews i WHERE i.status = :interviewStatus")
-                .setParameter("interviewStatusid", InterviewStatus.WAITING_INTERVIEW_DATE);
 
-        List<Interview> candidates = (List<Interview>)query.getResultList();
+        //List<Interview> candidates = (List<Interview>)query.getResultList();
         List<InterviewDetails> x = copyCandidateToDetails(candidates);
         return x;
         } catch (Exception ex) {

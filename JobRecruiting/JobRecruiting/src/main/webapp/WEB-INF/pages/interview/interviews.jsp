@@ -17,8 +17,9 @@
                 ${interview.jobpost.title}
             </div>
             
+            
             <c:choose>
-                <c:when test="${pageContext.request.isUserInRole(CandidateRole)}">
+                <c:when test="${candidate==TRUE}">    
                 </c:when>
                 <c:otherwise>
                     <div class="col-md">

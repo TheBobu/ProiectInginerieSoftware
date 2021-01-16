@@ -85,14 +85,19 @@ public class Interviews extends HttpServlet {
 //            interviews = interviewBean.getAllInterviewsAsCandidate(userId);
 //        else
 //            interviews = interviewBean.getAllInterviewsAsInterviewer(userId);
+        Boolean candidate=Boolean.FALSE;
         if(user.getPosition().compareTo(Position.CANDIDATE)==0)
+        {
             interviews = interviewBean.getAllInterviewsAsCandidate(userId);
+            candidate=Boolean.TRUE;
+        }         
         else
             interviews = interviewBean.getAllInterviewsAsInterviewer(userId);
         
         //interv as candidate
          
         request.getSession().setAttribute("interviews", interviews);   
+        request.getSession().setAttribute("role", candidate);
         request.getRequestDispatcher("/WEB-INF/pages/interview/interviews.jsp").forward(request, response);
 
     }
