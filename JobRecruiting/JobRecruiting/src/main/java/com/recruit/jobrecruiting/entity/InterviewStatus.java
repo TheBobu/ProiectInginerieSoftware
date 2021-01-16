@@ -12,5 +12,5 @@ package com.recruit.jobrecruiting.entity;
  * @author robert
  */
 public enum InterviewStatus {
-    WAITING_INTERVIEW_DATE, BEFORE_INTERVIEW, AFTER_INTERVIEW, REJECTED, ACCEPTED;
+    APPLIED_FOR, WAITING_INTERVIEW_DATE, BEFORE_INTERVIEW, AFTER_INTERVIEW, REJECTED, ACCEPTED;
 }

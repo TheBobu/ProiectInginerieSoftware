@@ -9,7 +9,8 @@ and open the template in the editor.
 */
 
 body{margin-top:20px;
-background:#eee;
+background:url("http://andreeapurta.com/proiectIngSoftware/backgroundProfile-min.png");
+background-size:cover;
 }
 
 
@@ -615,4 +616,19 @@ background:#eee;
   background: #FFF;
   border-color: #DDD;
   border-top: 1px solid #FFF;
+}
+
+.panel-body{
+    background-color:#fafafa;
+    height:100px;
+}
+.btn-profile {
+ 
+    margin-top: 5%;
+    background-color: rgba(0,0,0,.76) !important;
+    border: none;
+    color: #fafafa !important;
+    font-weight: 600 !important;
+    font-size: 1.2em !important;
+
 }
