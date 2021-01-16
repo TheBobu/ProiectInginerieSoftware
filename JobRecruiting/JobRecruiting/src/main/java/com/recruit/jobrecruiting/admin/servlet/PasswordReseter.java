@@ -9,6 +9,7 @@ import com.recruit.jobrecruiting.mail.EmailBean;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.annotation.security.DeclareRoles;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.HttpConstraint;
@@ -22,7 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Deea
  */
-@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"AdminRole"}))
+@DeclareRoles({"CandidateRole"})
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"CandidateRole"}))
 @WebServlet(name = "PasswordReseter", urlPatterns = {"/PasswordReseter"})
 public class PasswordReseter extends HttpServlet {
     @Inject EmailBean emailBean;
