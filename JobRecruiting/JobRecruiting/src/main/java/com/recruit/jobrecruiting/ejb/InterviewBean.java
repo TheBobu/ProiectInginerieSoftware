@@ -10,6 +10,7 @@ import com.recruit.jobrecruiting.entity.InterviewStatus;
 import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import com.recruit.jobrecruiting.util.Util;
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -26,15 +27,20 @@ public class InterviewBean {
     @Inject
     UserBean userBean;
 
-    public void addInterview(String _jobPostId, String username) {
-        Interview interview = new Interview();
+    public void createInterview(String _jobPostId, String username) {
+        try {
+            Interview interview = new Interview();
 
-        interview.setStatus(InterviewStatus.WAITING_INTERVIEW_DATE);
+            interview.setStatus(InterviewStatus.WAITING_INTERVIEW_DATE);
 
-        Integer jobPostId = Util.number(_jobPostId);
-        interview.setJobPost(jobPostBean.getJobPostEntity(jobPostId));
+            Integer jobPostId = Util.number(_jobPostId);
+            interview.setJobPost(jobPostBean.getJobPostEntity(jobPostId));
 
-        User user = userBean.getUserByUsername(username);
-        interview.setCandidate(user);
+            User user = userBean.getUserByUsername(username);
+            interview.setCandidate(user);
+        } catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+
     }
 }
