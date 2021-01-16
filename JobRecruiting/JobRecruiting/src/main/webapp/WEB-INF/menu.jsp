@@ -7,6 +7,7 @@
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages" />
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style><%@include file="/WEB-INF/css/menu.css"%></style>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <a class="navbar-brand" href="${pageContext.request.contextPath}">JobRecruiting</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,8 +41,8 @@
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><fmt:message key="label.language" /></a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="?sessionLocale=en">EN</a>
-                    <a class="dropdown-item" href="?sessionLocale=de">DE</a>
                     <a class="dropdown-item" href="?sessionLocale=ro">RO</a>
+                    <a class="dropdown-item" href="?sessionLocale=de">DE</a>
                 </div>
             </li>
             <c:choose>
