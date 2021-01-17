@@ -41,6 +41,7 @@
                 </li>
             </c:if>
 
+
             <c:if test="${pageContext.request.isUserInRole('RecruiterRole')}">
                 <li class="nav-item ">
                     <a class="nav-link" href="${pageContext.request.contextPath}/Skills"><fmt:message key="label.skills" /></a>
