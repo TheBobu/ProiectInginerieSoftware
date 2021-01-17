@@ -6,7 +6,7 @@
 package com.recruit.jobrecruiting.interviews.servlet;
 
 import com.recruit.jobrecruiting.common.InterviewDetails;
-import com.recruit.jobrecruiting.ejb.JobPostBean;
+import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
 import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
 import java.io.IOException;
 import java.io.PrintWriter;

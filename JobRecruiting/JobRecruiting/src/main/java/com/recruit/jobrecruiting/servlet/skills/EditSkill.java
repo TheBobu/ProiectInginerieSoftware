@@ -6,7 +6,7 @@
 package com.recruit.jobrecruiting.servlet.skills;
 
 import com.recruit.jobrecruiting.common.SkillDetails;
-import com.recruit.jobrecruiting.ejb.SkillBean;
+import com.recruit.jobrecruiting.skill.ejb.SkillBean;
 import com.recruit.jobrecruiting.validators.SkillValidator;
 import java.io.IOException;
 import java.io.PrintWriter;

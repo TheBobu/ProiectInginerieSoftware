@@ -5,7 +5,7 @@
  */
 package com.recruit.jobrecruiting.admin.servlet;
 
-import com.recruit.jobrecruiting.ejb.JobPostBean;
+import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
 import java.io.IOException;
 import javax.inject.Inject;
 import javax.servlet.ServletException;

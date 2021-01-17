@@ -5,7 +5,7 @@
  */
 package com.recruit.jobrecruiting.validators;
 
-import com.recruit.jobrecruiting.ejb.JobPostBean;
+import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
 import com.recruit.jobrecruiting.util.Util;
 
 /**

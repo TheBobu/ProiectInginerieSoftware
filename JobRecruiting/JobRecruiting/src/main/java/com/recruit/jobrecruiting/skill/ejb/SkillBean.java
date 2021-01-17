@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.recruit.jobrecruiting.ejb;
+package com.recruit.jobrecruiting.skill.ejb;
 
 import com.recruit.jobrecruiting.common.SkillDetails;
 import com.recruit.jobrecruiting.entity.Skill;

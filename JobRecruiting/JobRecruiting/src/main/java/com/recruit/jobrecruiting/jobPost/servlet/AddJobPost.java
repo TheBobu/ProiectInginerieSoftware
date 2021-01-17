@@ -3,21 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.recruit.jobrecruiting.servlet.jobpost;
+package com.recruit.jobrecruiting.jobpost.servlet;
 
-import com.recruit.jobrecruiting.common.JobPostDetails;
-import com.recruit.jobrecruiting.ejb.JobPostBean;
-import com.recruit.jobrecruiting.ejb.SkillBean;
+import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
+import com.recruit.jobrecruiting.skill.ejb.SkillBean;
 import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.Type;
-import com.recruit.jobrecruiting.interviews.ejb.ViewCandidatesBean;
+import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.mail.EmailBean;
+import com.recruit.jobrecruiting.user.ejb.UserBean;
 import com.recruit.jobrecruiting.util.Util;
 import com.recruit.jobrecruiting.validators.JobPostValidator;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.HttpConstraint;
@@ -32,8 +31,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author DENISA
  */
 @ServletSecurity(value = @HttpConstraint(rolesAllowed = {"RecruiterRole"}))
-@WebServlet(name = "EditJobPost", urlPatterns = {"/JobPost/Edit"})
-public class EditJobPost extends HttpServlet {
+@WebServlet(name = "AddJobPost", urlPatterns = {"/JobPost/Create"})
+public class AddJobPost extends HttpServlet {
 
     @Inject
     private JobPostBean jobPostBean;
@@ -42,7 +41,7 @@ public class EditJobPost extends HttpServlet {
     private SkillBean skillBean;
 
     @Inject
-    ViewCandidatesBean viewCandidateBean;
+    private UserBean userBean;
 
     @Inject
     private EmailBean emailBean;
@@ -58,22 +57,14 @@ public class EditJobPost extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().setAttribute("previous", request.getHeader("referer"));
 
-        int id = Integer.parseInt(request.getParameter("id"));
-        JobPostDetails jobPost = jobPostBean.getJobPost(id);
-        request.setAttribute("jobPost", jobPost);
         request.setAttribute("departments", Department.values());
         request.setAttribute("skills", skillBean.getAllSkills());
-        request.setAttribute("statuses", Status.getJobPostChoosable());
         request.setAttribute("types", Type.values());
-
-        request.setAttribute("isEdit", true);
-
         request.setAttribute("errors", request.getSession().getAttribute("errors"));
         request.getSession().removeAttribute("errors");
+        request.getRequestDispatcher("/WEB-INF/pages/jobpost/addjobpost.jsp").forward(request, response);
 
-        request.getRequestDispatcher("/WEB-INF/pages/jobpost/editjobpost.jsp").forward(request, response);
     }
 
     /**
@@ -88,30 +79,37 @@ public class EditJobPost extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String username = request.getRemoteUser();
         HashMap<String, String> messageBag = new HashMap<>();
-
-        int id = Integer.parseInt(request.getParameter("id"));
         String title = request.getParameter("title");
         String requirements = request.getParameter("requirements");
         String resposabilities = request.getParameter("resposabilities");
         String department = request.getParameter("department");
         String[] skills = request.getParameterValues("skills");
-        String status = request.getParameter("status");
+
+        String status = Status.WAITING_FOR_APPROVAL.toString();
+        if (request.isUserInRole("GeneralDirectorRole")) {
+            status = Status.ACTIVE.toString();
+        }
+
         String nopositionsAvailable = request.getParameter("noOfPositionsAvailable");
         String type = request.getParameter("type");
         String salary = request.getParameter("salary");
 
+        User user = userBean.getUserByUsername(username);
+        int poster = user.getId();
+
+        System.out.println("user");
+        System.out.println(username);
+
         JobPostValidator validator = new JobPostValidator(title, requirements, resposabilities, nopositionsAvailable, department, status, skills, type, salary);
 
         if (validator.passes(messageBag)) {
-            JobPostDetails jobPost = jobPostBean.editJobPost(id, title, requirements, resposabilities, nopositionsAvailable, skills, department, status, type, salary);
-            List<String> emails = viewCandidateBean.getAllCandidateEmail(id);
-            if (jobPost.getStatus() == Status.INACTIVE) {
-                sendModifiedJobPostEmail(request, emails, id, "Job Post closed");
-            } else {
-                sendModifiedJobPostEmail(request, emails, id, "Job Post modified");
+            int jobpost_id = jobPostBean.createJobPost(title, requirements, resposabilities, nopositionsAvailable, skills, department, poster, status, type, salary).getId();
+            if (!request.isUserInRole("GeneralDirectorRole")) {
+                sendEmail(request, jobpost_id);
             }
-            response.sendRedirect(request.getParameter("previous"));
+            response.sendRedirect(request.getContextPath() + "/JobPosts");
         } else {
             request.getSession().setAttribute("errors", messageBag);
             response.sendRedirect(request.getHeader("Referer"));
@@ -129,12 +127,11 @@ public class EditJobPost extends HttpServlet {
         return "Short description";
     }
 
-    protected void sendModifiedJobPostEmail(HttpServletRequest request, List<String> emails, int jobpost_id, String subject) {
+    protected void sendEmail(HttpServletRequest request, int jobpost_id) {
         new Thread(() -> {
+            String email = userBean.getGeneralDirectorEmail();
             String url = Util.getBaseUrl(request) + "/JobPost?id=" + jobpost_id;
-            emails.forEach((String email) -> {
-                emailBean.sendEmail(email, subject, url);
-            });
+            emailBean.sendEmail(email, "New jobpost created", url);
         }).start();
     }
 

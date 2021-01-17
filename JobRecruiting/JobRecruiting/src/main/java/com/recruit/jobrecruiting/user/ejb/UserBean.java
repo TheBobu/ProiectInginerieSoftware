@@ -7,7 +7,7 @@ package com.recruit.jobrecruiting.user.ejb;
 
 import com.recruit.jobrecruiting.common.UserDetails;
 import com.recruit.jobrecruiting.common.UserLightDetails;
-import com.recruit.jobrecruiting.ejb.SkillBean;
+import com.recruit.jobrecruiting.skill.ejb.SkillBean;
 import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Photo;
 import com.recruit.jobrecruiting.entity.PhotoType;

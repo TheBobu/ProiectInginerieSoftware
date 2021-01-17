@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.recruit.jobrecruiting.servlet.jobposting;
+package com.recruit.jobrecruiting.jobpost.servlet;
 
 import com.recruit.jobrecruiting.common.JobPostDetails;
-import com.recruit.jobrecruiting.ejb.JobPostBean;
+import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
 import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
