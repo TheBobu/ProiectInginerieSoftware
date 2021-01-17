@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.recruit.jobrecruiting.servlet.jobposting;
+package com.recruit.jobrecruiting.interviews.servlet;
 
-import com.recruit.jobrecruiting.common.JobPostDetails;
+import com.recruit.jobrecruiting.common.InterviewDetails;
 import com.recruit.jobrecruiting.ejb.JobPostBean;
-import com.recruit.jobrecruiting.entity.Department;
-import com.recruit.jobrecruiting.user.ejb.UserBean;
+import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import javax.annotation.security.DeclareRoles;
 import javax.inject.Inject;
@@ -22,23 +22,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet for accessing the JobPosts from the department of the user
- * (Department Director). Servlet can only be accessed by users who are
- * Department Directors.
+ * Servlet for accessing the successful interviews (candidates already accepted by Recruiter/Interviewer) 
+ * for a specific Jobpost. Servlet can only be accessed by users who are Department Directors. 
  *
  * @author robert
  */
 @DeclareRoles({"DepartmentDirectorRole"})
-@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"DepartmentDirectorRole"}))
-@WebServlet(name = "JobPostsByDepartment", urlPatterns = {"/JobPostsByDepartment"})
-public class JobPostsByDepartment extends HttpServlet {
+@ServletSecurity(value = @HttpConstraint(rolesAllowed={"DepartmentDirectorRole"}))
+@WebServlet(name = "SuccessfulInterviews", urlPatterns = {"/SuccessfulInterviewsForJobPost"})
+public class SuccessfulInterviewsForJobPost extends HttpServlet {
 
     @Inject
-    private UserBean userBean;
-
-    @Inject
-    private JobPostBean jobPostBean;
-
+    private InterviewBean interviewBean;
+    
+    @Inject JobPostBean jobPostBean;
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -50,14 +47,15 @@ public class JobPostsByDepartment extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String myUsername = request.getRemoteUser();
-        Department myDepartment = userBean.getDepartment(myUsername);
-        request.setAttribute("myDepartment", myDepartment);
-
-        List<JobPostDetails> jobPosts = jobPostBean.JobPostsByDepartment(myDepartment);
-        request.setAttribute("jobPosts", jobPosts);
-
-        request.getRequestDispatcher("/WEB-INF/pages/jobpost/jobPostsByDepartment.jsp").forward(request, response);
+        Integer jobPostId = Integer.parseInt(request.getParameter("id"));
+        
+        List<InterviewDetails> interviews = interviewBean.getAllSuccessfulInterviewsForJobPost(jobPostId);
+        request.setAttribute("interviews", interviews);
+        
+        String jobPostTitle = jobPostBean.getJobPost(jobPostId).getTitle();
+        request.setAttribute("jobPostTitle", jobPostTitle);
+                
+        request.getRequestDispatcher("/WEB-INF/pages/interview/successfulInterviewsForJobPost.jsp").forward(request, response);
     }
 
     /**
@@ -67,7 +65,6 @@ public class JobPostsByDepartment extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "JobPostsByDepartment Servlet";
+        return "Successful interviews for the a specific jobpost";
     }
-
 }

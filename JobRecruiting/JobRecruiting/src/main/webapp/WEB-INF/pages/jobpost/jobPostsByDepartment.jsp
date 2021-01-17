@@ -25,7 +25,7 @@
         </div>
 
         <div class="col-md">
-            <b>Proposed candidates</b>
+            <b>Proposed candidates by Recruiter/Interviewer</b>
         </div>
     </div>
     <c:forEach var="jobPost" items="${jobPosts}" varStatus="status">
@@ -43,7 +43,7 @@
             </div>
 
             <div class="col-md">
-                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/JobPost/Edit?id=${jobPost.id}" role="button">See proposed candidates</a>
+                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/SuccessfulInterviewsForJobPost?id=${jobPost.id}" role="button">See proposed candidates</a>
             </div>
         </div>
         <br>

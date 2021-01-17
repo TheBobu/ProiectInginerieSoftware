@@ -6,6 +6,7 @@
 package com.recruit.jobrecruiting.interviews.ejb;
 
 import com.recruit.jobrecruiting.common.InterviewDetails;
+import com.recruit.jobrecruiting.common.UserDetails;
 import com.recruit.jobrecruiting.ejb.JobPostBean;
 import com.recruit.jobrecruiting.entity.Interview;
 import com.recruit.jobrecruiting.entity.InterviewStatus;
@@ -22,45 +23,42 @@ import javax.persistence.TypedQuery;
 
 /**
  *
- * @author Doly
+ * @author Doly, robert
  */
-
 @Stateless
-public class InterviewBean {  //DB->
-    
+public class InterviewBean {
+
     private static final Logger LOG = Logger.getLogger(InterviewBean.class.getName());
 
     @Inject
     private JobPostBean jobPostBean;
-    
+
     @Inject
     private UserBean userBean;
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     public List<InterviewDetails> getAllInterviewsAsInterviewer(Integer userId)///////////doar cele pt care s-a stabilit interviul
     {
         try {
-            TypedQuery<Interview> typedQuery = em.createQuery
-                ("SELECT i FROM Interview i WHERE (i.interviewer.id = :id AND i.status <> :st)", Interview.class)
-                .setParameter("id", userId).setParameter("st", InterviewStatus.APPLIED_FOR);
-        List<Interview> interviews = (List<Interview>)typedQuery.getResultList();
-        List<InterviewDetails> x = copyInterviewToDetails(interviews);
-        return x;
+            TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM Interview i WHERE (i.interviewer.id = :id AND i.status <> :st)", Interview.class)
+                    .setParameter("id", userId).setParameter("st", InterviewStatus.APPLIED_FOR);
+            List<Interview> interviews = (List<Interview>) typedQuery.getResultList();
+            List<InterviewDetails> x = copyInterviewToDetails(interviews);
+            return x;
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
     }
-    
-    public List<InterviewDetails> getAllInterviewsAsCandidate(Integer userId)
-    {
+
+    public List<InterviewDetails> getAllInterviewsAsCandidate(Integer userId) {
         try {
             TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM Interview i WHERE i.candidate.id = :id", Interview.class)
-                .setParameter("id", userId);
-        List<Interview> interviews = (List<Interview>)typedQuery.getResultList();
-        List<InterviewDetails> x = copyInterviewToDetails(interviews);
-        return x;
+                    .setParameter("id", userId);
+            List<Interview> interviews = (List<Interview>) typedQuery.getResultList();
+            List<InterviewDetails> x = copyInterviewToDetails(interviews);
+            return x;
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
@@ -74,6 +72,55 @@ public class InterviewBean {  //DB->
         }
         return detailsList;
     }
-    
-    
+
+    /**
+     * Gets all successful interviews (candidates accepted by
+     * recruiter/interviewer) for a specific job post.
+     *
+     * @param id the id of the JobPost
+     * @return Returns the list of successful interviews
+     */
+    public List<InterviewDetails> getAllSuccessfulInterviewsForJobPost(Integer id) {
+        try {
+            TypedQuery<InterviewDetails> typedQuery = em.createQuery("SELECT i FROM Interview i WHERE i.jobPost.id = :id AND i.status = :status", InterviewDetails.class)
+                    .setParameter("id", id)
+                    .setParameter("status", InterviewStatus.ACCEPTED_BY_RECRUITER);
+
+            return typedQuery.getResultList();
+        } catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+    }
+
+    /**
+     * Grant final candidate accept after a successful interview with the
+     * interviewer. Should only be used by the department director.
+     *
+     * @param id the id of the interview
+     */
+    public void finalAccept(Integer id) {
+        try {
+            Interview interview = em.find(Interview.class, id);
+            interview.setStatus(InterviewStatus.ACCEPTED_BY_DIRECTOR);
+            em.persist(interview);
+        } catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+    }
+
+    /**
+     * Grant final candidate reject after a successful interview with the
+     * interviewer. Should only be used by the department director.
+     *
+     * @param id the id of the interview
+     */
+    public void finalReject(Integer id) {
+        try {
+            Interview interview = em.find(Interview.class, id);
+            interview.setStatus(InterviewStatus.REJECTED_BY_DIRECTOR);
+            em.persist(interview);
+        } catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+    }
 }

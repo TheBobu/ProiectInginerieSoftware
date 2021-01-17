@@ -133,13 +133,12 @@ public class JobPostBean {
         JobPost oldJobPost = em.find(JobPost.class, id);
         em.remove(oldJobPost);
         em.persist(jobPost);
-
     }
 
     /**
      * Gets job posts from a specific department
      *
-     * @param department the department of the job posts you want to get
+     * @param dep the department of the job posts you want to get
      * @return Returns a list of JobPostDetails, from the specified department
      */
     public List<JobPostDetails> JobPostsByDepartment(Department dep) {

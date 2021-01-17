@@ -1,16 +1,13 @@
+package com.recruit.jobrecruiting.interviews.servlet;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.recruit.jobrecruiting.servlet.jobposting;
-
-import com.recruit.jobrecruiting.common.JobPostDetails;
-import com.recruit.jobrecruiting.ejb.JobPostBean;
-import com.recruit.jobrecruiting.entity.Department;
-import com.recruit.jobrecruiting.user.ejb.UserBean;
+import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
 import java.io.IOException;
-import java.util.List;
+import java.io.PrintWriter;
 import javax.annotation.security.DeclareRoles;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -22,22 +19,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet for accessing the JobPosts from the department of the user
- * (Department Director). Servlet can only be accessed by users who are
- * Department Directors.
+ * Servlet for granting final access to a candidate already accepted by Recruiter/Interviewer.
+ * Servlet can only be accessed by users who are Department Directors. 
  *
  * @author robert
  */
 @DeclareRoles({"DepartmentDirectorRole"})
-@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"DepartmentDirectorRole"}))
-@WebServlet(name = "JobPostsByDepartment", urlPatterns = {"/JobPostsByDepartment"})
-public class JobPostsByDepartment extends HttpServlet {
+@ServletSecurity(value = @HttpConstraint(rolesAllowed={"DepartmentDirectorRole"}))
+@WebServlet(name = "FinalAccept", urlPatterns = {"/Interview/FinalAccept"})
+public class FinalAccept extends HttpServlet {
 
     @Inject
-    private UserBean userBean;
-
-    @Inject
-    private JobPostBean jobPostBean;
+    private InterviewBean interviewBean;
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -50,14 +43,9 @@ public class JobPostsByDepartment extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String myUsername = request.getRemoteUser();
-        Department myDepartment = userBean.getDepartment(myUsername);
-        request.setAttribute("myDepartment", myDepartment);
-
-        List<JobPostDetails> jobPosts = jobPostBean.JobPostsByDepartment(myDepartment);
-        request.setAttribute("jobPosts", jobPosts);
-
-        request.getRequestDispatcher("/WEB-INF/pages/jobpost/jobPostsByDepartment.jsp").forward(request, response);
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        interviewBean.finalAccept(id);
+        response.sendRedirect(request.getHeader("referer"));
     }
 
     /**
@@ -67,7 +55,7 @@ public class JobPostsByDepartment extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "JobPostsByDepartment Servlet";
+        return "Department Director gives final accept to proposed candidate";
     }
 
 }
