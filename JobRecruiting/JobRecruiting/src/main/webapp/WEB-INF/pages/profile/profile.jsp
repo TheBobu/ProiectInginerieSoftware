@@ -160,7 +160,7 @@
                                                     ${interview.interviewStatus}
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <a href="#" role="button" class=" btn-profile col-xl btn btn-primary">View Interview</a>
+                                                    <a href="${pageContext.request.contextPath}/Comment?id=${interview.id}" role="button" class=" btn-profile col-xl btn btn-primary">View Interview</a>
                                                 </div></div>
                                         </div>
                                     </div>

@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import javax.json.bind.annotation.JsonbTransient;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -45,7 +46,11 @@ public class JobPost implements Serializable, Detachable {
 
     private String title;
 
-    private String description;
+    @Column(length = 1500)
+    private String requirements;
+
+    @Column(length = 1500)
+    private String responsabilities;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "JOBPOST_SKILL")
@@ -95,14 +100,6 @@ public class JobPost implements Serializable, Detachable {
 
     public void setSkills(List<Skill> skills) {
         this.skills = skills;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public int getNoOfPositionsAvailable() {
@@ -172,16 +169,19 @@ public class JobPost implements Serializable, Detachable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 47 * hash + Objects.hashCode(this.id);
-        hash = 47 * hash + Objects.hashCode(this.title);
-        hash = 47 * hash + Objects.hashCode(this.description);
-        hash = 47 * hash + Objects.hashCode(this.skills);
-        hash = 47 * hash + this.noOfPositionsAvailable;
-        hash = 47 * hash + this.noOfPositionsFilled;
-        hash = 47 * hash + Objects.hashCode(this.department);
-        hash = 47 * hash + Objects.hashCode(this.poster);
-        hash = 47 * hash + Objects.hashCode(this.interviewsForJobPost);
-        hash = 47 * hash + Objects.hashCode(this.status);
+        hash = 37 * hash + Objects.hashCode(this.id);
+        hash = 37 * hash + Objects.hashCode(this.title);
+        hash = 37 * hash + Objects.hashCode(this.requirements);
+        hash = 37 * hash + Objects.hashCode(this.responsabilities);
+        hash = 37 * hash + Objects.hashCode(this.skills);
+        hash = 37 * hash + this.noOfPositionsAvailable;
+        hash = 37 * hash + this.noOfPositionsFilled;
+        hash = 37 * hash + Objects.hashCode(this.department);
+        hash = 37 * hash + Objects.hashCode(this.poster);
+        hash = 37 * hash + Objects.hashCode(this.interviewsForJobPost);
+        hash = 37 * hash + Objects.hashCode(this.status);
+        hash = 37 * hash + Objects.hashCode(this.type);
+        hash = 37 * hash + this.salary;
         return hash;
     }
 
@@ -203,16 +203,22 @@ public class JobPost implements Serializable, Detachable {
         if (this.noOfPositionsFilled != other.noOfPositionsFilled) {
             return false;
         }
+        if (this.salary != other.salary) {
+            return false;
+        }
         if (!Objects.equals(this.title, other.title)) {
             return false;
         }
-        if (!Objects.equals(this.description, other.description)) {
+        if (!Objects.equals(this.requirements, other.requirements)) {
             return false;
         }
-        if (!Objects.equals(this.skills, other.skills)) {
+        if (!Objects.equals(this.responsabilities, other.responsabilities)) {
             return false;
         }
         if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.skills, other.skills)) {
             return false;
         }
         if (this.department != other.department) {
@@ -227,20 +233,41 @@ public class JobPost implements Serializable, Detachable {
         if (this.status != other.status) {
             return false;
         }
+        if (this.type != other.type) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "JobPost{" + "id=" + id + ", title=" + title + ", description=" + description + ", skills=" + skills + ", noOfPositionsAvailable=" + noOfPositionsAvailable + ", noOfPositionsFilled=" + noOfPositionsFilled + ", department=" + department + ", poster=" + poster + ", interviewsForJobPost=" + interviewsForJobPost + ", status=" + status + '}';
+        return "JobPost{" + "id=" + id + ", title=" + title + ", requirements=" + requirements + ", responsabilities=" + responsabilities + ", skills=" + skills + ", noOfPositionsAvailable=" + noOfPositionsAvailable + ", noOfPositionsFilled=" + noOfPositionsFilled + ", department=" + department + ", poster=" + poster + ", interviewsForJobPost=" + interviewsForJobPost + ", status=" + status + ", type=" + type + ", salary=" + salary + '}';
     }
+
+    public String getRequirements() {
+        return requirements;
+    }
+
+    public void setRequirements(String requirements) {
+        this.requirements = requirements;
+    }
+
+    public String getResponsabilities() {
+        return responsabilities;
+    }
+
+    public void setResponsabilities(String responsabilities) {
+        this.responsabilities = responsabilities;
+    }
+
 
     @Override
     public JobPostDetails detach() {
         return new JobPostDetails(
                 id,
                 title,
-                description,
+                requirements,
+                responsabilities,
                 noOfPositionsAvailable,
                 noOfPositionsFilled,
                 Util.detachEntities(skills),
@@ -250,5 +277,21 @@ public class JobPost implements Serializable, Detachable {
                 type,
                 salary
         );
+    }
+
+    public JobPost copy() {
+        JobPost jobPost = new JobPost();
+
+        jobPost.setTitle(title);
+        jobPost.setRequirements(requirements);
+        jobPost.setResponsabilities(responsabilities);
+        jobPost.setDepartment(department);
+        jobPost.setNoOfPositionsFilled(0);
+        jobPost.setNoOfPositionsAvailable(noOfPositionsAvailable);
+        jobPost.setType(type);
+        jobPost.setSalary(salary);
+        jobPost.setSkills(skills);
+
+        return jobPost;
     }
 }

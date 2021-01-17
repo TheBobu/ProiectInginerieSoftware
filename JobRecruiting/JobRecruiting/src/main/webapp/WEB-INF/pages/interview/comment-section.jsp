@@ -13,6 +13,15 @@
 <!DOCTYPE html>
 <t:pageTemplate pageTitle="Comment-section">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        <h1 class="mb-4">Interview details</h1>
+    <section class="content-item" id="details">
+        <div class="container">
+            <h3 class="mb-4">Job Post: ${interview.jobpost.title}</h3>
+            <h3 class="mb-4">Candidate: ${interview.candidate.getName()} </h3>
+            <h3 class="mb-4">Interviewer: ${interview.interviewer.getName()}</h3>
+            <h3 class="mb-4">Interview status: ${interview.interviewStatus}</h3> 
+        </div>
+    </section>
     <section class="content-item" id="comments">
         <div class="container">   
             <div class="row">

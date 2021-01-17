@@ -7,6 +7,8 @@ package com.recruit.jobrecruiting.comment.servlet;
 
 import com.recruit.jobrecruiting.comment.ejb.CommentBean;
 import com.recruit.jobrecruiting.common.CommentDetails;
+import com.recruit.jobrecruiting.common.InterviewDetails;
+import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
@@ -34,6 +36,9 @@ public class Comment extends HttpServlet {
 
     @Inject
     CommentBean commentBean;
+    
+    @Inject
+    InterviewBean interviewBean;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -59,9 +64,20 @@ public class Comment extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Integer id = Integer.parseInt(request.getParameter("id"));
+//        String jobpost=request.getParameter("jobpost");
+//        String candidate=request.getParameter("candidate");
+//        String interviewer=request.getParameter("interviewer");
+//        String status=request.getParameter("status");
+        
+        request.getSession().setAttribute("id", id);   
+//        request.getSession().setAttribute("jobpost", jobpost);
+//        request.getSession().setAttribute("candidate", candidate);
+//        request.getSession().setAttribute("interviewer", interviewer);
+//        request.getSession().setAttribute("status", status);
         List<CommentDetails> comments = commentBean.getAllComments(id);
+        InterviewDetails interview= interviewBean.getInterviewById(id);
         request.getSession().setAttribute("comments", comments);
-        request.getSession().setAttribute("id", id);
+        request.getSession().setAttribute("interview", interview);
         request.getRequestDispatcher("/WEB-INF/pages/interview/comment-section.jsp").forward(request, response);
     }
 

@@ -24,6 +24,9 @@ public class SkillValidator extends Validator {
         name();
     }
 
+    /**
+     * Validator for skill name
+     */
     private void name() {
         if (!Rules.lengthGreaterThan(name, 2)) {
             messageBag.put("name", "Please provide a valid name");

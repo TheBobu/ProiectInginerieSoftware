@@ -148,6 +148,9 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
+    public String getName(){
+        return this.getFirstName()+" "+this.getLastName();
+    }
     public String getAddress() {
         return address;
     }

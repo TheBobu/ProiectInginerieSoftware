@@ -20,10 +20,10 @@
             <div class="col-md">
                 <c:choose>
                     <c:when test="${candidate}">    
-                        ${interview.getInterviewerFullName()}
+                        ${interview.interviewer.getName()}
                     </c:when>
                     <c:otherwise>
-                        ${interview.getCandidateFullName()}
+                        ${interview.candidate.getName()}
                     </c:otherwise>
                 </c:choose>
             </div>
@@ -37,7 +37,7 @@
                 <c:when test="${interview.isAppliedFor()}">    
                 </c:when>
                 <c:otherwise>      
-                        <a class="btn btn-secondary" href="${pageContext.request.contextPath}/Comment?id=${interview.id}" role="button">View conversation</a>               
+                    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/Comment?id=${interview.id}" role="button">View details</a>               
                 </c:otherwise>
             </c:choose>
             </div>

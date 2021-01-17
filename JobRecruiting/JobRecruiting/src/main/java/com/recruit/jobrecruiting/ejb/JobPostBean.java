@@ -11,6 +11,7 @@ import com.recruit.jobrecruiting.entity.JobPost;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.Type;
 import com.recruit.jobrecruiting.entity.User;
+import com.recruit.jobrecruiting.user.ejb.UserBean;
 import com.recruit.jobrecruiting.util.Detachable;
 import com.recruit.jobrecruiting.util.Util;
 import java.util.Arrays;
@@ -38,6 +39,9 @@ public class JobPostBean {
     @Inject
     private SkillBean skillBean;
 
+    @Inject
+    private UserBean userBean;
+
     public List<JobPostDetails> getAllJobPosts() {
         LOG.info("getAllJobPosts");
         try {
@@ -49,23 +53,35 @@ public class JobPostBean {
         }
     }
 
-    public List<JobPostDetails> filterJobPosts(String keyword, String type, String salary) {
-        LOG.info("filterJobPosts");
-
+    public List<JobPostDetails> getAllActiveJobPosts() {
+        LOG.info("getAllJobPosts");
         try {
-            Query query = em.createQuery("SELECT j FROM JobPost j where (lower(j.title) like :keyword or lower(j.description) like :keyword ) and  j.type = :type and j.salary >= :salary")
-                    .setParameter("keyword", "%" + Util.string(keyword).toLowerCase() + "%")
-                    .setParameter("salary", Util.number(salary))
-                    .setParameter("type", Type.valueOf(type));
-
+            Query query = em.createQuery("SELECT j FROM JobPost j where status=:status")
+                    .setParameter("status", Status.ACTIVE);
             return Util.detachEntities(query.getResultList());
         } catch (Exception ex) {
-            return getAllJobPosts();
+            throw new EJBException(ex);
+        }
+    }
+
+    public List<JobPostDetails> filterJobPosts(String keyword, String type, String salary, String status) {
+        LOG.info("filterJobPosts" + status);
+
+        try {
+            Query query = em.createQuery("SELECT j FROM JobPost j where (lower(j.title) like :keyword or lower(j.requirements) like :keyword or lower(j.responsabilities) like :keyword) and j.type in :types  and j.salary >= :salary and j.status in :statuses")
+                    .setParameter("keyword", "%" + Util.string(keyword).toLowerCase() + "%")
+                    .setParameter("salary", Util.number(salary))
+                    .setParameter("types", Util.types(type))
+                    .setParameter("statuses", Util.statuses(status));
+            return Util.detachEntities(query.getResultList());
+
+        } catch (Exception ex) {
+            throw (ex);
         }
     }
 
     public JobPostDetails getJobPost(int id) {
-        LOG.info("getCar");
+        LOG.info("getJobPost");
         try {
             return em.find(JobPost.class, id).detach();
         } catch (Exception ex) {
@@ -73,19 +89,26 @@ public class JobPostBean {
         }
     }
 
-    public void createJobPost(String title, String description, String noOfPositionsFilled, String noOfPositionsAvailable, String[] skillIds, String department, int poster, String status, String type, String salary) {
+    public JobPost getJobPostEntity(int id) {
+        LOG.info("getJobPostEntity");
+        try {
+            return em.find(JobPost.class, id);
+        } catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+    }
+
+    public JobPostDetails createJobPost(String title, String requirements, String responsabilities, String noOfPositionsAvailable, String[] skillIds, String department, int poster, String status, String type, String salary) {
         LOG.info("createJobPost");
         JobPost jobPost = new JobPost();
 
         jobPost.setTitle(title);
-        jobPost.setDescription(description);
+        jobPost.setRequirements(requirements);
+        jobPost.setResponsabilities(responsabilities);
         User user = em.find(User.class, poster);
         jobPost.setPoster(user);
-        jobPost.setNoOfPositionsFilled(Util.number(noOfPositionsFilled));
-
         jobPost.setNoOfPositionsAvailable(Util.number(noOfPositionsAvailable));
         jobPost.setDepartment(Department.valueOf(department));
-        jobPost.setStatus(Status.valueOf(status));
         jobPost.setStatus(Status.valueOf(status));
         jobPost.setType(Type.valueOf(type));
         jobPost.setSalary(Util.number(salary));
@@ -93,6 +116,8 @@ public class JobPostBean {
         jobPost.setSkills(skillBean.findSkills(Arrays.asList(skillIds)));
 
         em.persist(jobPost);
+
+        return jobPost.detach();
     }
 
     public void deleteJobPost(int id) {
@@ -104,21 +129,37 @@ public class JobPostBean {
         }
     }
 
-    public void editJobPost(int id, String title, String description, String noOfPositionsFilled, String noOfPositionsAvailable, String[] skillIds, String department, String status, String type, String salary) {
+    public JobPostDetails editJobPost(int id, String title, String requirements, String responsabilities, String noOfPositionsAvailable, String[] skillIds, String department, String status, String type, String salary) {
         LOG.info("editJobPost");
         try {
             JobPost jobPost = em.find(JobPost.class, id);
             jobPost.setTitle(title);
-            jobPost.setDescription(description);
+            jobPost.setRequirements(requirements);
+            jobPost.setResponsabilities(responsabilities);
             jobPost.setDepartment(Department.valueOf(department));
-            jobPost.setStatus(Status.valueOf(status));
-            jobPost.setNoOfPositionsFilled(Util.number(noOfPositionsFilled));
             jobPost.setNoOfPositionsAvailable(Util.number(noOfPositionsAvailable));
+
+            setJobpostStatus(jobPost, status);
+
             jobPost.setType(Type.valueOf(type));
             jobPost.setSalary(Util.number(salary));
             jobPost.setSkills(skillBean.findSkills(Arrays.asList(skillIds)));
+            return jobPost.detach();
         } catch (Exception ex) {
             throw new EJBException(ex);
+        }
+    }
+
+    /**
+     * Closes the position automatically when there are enough applicants,
+     * otherwise sets the desired status
+     *
+     */
+    protected void setJobpostStatus(JobPost jobPost, String status) {
+        if (jobPost.getNoOfPositionsFilled() >= jobPost.getNoOfPositionsAvailable()) {
+            jobPost.setStatus(Status.INACTIVE);
+        } else {
+            jobPost.setStatus(Status.valueOf(status));
         }
     }
 
@@ -150,5 +191,31 @@ public class JobPostBean {
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
+    }
+
+    public JobPostDetails copyJobPost(int id, Status status, String posterUsername) {
+
+        LOG.info("copyJobPost," + id);
+
+        JobPost jobPost = getJobPostEntity(id);
+
+        JobPost copiedJobPost = (JobPost) jobPost.copy();
+
+        copiedJobPost.setStatus(status);
+
+        User poster = userBean.getUserByUsername(posterUsername);
+
+        copiedJobPost.setPoster(poster);
+
+        em.persist(copiedJobPost);
+
+        return copiedJobPost.detach();
+    }
+
+    public void increasePositionsFilled(JobPost jobPost) {
+        int old = jobPost.getNoOfPositionsFilled();
+        jobPost.setNoOfPositionsFilled(old + 1);
+
+        setJobpostStatus(jobPost, jobPost.getStatus().toString());
     }
 }

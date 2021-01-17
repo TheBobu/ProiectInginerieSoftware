@@ -5,16 +5,13 @@
  */
 package com.recruit.jobrecruiting.user.ejb;
 
-import com.recruit.jobrecruiting.common.CommentDetails;
 import com.recruit.jobrecruiting.common.UserDetails;
 import com.recruit.jobrecruiting.common.UserLightDetails;
 import com.recruit.jobrecruiting.ejb.SkillBean;
-import com.recruit.jobrecruiting.entity.Comment;
 import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Photo;
 import com.recruit.jobrecruiting.entity.PhotoType;
 import com.recruit.jobrecruiting.entity.Position;
-import com.recruit.jobrecruiting.entity.Skill;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.User;
 import java.math.BigInteger;
@@ -23,8 +20,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.activation.MimetypesFileTypeMap;
@@ -39,7 +34,7 @@ import javax.persistence.TypedQuery;
 /**
  * Bean for the {@link User} entity.
  *
- * @author robert, andrei, Andreea Purta
+ * @author robert, andrei, Andreea Purta, DENISA
  */
 @Stateless
 public class UserBean {
@@ -51,6 +46,7 @@ public class UserBean {
 
     @PersistenceContext
     private EntityManager em;
+
 
     /**
      * Gets all users from the database.
@@ -161,6 +157,12 @@ public class UserBean {
 
     public User getUserById(Integer id) {
         return em.find(User.class, id);
+    }
+
+    public User getUserByUsername(String username) {
+        return (User) em.createQuery("SELECT u FROM User u WHERE u.username=:username")
+                .setParameter("username", username)
+                .getResultList().get(0);
     }
 
     public void activateUser(Integer id) {
@@ -322,6 +324,12 @@ public class UserBean {
         return photo;
     }
 
+    public String getGeneralDirectorEmail() {
+        Query query = em.createQuery("SELECT u.email FROM User u WHERE u.position = :position")
+                .setParameter("position", Position.GENERAL_DIRECTOR);
+        return (String) query.getResultList().get(0);
+    }
+
     private List<UserDetails> copyUsersToDetails(List<User> users) {
         List<UserDetails> detailsList = new ArrayList<>();
         for (User user : users) {
@@ -340,17 +348,6 @@ public class UserBean {
         return detailsList;
     }
 
-    public User getUserByUsername(String username) {
-        try {
-            TypedQuery<User> typedQuery = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
-                    .setParameter("username", username).setParameter("username", username);
-            User user = typedQuery.getResultList().get(0);
-            return user;
-        } catch (Exception ex) {
-            throw new EJBException(ex);
-        }
-    }
-
     /**
      * Gets the department of a specific user.
      * 
@@ -367,5 +364,4 @@ public class UserBean {
             throw new EJBException(ex);
         }
     }
-
 }

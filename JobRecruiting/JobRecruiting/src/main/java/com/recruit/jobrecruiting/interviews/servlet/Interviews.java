@@ -80,7 +80,7 @@ public class Interviews extends HttpServlet {
         //Integer userIdInt=Integer.parseInt(userId);
         //String requestedBy=request.getParameter("requestedBy");/////////////////////params
         
-        List<InterviewDetails> interviews;
+        List<InterviewDetails> interviews;         //!!!!!!!!schimbare light details
 //        if(request.isUserInRole("CandidateRole"))
 //            interviews = interviewBean.getAllInterviewsAsCandidate(userId);
 //        else
@@ -113,6 +113,18 @@ public class Interviews extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+//        String id=request.getParameter("id");
+//        String jobpost=request.getParameter("jobpost");
+//        String candidate=request.getParameter("candidate");
+//        String interviewer=request.getParameter("interviewer");
+//        String status=request.getParameter("status");
+//        
+//        request.getSession().setAttribute("id", id);   
+//        request.getSession().setAttribute("jobpost", jobpost);
+//        request.getSession().setAttribute("candidate", candidate);
+//        request.getSession().setAttribute("interviewer", interviewer);
+//        request.getSession().setAttribute("status", status);
+//        request.getRequestDispatcher("/WEB-INF/pages/interview/comment-section.jsp").forward(request, response);
         
     }
 

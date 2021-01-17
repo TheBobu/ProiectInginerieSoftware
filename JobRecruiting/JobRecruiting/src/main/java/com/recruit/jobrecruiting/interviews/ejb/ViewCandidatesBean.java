@@ -32,32 +32,31 @@ public class ViewCandidatesBean {
 
     @Inject
     private JobPostBean jobPostBean;
-    
+
     @Inject
     private UserBean userBean;
-    
+
     @PersistenceContext
     private EntityManager em;
-    
-    public List<InterviewDetails> getAllCandidates()
-    {
+
+    public List<InterviewDetails> getAllCandidates() {
         LOG.info("getAllCandidates");
         try {
             TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM Interview i WHERE i.status = :interviewStatus", Interview.class)
-                .setParameter("interviewStatus", InterviewStatus.APPLIED_FOR);
-            
-        List<Interview> candidates = (List<Interview>)typedQuery.getResultList();
+                    .setParameter("interviewStatus", InterviewStatus.APPLIED_FOR);
+
+            List<Interview> candidates = (List<Interview>) typedQuery.getResultList();
 //        Query query = em.createQuery("SELECT i FROM Interviews i WHERE i.status = :interviewStatus")
 //                .setParameter("interviewStatusid", InterviewStatus.WAITING_INTERVIEW_DATE);
 
-        //List<Interview> candidates = (List<Interview>)query.getResultList();
-        List<InterviewDetails> x = copyCandidateToDetails(candidates);
-        return x;
+            //List<Interview> candidates = (List<Interview>)query.getResultList();
+            List<InterviewDetails> x = copyCandidateToDetails(candidates);
+            return x;
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
     }
-    
+
 //    public List<InterviewDetails> getAllInterviewsAsCandidate(Integer userId)
 //    {
 //        try {
@@ -70,7 +69,6 @@ public class ViewCandidatesBean {
 //            throw new EJBException(ex);
 //        }
 //    }
-
     private List<InterviewDetails> copyCandidateToDetails(List<Interview> candidates) {
         List<InterviewDetails> detailsList = new ArrayList<>();
         for (Interview candidate : candidates) {
@@ -79,4 +77,12 @@ public class ViewCandidatesBean {
         }
         return detailsList;
     }
+
+    public List<String> getAllCandidateEmail(Integer jobpostId) {
+        LOG.info("getAllCandidateEmail:" + jobpostId);
+        Query query = em.createQuery("SELECT i.candidate.email FROM Interview i WHERE i.jobPost.id = :jobPostId")
+                .setParameter("jobPostId", jobpostId);
+        return query.getResultList();
+    }
+
 }
