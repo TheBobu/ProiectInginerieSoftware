@@ -6,6 +6,7 @@
 package com.recruit.jobrecruiting.interviews.ejb;
 
 import com.recruit.jobrecruiting.common.InterviewDetails;
+import com.recruit.jobrecruiting.common.InterviewLightDetails;
 import com.recruit.jobrecruiting.ejb.JobPostBean;
 import com.recruit.jobrecruiting.entity.Interview;
 import com.recruit.jobrecruiting.entity.InterviewStatus;
@@ -46,7 +47,7 @@ public class InterviewBean {  //DB->
                 ("SELECT i FROM Interview i WHERE (i.interviewer.id = :id AND i.status <> :st)", Interview.class)
                 .setParameter("id", userId).setParameter("st", InterviewStatus.APPLIED_FOR);
         List<Interview> interviews = (List<Interview>)typedQuery.getResultList();
-        List<InterviewDetails> x = copyInterviewToDetails(interviews);
+        List<InterviewDetails> x = copyInterviewToDetails(interviews);    //schimbare cu light details!!!!
         return x;
         } catch (Exception ex) {
             throw new EJBException(ex);
@@ -74,6 +75,28 @@ public class InterviewBean {  //DB->
         }
         return detailsList;
     }
+    
+//    public Interview getInterviewById(Integer id) {
+//        return 
+//    }
+    
+    private InterviewDetails copyInterviewToDetails(Interview interview){
+        InterviewDetails interviewDetails = new InterviewDetails(interview.getId(), interview.getJobPost(), interview.getCandidate(), interview.getInterviewer(), interview.getStatus());
+        return interviewDetails;
+    }
+    
+    public InterviewDetails getInterviewById(Integer id){
+        Interview interview=em.find(Interview.class, id);
+        return copyInterviewToDetails(interview);
+    }
+//    private List<InterviewLightDetails> copyInterviewToLightDetails(List<Interview> interviews) {
+//        List<InterviewLightDetails> lightDetailsList = new ArrayList<>();
+//        for (Interview interview : interviews) {
+//            InterviewLightDetails interviewLightDetails = new InterviewLightDetails(interview.getId(), interview.getJobPost(), interview.getCandidate(), interview.getInterviewer(), interview.getStatus());
+//            lightDetailsList.add(interviewLightDetails);
+//        }
+//        return lightDetailsList;
+//    }
     
     
 }
