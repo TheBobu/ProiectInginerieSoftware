@@ -87,8 +87,6 @@ public class InterviewBean {  //DB->
             JobPost jobPost = jobPostBean.getJobPostEntity(jobPostId);
             interview.setJobPost(jobPost);
 
-            jobPostBean.increasePositionsFilled(jobPost);
-
             User user = userBean.getUserByUsername(username);
             interview.setCandidate(user);
 
