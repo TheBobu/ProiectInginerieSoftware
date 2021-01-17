@@ -10,12 +10,16 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style><%@include file="/WEB-INF/css/main.css"%></style>
 
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages" />
+
 <t:pageTemplate pageTitle="Jobs">
 
-    <h1 class="mb-4">Jobs posts</h1>
+    <h1 class="mb-4"><fmt:message key="label.jobPosts.title" /></h1>
     <!-- Team item -->
     <t:filterJobPostForm/>
-    <a class="btn btn-primary" href="${pageContext.request.contextPath}/JobPost/Create">create</a>
+    <a class="btn btn-primary" href="${pageContext.request.contextPath}/JobPost/Create"><fmt:message key="label.jobPosts.create" /></a>
     <div class="row row-cols-1 row-cols-md-2 g-4 mt-4">
         <c:forEach var="jobpost" items="${jobPosts}">
             <div class="col">
