@@ -87,6 +87,8 @@ public class InterviewBean {  //DB->
             JobPost jobPost = jobPostBean.getJobPostEntity(jobPostId);
             interview.setJobPost(jobPost);
 
+            interview.setInterviewer(jobPost.getPoster());
+
             User user = userBean.getUserByUsername(username);
             interview.setCandidate(user);
 

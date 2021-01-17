@@ -5,8 +5,13 @@
  */
 package com.recruit.jobrecruiting.servlet.jobpost;
 
+import com.recruit.jobrecruiting.common.InterviewDetails;
 import com.recruit.jobrecruiting.ejb.JobPostBean;
+import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
+import com.recruit.jobrecruiting.mail.EmailBean;
+import com.recruit.jobrecruiting.user.ejb.UserBean;
+import com.recruit.jobrecruiting.util.Util;
 import com.recruit.jobrecruiting.validators.ApplicationValidator;
 import com.recruit.jobrecruiting.validators.Validator;
 import java.io.IOException;
@@ -24,7 +29,6 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DENISA
  */
-
 /**
  * Servlet used fro applying for a job. It is accesible only to logged in users
  *
@@ -38,6 +42,12 @@ public class ApplyForJob extends HttpServlet {
 
     @Inject
     private JobPostBean jobPostBean;
+
+    @Inject
+    private UserBean userBean;
+
+    @Inject
+    private EmailBean emailBean;
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -57,8 +67,19 @@ public class ApplyForJob extends HttpServlet {
         HashMap<String, String> messageBag = new HashMap<>();
         Validator validator = new ApplicationValidator(jobPost_id, jobPostBean);
 
+        User user = userBean.getUserByUsername(username);
+
         if (validator.passes(messageBag)) {
-            interviewBean.createInterview(jobPost_id, username);
+            InterviewDetails interview = interviewBean.createInterview(jobPost_id, username);
+
+            new Thread(() -> {
+                String email = interview.getInterviewer().getEmail();
+                String joburl = Util.getBaseUrl(request) + "/JobPost?id=" + jobPost_id;
+                String candidateurl = Util.getBaseUrl(request) + "/Profile?id=" + user.getId();
+                String body = interview.getCandidateFullName() + " has applied for " + joburl;
+                body += " .Here is a link to their profile: " + candidateurl;
+                emailBean.sendEmail(email, "Someone has applied to a job you created!", body);
+            }).start();
         }
         response.sendRedirect(request.getContextPath() + "/JobPosts");
     }
@@ -72,6 +93,4 @@ public class ApplyForJob extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }
-
-
 }
