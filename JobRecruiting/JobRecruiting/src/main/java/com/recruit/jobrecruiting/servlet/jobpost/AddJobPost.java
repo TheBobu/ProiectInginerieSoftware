@@ -123,8 +123,9 @@ public class AddJobPost extends HttpServlet {
 
     protected void sendEmail(HttpServletRequest request, int jobpost_id) {
         new Thread(() -> {
+            String email = userBean.getGeneralDirectorEmail();
             String url = Util.getBaseUrl(request) + "/JobPost?id=" + jobpost_id;
-            emailBean.sendEmail("denisa.halmaghi@ulbsibiu.ro", "New jobpost created", url);
+            emailBean.sendEmail(email, "New jobpost created", url);
         }).start();
     }
 
