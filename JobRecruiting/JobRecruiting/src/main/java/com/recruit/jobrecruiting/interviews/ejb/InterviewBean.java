@@ -76,7 +76,7 @@ public class InterviewBean {  //DB->
         return detailsList;
     }
 
-    public void createInterview(String _jobPostId, String username) {
+    public InterviewDetails createInterview(String _jobPostId, String username) {
         try {
             Interview interview = new Interview();
 
@@ -93,6 +93,8 @@ public class InterviewBean {  //DB->
             interview.setCandidate(user);
 
             em.persist(interview);
+
+            return copyInterviewToDetails(interview);
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
