@@ -23,7 +23,7 @@
         <div class="col-md">${job.department}</div>
         <div class="col-md">${job.noOfPositionsAvailable}</div>
         <div class="col-md">${job.type}</div>
-        <div class="col-md">${job.description}</div>
+        
             <div class="col-md"><a class="btn btn-secondary" href="${pageContext.request.contextPath}/JobActivatorDeactivator?id=${job.id}" role="button"><fmt:message key="label.jobManager.activatedeactivate" /></a></div>
     </div>
     
