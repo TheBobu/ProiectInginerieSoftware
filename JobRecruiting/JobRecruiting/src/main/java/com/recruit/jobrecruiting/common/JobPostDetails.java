@@ -143,7 +143,7 @@ public class JobPostDetails {
     }
 
     public List<String> bullets() {
-        return Arrays.asList(description.split("#{1}"));
+        return Arrays.asList(description.split("~"));
     }
 
 }

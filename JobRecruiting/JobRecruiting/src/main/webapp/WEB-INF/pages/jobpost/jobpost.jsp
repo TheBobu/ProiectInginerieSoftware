@@ -65,13 +65,30 @@
                 </div>
 
             </div>
- 
+
         </div>
         <div class="">
             <a class="btn btn-success"><span class="d-flex align-items-baseline"><i class="far fa-check-square me-2"></i> <span>Apply</span></span></a>
         </div>
 
-        <p class="card-text mt-4">${jobPost.bullets()}</p>
+        <h5 class="card-text mt-4">Cerinte:</h5>
+        <ul>
+            <c:forEach var ="bullet" items = "${jobPost.bullets()}">
+                <c:if test="${!bullet.equals('')}">
+                    <li class="">${bullet}</li>
+                    </c:if>
+                </c:forEach>
+        </ul>
         
+        <h5 class="card-text mt-4">Responsabilitati:</h5>
+        <ul>
+            <c:forEach var ="bullet" items = "${jobPost.bullets()}">
+                <c:if test="${!bullet.equals('')}">
+                    <li class="">${bullet}</li>
+                    </c:if>
+                </c:forEach>
+        </ul>
+
+
     </div>
 </t:pageTemplate>
