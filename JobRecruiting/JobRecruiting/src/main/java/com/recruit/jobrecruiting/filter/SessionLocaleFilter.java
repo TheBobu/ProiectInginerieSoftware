@@ -38,9 +38,7 @@ public class SessionLocaleFilter implements Filter {
     
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
-        if (debug) {
-            log("SessionFilter:DoBeforeProcessing");
-        }
+        
 
         // Write code here to process the request and/or response before
         // the rest of the filter chain is invoked.
@@ -66,9 +64,7 @@ public class SessionLocaleFilter implements Filter {
     
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
-        if (debug) {
-            
-        }
+        
 
         // Write code here to process the request and/or response after
         // the rest of the filter chain is invoked.
@@ -102,10 +98,7 @@ public class SessionLocaleFilter implements Filter {
             FilterChain chain)
             throws IOException, ServletException {
         
-        if (debug) {
-            log("SessionFilter:doFilter()");
-        }
-        
+               
         doBeforeProcessing(request, response);
         
         Throwable problem = null;
