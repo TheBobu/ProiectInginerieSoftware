@@ -27,9 +27,19 @@
                     <a class="nav-link" href="${pageContext.request.contextPath}/JobAdministration"><fmt:message key="label.jobManagement" /></a>
                 </li>
             </c:if>
+            <c:if test="${pageContext.request.isUserInRole('DepartmentDirectorRole')}">
+                <li class="nav-item ">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/JobPostsByDepartment"><fmt:message key="label.jobManagementByDepartment" /></a>
+                </li>
+            </c:if>
             <c:if test="${pageContext.request.isUserInRole('CandidateRole')}">
                 <li class="nav-item ${activePage eq 'Users' ? ' active' : ''}">
                     <a class="nav-link" href="${pageContext.request.contextPath}/Profile"><fmt:message key="label.profile" /></a>
+                </li>
+            </c:if>
+            <c:if test="${pageContext.request.isUserInRole('RecruiterRole')}">
+                <li class="nav-item ">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/Skills"><fmt:message key="label.skills" /></a>
                 </li>
             </c:if>
 
