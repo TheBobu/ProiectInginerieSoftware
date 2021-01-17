@@ -35,7 +35,7 @@
                     <a class="nav-link" href="${pageContext.request.contextPath}/Interviews"><fmt:message key="label.interviews" /></a>
                 </li>
             </c:if>
-            <c:if test="${pageContext.request.isUserInRole('Recruiter')}">
+            <c:if test="${pageContext.request.isUserInRole('RecruiterRole')}">
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/ViewCandidates"><fmt:message key="label.viewCandidates" /></a>
                 </li>
