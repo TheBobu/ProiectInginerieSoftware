@@ -20,15 +20,15 @@
                 <a class="nav-link" href="${pageContext.request.contextPath}/JobPosts"><fmt:message key="label.jobs" /></a>
             </li>
             <c:if test="${pageContext.request.isUserInRole('AdminRole')}">
-                <li class="nav-item ${activePage eq 'Cars' ? ' active' : ''}">
+                <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/Administration"><fmt:message key="label.userManagement" /></a>
                 </li>
-                <li class="nav-item ${activePage eq 'Cars' ? ' active' : ''}">
+                <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/JobAdministration"><fmt:message key="label.jobManagement" /></a>
                 </li>
             </c:if>
             <c:if test="${pageContext.request.isUserInRole('CandidateRole')}">
-                <li class="nav-item ${activePage eq 'Users' ? ' active' : ''}">
+                <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/Profile"><fmt:message key="label.profile" /></a>
                 </li>
             </c:if>
