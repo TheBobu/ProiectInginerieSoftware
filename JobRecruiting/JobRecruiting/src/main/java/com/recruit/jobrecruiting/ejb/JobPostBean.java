@@ -11,6 +11,7 @@ import com.recruit.jobrecruiting.entity.JobPost;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.Type;
 import com.recruit.jobrecruiting.entity.User;
+import com.recruit.jobrecruiting.user.ejb.UserBean;
 import com.recruit.jobrecruiting.util.Detachable;
 import com.recruit.jobrecruiting.util.Util;
 import java.util.Arrays;
@@ -37,6 +38,9 @@ public class JobPostBean {
 
     @Inject
     private SkillBean skillBean;
+
+    @Inject
+    private UserBean userBean;
 
     public List<JobPostDetails> getAllJobPosts() {
         LOG.info("getAllJobPosts");
@@ -177,7 +181,7 @@ public class JobPostBean {
 
     }
 
-    public JobPostDetails copyJobPost(int id, Status status) {
+    public JobPostDetails copyJobPost(int id, Status status, String posterUsername) {
 
         LOG.info("copyJobPost," + id);
 
@@ -186,6 +190,10 @@ public class JobPostBean {
         JobPost copiedJobPost = (JobPost) jobPost.copy();
 
         copiedJobPost.setStatus(status);
+
+        User poster = userBean.getUserByUsername(posterUsername);
+
+        copiedJobPost.setPoster(poster);
 
         em.persist(copiedJobPost);
 

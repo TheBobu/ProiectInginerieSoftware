@@ -99,6 +99,9 @@ public class AddJobPost extends HttpServlet {
         User user = userBean.getUserByUsername(username);
         int poster = user.getId();
 
+        System.out.println("user");
+        System.out.println(username);
+
         JobPostValidator validator = new JobPostValidator(title, requirements, resposabilities, nopositionsAvailable, department, status, skills, type, salary);
 
         if (validator.passes(messageBag)) {

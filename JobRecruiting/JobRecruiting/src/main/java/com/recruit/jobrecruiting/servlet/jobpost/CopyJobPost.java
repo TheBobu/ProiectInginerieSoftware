@@ -64,8 +64,8 @@ public class CopyJobPost extends HttpServlet {
             status = Status.INACTIVE;
         }
 
-
-        int jobpost_id = jobPostBean.copyJobPost(id, status).getId();
+        String username = request.getRemoteUser();
+        int jobpost_id = jobPostBean.copyJobPost(id, status, username).getId();
 
         if (!request.isUserInRole("GeneralDirectorRole")) {
             sendEmail(request, jobpost_id);
