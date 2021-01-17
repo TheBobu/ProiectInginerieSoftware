@@ -17,6 +17,7 @@
 <%@attribute name="id"%>
 <%@attribute name="salary"%>
 <%@attribute name="type"%>
+<%@attribute name="hasApplied"%>
 
 <div class="text-center col-11 bg-white position-relative shadow-sm rounded">
     <t:ifHasRole role="RecruiterRole">
@@ -39,7 +40,7 @@
         <div class="card-text">
             <p class="card-text mt-1 ">Salary: <span style="font-weight:bold">${salary}$</span></p>
             <c:choose>
-                <c:when test="${pageContext.request.getRemoteUser()==null}">
+                <c:when test="${!hasApplied}">
                     <a href="${pageContext.request.contextPath}/ApplyForJob?jobid=${id}" class="mt-1 me-3 btn  btn-success fs-5">
                         Apply
                     </a>

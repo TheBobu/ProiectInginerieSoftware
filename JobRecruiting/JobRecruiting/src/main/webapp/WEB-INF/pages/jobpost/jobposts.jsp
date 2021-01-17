@@ -31,6 +31,7 @@
                     copyLink="${pageContext.request.contextPath}/JobPost/Copy?id=${jobpost.id}"
                     editLink="${pageContext.request.contextPath}/JobPost/Edit?id=${jobpost.id}"
                     id="${jobpost.id}"
+                    hasApplied="${false}"
                     />
             </div>
         </c:forEach>

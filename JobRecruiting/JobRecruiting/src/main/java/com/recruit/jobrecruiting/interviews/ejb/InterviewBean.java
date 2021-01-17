@@ -9,7 +9,9 @@ import com.recruit.jobrecruiting.common.InterviewDetails;
 import com.recruit.jobrecruiting.ejb.JobPostBean;
 import com.recruit.jobrecruiting.entity.Interview;
 import com.recruit.jobrecruiting.entity.InterviewStatus;
+import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
+import com.recruit.jobrecruiting.util.Util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -22,7 +24,7 @@ import javax.persistence.TypedQuery;
 
 /**
  *
- * @author Doly
+ * @author Doly, DENISA
  */
 
 @Stateless
@@ -74,6 +76,21 @@ public class InterviewBean {  //DB->
         }
         return detailsList;
     }
-    
-    
+
+    public void createInterview(String _jobPostId, String username) {
+        try {
+            Interview interview = new Interview();
+
+            interview.setStatus(InterviewStatus.APPLIED_FOR);
+
+            Integer jobPostId = Util.number(_jobPostId);
+            interview.setJobPost(jobPostBean.getJobPostEntity(jobPostId));
+
+            User user = userBean.getUserByUsername(username);
+            interview.setCandidate(user);
+        } catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+
+    }
 }

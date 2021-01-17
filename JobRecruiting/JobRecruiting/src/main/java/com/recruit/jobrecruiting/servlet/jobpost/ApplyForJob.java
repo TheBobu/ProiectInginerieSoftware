@@ -5,8 +5,8 @@
  */
 package com.recruit.jobrecruiting.servlet.jobpost;
 
-import com.recruit.jobrecruiting.ejb.InterviewBean;
 import com.recruit.jobrecruiting.ejb.JobPostBean;
+import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
 import com.recruit.jobrecruiting.validators.ApplicationValidator;
 import com.recruit.jobrecruiting.validators.Validator;
 import java.io.IOException;
