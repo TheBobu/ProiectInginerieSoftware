@@ -15,7 +15,6 @@
             <form method="POST" enctype="multipart/form-data" class="needs-validation" action="${pageContext.request.contextPath}/Profile/Update">
                 <div class="media clearfix">
                     <div class="row">
-
                         <div class="media-left col-sm-3">
                          
                             <img class="media-object" src="${pageContext.request.contextPath}/ProfilePicture?id=${user.id}&typeId=0" width="300" alt="...">
@@ -33,7 +32,6 @@
                                         <h6 class="mb-0">Full Name</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-
                                         <h6 class="mb-0"> <input type="text" class="form-control" name="firstName" value="${user.firstName}"  placeholder="First Name"></h6>
                                         <h6 class="mb-0"> <input type="text" class="form-control" name="lastName" value="${user.lastName}" placeholder="Last Name"></h6>
                                     </div>
@@ -104,19 +102,16 @@
                                     <div class="col-xl col-md-4" style="float:right;">
                                         <a href="${pageContext.request.contextPath}/PasswordReseter?id=${user.id}"   role="button" class=" btn btn-profile btn-profile">Change Password</a>
                                         <button class=" btn btn-profile"  type="submit">Update profile</button>
-
                                     </div>
                                 
                                   
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>                   
         </div>
         <div class="row">
-
             <div class="col-md-4">
                 <div class="panel">
                     <div class="panel-heading">
@@ -131,7 +126,6 @@
                         </p>
                     </div>
                 </div>
-
                 <div class="panel">
                     <div class="panel-heading">
                         <span class="panel-icon">
@@ -140,7 +134,6 @@
                         <span class="panel-title"> My Skills</span>
                     </div>
                     <div class="panel-body pb5">
-
                         <ul id="faves">
                             <li>C#</li>
                             <li>Java</li>
@@ -150,11 +143,8 @@
                             <label for="name" class="form-label">Name</label>
                             <input type="text" minlength=6 class="form-control" id="add" name="name"  >
                             <input type="button" id="btnAdd" value="Add" onclick="addItem()">
-
                             <t:displayError error="name"/>
                         </div>
-
-
                     </div>
                 </div>
                 <div class="panel">
@@ -178,7 +168,6 @@
                     </ul>
                     <div class="tab-content p30" style="height: 578px;">
                         <div id="tab1" class="tab-pane active">
-
                         </div>
                         <div id="tab2" class="tab-pane"></div>
                         <div id="tab3" class="tab-pane"></div>
@@ -188,8 +177,6 @@
             </div>
         </div>
     </section>
-
-
     <script>
         (function () {
             'use strict'
@@ -209,18 +196,14 @@
             }, false)
         })()
     </script>
-
-
     <script>
         function addItem() {
             var li = document.createElement("LI");
             var input = document.getElementById("add");
             li.innerHTML = input.value;
             input.value = "";
-
             document.getElementById("faves").appendChild(li);
         }
     </script>
-
     <input type="button" id="btnAdd" value="Add" onclick="addItem()">
 </t:pageTemplate>

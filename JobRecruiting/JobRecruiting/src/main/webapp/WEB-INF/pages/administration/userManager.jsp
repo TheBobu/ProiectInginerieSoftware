@@ -38,7 +38,7 @@
             <div class="col-md-3">
             <form method="POST" action="${pageContext.request.contextPath}/PasswordReseter">
                 <input type="hidden" name="id" value="${user.id}">
-                <input type="submit" value="<fmt:message key="label.userManager.passreset" />">
+                <input class="btn btn-secondary" type="submit" value="<fmt:message key="label.userManager.passreset" />">
             </form>
             </div>
         </div>

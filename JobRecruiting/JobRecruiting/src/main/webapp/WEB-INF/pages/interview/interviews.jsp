@@ -7,14 +7,16 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<style><%@include file="/WEB-INF/css/main.css"%></style>
+<style><%@include file="/WEB-INF/css/management.css"%></style>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages" />
 
 <t:pageTemplate pageTitle="Interviews">
 
-    <h1 class="mb-4"><fmt:message key="label.interviews.title" /></h1>
+  
+ <div class="container-management">
     <c:forEach var="interview" items="${interviews}">
         <div class="row">
             <div class="col-md">
@@ -48,4 +50,5 @@
             
         </div>
     </c:forEach>
+</div>
 </t:pageTemplate>

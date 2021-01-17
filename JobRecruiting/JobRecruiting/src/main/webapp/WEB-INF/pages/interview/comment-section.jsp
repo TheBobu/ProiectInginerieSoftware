@@ -9,7 +9,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style><%@include file="/WEB-INF/css/comment.css"%></style>
 <style><%@include file="/WEB-INF/css/main.css"%></style>
-
+<style><%@include file="/WEB-INF/css/management.css"%></style>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages" />
@@ -17,8 +17,9 @@
 <!DOCTYPE html>
 <t:pageTemplate pageTitle="Comment-section">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    
     <section class="content-item" id="comments">
-        <div class="container">   
+        <div class="container-management">   
             <div class="row">
                 <div class="col-sm-8">   
                    
