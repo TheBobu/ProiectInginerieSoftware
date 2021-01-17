@@ -85,9 +85,8 @@ public class InterviewBean {  //DB->
         return interviewDetails;
     }
     
-    public InterviewDetails getInterviewById(Integer id){
-        Interview interview=em.find(Interview.class, id);
-        return copyInterviewToDetails(interview);
+    public Interview getInterviewById(Integer id){
+        return em.find(Interview.class, id);
     }
 //    private List<InterviewLightDetails> copyInterviewToLightDetails(List<Interview> interviews) {
 //        List<InterviewLightDetails> lightDetailsList = new ArrayList<>();
