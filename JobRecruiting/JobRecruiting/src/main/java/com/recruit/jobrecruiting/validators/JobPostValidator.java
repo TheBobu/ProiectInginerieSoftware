@@ -24,11 +24,10 @@ public class JobPostValidator extends Validator {
     private String type;
     private String salary;
 
-    public JobPostValidator(String title, String description, String noOfPositionsAvailable, String noOfPositionsFilled, String department, String status, String[] skills, String type, String salary) {
+    public JobPostValidator(String title, String description, String noOfPositionsAvailable, String department, String status, String[] skills, String type, String salary) {
         this.title = title;
         this.description = description;
         this.noOfPositionsAvailable = noOfPositionsAvailable;
-        this.noOfPositionsFilled = noOfPositionsFilled;
         this.department = department;
         this.status = status;
         this.skills = skills;
@@ -42,7 +41,6 @@ public class JobPostValidator extends Validator {
         title();
         description();
         noOfPositionsAvailable();
-        noOfPositionsFilled();
         status();
         department();
         skills();
@@ -77,18 +75,6 @@ public class JobPostValidator extends Validator {
         if (result == false) {
             messageBag.put("noOfPositionsAvailable", "Please provide a valid number of position available");
 
-        }
-    }
-
-    /**
-     * Validator for jobpost number of positions filled
-     */
-    private void noOfPositionsFilled() {
-
-        Boolean result = (noOfPositionsFilled.equals("")) || Rules.isNumber(noOfPositionsFilled) && Rules.greaterThan(Util.number(noOfPositionsFilled), -1);
-
-        if (result == false) {
-            messageBag.put("noOfPositionsFilled", "Please provide a valid number of positions filled");
         }
     }
 

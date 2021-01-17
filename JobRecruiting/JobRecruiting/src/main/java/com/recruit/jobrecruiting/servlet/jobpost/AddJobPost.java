@@ -92,17 +92,16 @@ public class AddJobPost extends HttpServlet {
         }
 
         String nopositionsAvailable = request.getParameter("noOfPositionsAvailable");
-        String noOfPositionsFilled = request.getParameter("noOfPositionsFilled");
         String type = request.getParameter("type");
         String salary = request.getParameter("salary");
 
         User user = userBean.getUserByUsername(username);
         int poster = user.getId();
 
-        JobPostValidator validator = new JobPostValidator(title, description, nopositionsAvailable, noOfPositionsFilled, department, status, skills, type, salary);
+        JobPostValidator validator = new JobPostValidator(title, description, nopositionsAvailable, department, status, skills, type, salary);
 
         if (validator.passes(messageBag)) {
-            int jobpost_id = jobPostBean.createJobPost(title, description, noOfPositionsFilled, nopositionsAvailable, skills, department, poster, status, type, salary).getId();
+            int jobpost_id = jobPostBean.createJobPost(title, description, nopositionsAvailable, skills, department, poster, status, type, salary).getId();
             if (!request.isUserInRole("GeneralDirectorRole")) {
                 sendEmail(request, jobpost_id);
             }

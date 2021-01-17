@@ -36,11 +36,6 @@
             </select>
             <t:displayError error="department"/>
         </div>
-        <div class="form-group mb-4">
-            <label for="noOfPositionsFilled" class="form-label">Positions occupied</label>
-            <input type="number" class="form-control" min=0 value ="${jobPost.noOfPositionsFilled}" id="noOfPositionsFilled" name="noOfPositionsFilled">
-            <t:displayError error="noOfPositionsFilled"/>
-        </div>
 
         <div class="form-group mb-4">
             <label for="description" class="form-label">Description</label>

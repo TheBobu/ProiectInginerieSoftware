@@ -96,14 +96,13 @@ public class EditJobPost extends HttpServlet {
         String[] skills = request.getParameterValues("skills");
         String status = request.getParameter("status");
         String nopositionsAvailable = request.getParameter("noOfPositionsAvailable");
-        String noOfPositionsFilled = request.getParameter("noOfPositionsFilled");
         String type = request.getParameter("type");
         String salary = request.getParameter("salary");
 
-        JobPostValidator validator = new JobPostValidator(title, description, nopositionsAvailable, noOfPositionsFilled, department, status, skills, type, salary);
+        JobPostValidator validator = new JobPostValidator(title, description, nopositionsAvailable, department, status, skills, type, salary);
 
         if (validator.passes(messageBag)) {
-            JobPostDetails jobPost = jobPostBean.editJobPost(id, title, description, noOfPositionsFilled, nopositionsAvailable, skills, department, status, type, salary);
+            JobPostDetails jobPost = jobPostBean.editJobPost(id, title, description, nopositionsAvailable, skills, department, status, type, salary);
             List<String> emails = viewCandidateBean.getAllCandidateEmail(id);
             if (jobPost.getStatus() == Status.INACTIVE) {
                 sendModifiedJobPostEmail(request, emails, id, "Job Post closed");

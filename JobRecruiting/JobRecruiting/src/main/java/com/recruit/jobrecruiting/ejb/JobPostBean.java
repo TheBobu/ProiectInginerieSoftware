@@ -96,7 +96,7 @@ public class JobPostBean {
         }
     }
 
-    public JobPostDetails createJobPost(String title, String description, String noOfPositionsFilled, String noOfPositionsAvailable, String[] skillIds, String department, int poster, String status, String type, String salary) {
+    public JobPostDetails createJobPost(String title, String description, String noOfPositionsAvailable, String[] skillIds, String department, int poster, String status, String type, String salary) {
 
         LOG.info("createJobPost");
         JobPost jobPost = new JobPost();
@@ -105,7 +105,6 @@ public class JobPostBean {
         jobPost.setDescription(description);
         User user = em.find(User.class, poster);
         jobPost.setPoster(user);
-        jobPost.setNoOfPositionsFilled(Util.number(noOfPositionsFilled));
 
         jobPost.setNoOfPositionsAvailable(Util.number(noOfPositionsAvailable));
         jobPost.setDepartment(Department.valueOf(department));
@@ -129,7 +128,7 @@ public class JobPostBean {
         }
     }
 
-    public JobPostDetails editJobPost(int id, String title, String description, String noOfPositionsFilled, String noOfPositionsAvailable, String[] skillIds, String department, String status, String type, String salary) {
+    public JobPostDetails editJobPost(int id, String title, String description, String noOfPositionsAvailable, String[] skillIds, String department, String status, String type, String salary) {
 
         LOG.info("editJobPost");
         try {
@@ -137,7 +136,6 @@ public class JobPostBean {
             jobPost.setTitle(title);
             jobPost.setDescription(description);
             jobPost.setDepartment(Department.valueOf(department));
-            jobPost.setNoOfPositionsFilled(Util.number(noOfPositionsFilled));
             jobPost.setNoOfPositionsAvailable(Util.number(noOfPositionsAvailable));
 
             setJobpostStatus(jobPost, status);
