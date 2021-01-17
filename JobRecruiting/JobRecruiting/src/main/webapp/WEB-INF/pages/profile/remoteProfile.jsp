@@ -8,6 +8,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style><%@include file="/WEB-INF/css/profile.css"%></style>
 
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages" />
+
 <t:pageTemplate pageTitle="Login">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -22,11 +26,11 @@
                     <div class="media-body col-sm-9">
                         <div class="card-body">
                             <h2 class="media-heading">${user.firstName} ${user.lastName}  
-                                <small> - Profile</small>
+                                <small><fmt:message key="label.remoteProfile.profile" /></small>
                             </h2>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 >Full Name</h6>
+                                    <h6><fmt:message key="label.remoteProfile.fullName" /></h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${user.firstName} ${user.lastName} 
@@ -35,7 +39,7 @@
                             <hr />
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6>Email</h6>
+                                    <h6><fmt:message key="label.remoteProfile.email" /></h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${user.email}
@@ -44,7 +48,7 @@
                             <hr />
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 >Birth Date</h6>
+                                    <h6><fmt:message key="label.remoteProfile.birthday" /></h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${user.birthDate} 
@@ -53,7 +57,7 @@
                             <hr />
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6>User Type</h6>
+                                    <h6><fmt:message key="label.remoteProfile.userType" /></h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${user.position} 
@@ -62,7 +66,7 @@
                             <hr />
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 >Address</h6>
+                                    <h6><fmt:message key="label.remoteProfile.address" /></h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${ user.address }
@@ -71,7 +75,7 @@
                             <hr />
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6>Department</h6>
+                                    <h6><fmt:message key="label.remoteProfile.department" /></h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${user.department}
@@ -79,7 +83,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-xl">
-                                <a  target="_blank" href="${pageContext.request.contextPath}/ProfilePicture?id=${user.id}&typeId=1" class="col-xl btn btn-profile btn-primary"  role="button">Download CV</a>
+                                <a  target="_blank" href="${pageContext.request.contextPath}/ProfilePicture?id=${user.id}&typeId=1" class="col-xl btn btn-profile btn-primary"  role="button"><fmt:message key="label.remoteProfile.downloadCV" /></a>
                                 </div>
                            
                          
@@ -96,7 +100,7 @@
                         <span class="panel-icon">
                             <i class="fa fa-star"></i>
                         </span>
-                        <span class="panel-title"> About Me</span>
+                        <span class="panel-title"><fmt:message key="label.remoteProfile.aboutMe" /></span>
                     </div>
                     <div class="panel-body pn">
                         <p> ${user.shortBio}
@@ -108,7 +112,7 @@
                         <span class="panel-icon">
                             <i class="fa fa-trophy"></i>
                         </span>
-                        <span class="panel-title"> My Skills</span>
+                        <span class="panel-title"><fmt:message key="label.remoteProfile.mySkills" /></span>
                     </div>
                     <div class="panel-body pb5">
                         <ul id="faves">
@@ -123,7 +127,7 @@
                         <span class="panel-icon">
                             <i class="fa fa-pencil"></i>
                         </span>
-                        <span class="panel-title">My Experience</span>
+                        <span class="panel-title"><fmt:message key="label.remoteProfile.myExperience" /></span>
                     </div>
                     <div class="panel-body pb5">
                         <p>${user.userExperience}</p>

@@ -7,7 +7,9 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style><%@include file="/WEB-INF/css/profile.css"%></style>
-
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages" />
 <t:pageTemplate pageTitle="Login">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -22,11 +24,11 @@
                     <div class="media-body col-sm-9">
                         <div class="card-body">
                             <h2 class="media-heading">${user.firstName} ${user.lastName}  
-                                <small> - Profile</small>
+                                <small> - <fmt:message key="label.profile.title" /></small>
                             </h2>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 >Full Name</h6>
+                                    <h6 ><fmt:message key="label.profile.name" /></h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${user.firstName} ${user.lastName} 
@@ -35,7 +37,7 @@
                             <hr />
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6>Email</h6>
+                                    <h6><fmt:message key="label.profile.email" /></h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${user.email}
@@ -44,7 +46,7 @@
                             <hr />
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 >Birth Date</h6>
+                                    <h6 ><fmt:message key="label.profile.date" /></h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${user.birthDate} 
@@ -53,7 +55,7 @@
                             <hr />
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6>User Type</h6>
+                                    <h6><fmt:message key="label.profile.type" /></h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${user.position} 
@@ -62,7 +64,7 @@
                             <hr />
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 >Address</h6>
+                                    <h6 ><fmt:message key="label.profile.address" /></h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${ user.address }
@@ -71,7 +73,7 @@
                             <hr />
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6>Department</h6>
+                                    <h6><fmt:message key="label.profile.department" /></h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${user.department}
@@ -79,11 +81,11 @@
                             </div>
                             <div class="row">
                                 <div class="col-xl">
-                                    <a  target="_blank" href="${pageContext.request.contextPath}/ProfilePicture?id=${user.id}&typeId=1" class="col-xl btn btn-profile btn-primary"  role="button">Download CV</a>
+                                    <a  target="_blank" href="${pageContext.request.contextPath}/ProfilePicture?id=${user.id}&typeId=1" class="col-xl btn btn-profile btn-primary"  role="button"><fmt:message key="label.profile.cv" /></a>
                                 </div>
 
                                 <div class="col-xl">
-                                    <a href="${pageContext.request.contextPath}/Profile/Update" role="button" class=" btn-profile col-xl btn btn-primary">Edit User</a>
+                                    <a href="${pageContext.request.contextPath}/Profile/Update" role="button" class=" btn-profile col-xl btn btn-primary"><fmt:message key="label.profile.edit" /></a>
                                 </div>
                             </div>
                         </div>
@@ -98,7 +100,7 @@
                         <span class="panel-icon">
                             <i class="fa fa-star"></i>
                         </span>
-                        <span class="panel-title"> About Me</span>
+                        <span class="panel-title"><fmt:message key="label.profile.about" /></span>
                     </div>
                     <div class="panel-body pn">
                         <p> ${user.shortBio}
@@ -110,7 +112,7 @@
                         <span class="panel-icon">
                             <i class="fa fa-trophy"></i>
                         </span>
-                        <span class="panel-title"> My Skills</span>
+                        <span class="panel-title"><fmt:message key="label.profile.skills" /></span>
                     </div>
                     <div class="panel-body pb5">
                         <ul id="faves">
@@ -125,7 +127,7 @@
                         <span class="panel-icon">
                             <i class="fa fa-pencil"></i>
                         </span>
-                        <span class="panel-title">My Experience</span>
+                        <span class="panel-title"><fmt:message key="label.profile.xp" /></span>
                     </div>
                     <div class="panel-body pb5">
                         <p>${user.userExperience}</p>
@@ -137,10 +139,10 @@
 
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class=" nav-item " role="presentation">
-                            <a class="nav-link active" id="interviews-tab" data-toggle="tab" href="#interviews" role="tab" aria-controls="interviews" aria-selected="true">My Interviews</a>
+                            <a class="nav-link active" id="interviews-tab" data-toggle="tab" href="#interviews" role="tab" aria-controls="interviews" aria-selected="true"><fmt:message key="label.profile.interviews" /></a>
                         </li>
                         <li class=" nav-item " role="presentation">
-                            <a class="nav-link" id="applications-tab" data-toggle="tab" href="#applications" role="tab" aria-controls="applications" aria-selected="false">My applications</a>
+                            <a class="nav-link" id="applications-tab" data-toggle="tab" href="#applications" role="tab" aria-controls="applications" aria-selected="false"><fmt:message key="label.profile.applications" /></a>
                         </li>
 
                     </ul>
@@ -160,7 +162,9 @@
                                                     ${interview.interviewStatus}
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <a href="${pageContext.request.contextPath}/Comment?id=${interview.id}" role="button" class=" btn-profile col-xl btn btn-primary">View Interview</a>
+
+                                                    <a href="${pageContext.request.contextPath}/Comment?id=${interview.id}" role="button" class=" btn-profile col-xl btn btn-primary"><fmt:message key="label.profile.viewInt" /></a>
+
                                                 </div></div>
                                         </div>
                                     </div>
@@ -182,7 +186,7 @@
                                                     ${interview.interviewStatus}
                                                 </div>
                                                 <div class="col-md-5">
-                                                    <a href="#" role="button" class=" btn-profile col-xl btn btn-primary">View Application</a>
+                                                    <a href="#" role="button" class=" btn-profile col-xl btn btn-primary"><fmt:message key="label.profile.viewApp" /></a>
                                                 </div></div>
                                         </div>
                                     </div>

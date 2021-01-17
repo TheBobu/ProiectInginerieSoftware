@@ -8,9 +8,13 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages" />
+
 <t:pageTemplate pageTitle="Interviews">
 
-    <h1 class="mb-4">Interviews</h1>
+    <h1 class="mb-4"><fmt:message key="label.interviews.title" /></h1>
     <c:forEach var="interview" items="${interviews}">
         <div class="row">
             <div class="col-md">
@@ -37,7 +41,7 @@
                 <c:when test="${interview.isAppliedFor()}">    
                 </c:when>
                 <c:otherwise>      
-                    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/Comment?id=${interview.id}" role="button">View details</a>               
+                        <a class="btn btn-secondary" href="${pageContext.request.contextPath}/Comment?id=${interview.id}" role="button"><fmt:message key="label.interviews.viewconversation" /></a>               
                 </c:otherwise>
             </c:choose>
             </div>
