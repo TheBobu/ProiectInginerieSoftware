@@ -8,6 +8,10 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages" />
+
 <t:pageTemplate pageTitle="Candidates">
 
     <h1 class="mb-4">Candidates</h1>
@@ -22,11 +26,11 @@
             </div>
             
             <div class="col-md">
-                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/Profile?id=${candidate.candidate.id}" role="button">View profile</a>
+                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/Profile?id=${candidate.candidate.id}" role="button"><fmt:message key="label.viewCandidates.viewProfile" /></a>
             </div>
             
             <div class="col-md"> <%-------------------TO DO---------------------------------%>
-                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/Comment?id=${candidate.id}" role="button">Plan an interview</a>
+                <a class="btn btn-secondary" href="${pageContext.request.contextPath}/Comment?id=${candidate.id}" role="button"><fmt:message key="label.viewCandidates.planInterview" /></a>
             </div>
         </div>
     </c:forEach>
