@@ -18,7 +18,6 @@
   </security-role-mapping>
   <security-role-mapping>
     <role-name>DepartmentDirectorRole</role-name>
-    <group-name>ADMIN</group-name>
     <group-name>GENERAL_DIRECTOR</group-name>
     <group-name>DEPARTMENT_DIRECTOR</group-name>
   </security-role-mapping>

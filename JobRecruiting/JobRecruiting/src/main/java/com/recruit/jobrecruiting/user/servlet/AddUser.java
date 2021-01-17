@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -35,6 +36,7 @@ public class AddUser extends HttpServlet {
 
     @Inject
     UserBean userBean;
+    
     @Inject
     EmailBean emailBean;
 
@@ -67,13 +69,14 @@ public class AddUser extends HttpServlet {
             String username = request.getParameter("username");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
+            String passwordAgain = request.getParameter("passwordAgain");
             LocalDate birthDate = LocalDate.parse(request.getParameter("birthDate"));
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
             String address = request.getParameter("address");
              String shortBio = request.getParameter("shortBio");
             HashMap<String, String> messageBag = new HashMap<>();
-            UserValidator validator = new UserValidator(username, email, password, birthDate, firstName, lastName, address, userBean);
+            UserValidator validator = new UserValidator(username, email, password, passwordAgain, birthDate, firstName, lastName, address, userBean);
 
             if (validator.passes(messageBag)) {
                 Integer id = userBean.createUser(username, email, password, birthDate, firstName, lastName, address,shortBio);
@@ -93,18 +96,18 @@ public class AddUser extends HttpServlet {
                 fileContent = new byte[(int) fileSize];
                 filePart.getInputStream().read(fileContent);
                 userBean.addCv(id, fileName, fileType, fileContent);
-                
+
                 emailBean.sendEmail(email, "Job Recruiting Platform", "Your account was succesfully created. Please wait for the administrator to activate your account. Thank you!");
                 response.sendRedirect(request.getContextPath());
             } else {
-                request.getSession().setAttribute("errors", messageBag);
-                response.sendRedirect(request.getHeader("Referer"));
+                request.setAttribute("errors", messageBag);
+                request.getRequestDispatcher("/WEB-INF/pages/user/addUser.jsp").include(request, response);
             }
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(AddUser.class.getName()).log(Level.SEVERE, null, ex);
             System.out.print(ex);
         }
-        
+
     }
 
     /**

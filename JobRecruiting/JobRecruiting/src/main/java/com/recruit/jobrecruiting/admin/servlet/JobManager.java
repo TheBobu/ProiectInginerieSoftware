@@ -6,7 +6,7 @@
 package com.recruit.jobrecruiting.admin.servlet;
 
 import com.recruit.jobrecruiting.common.JobPostDetails;
-import com.recruit.jobrecruiting.ejb.JobPostBean;
+import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
 import com.recruit.jobrecruiting.entity.JobPost;
 import com.recruit.jobrecruiting.entity.Position;
 import com.recruit.jobrecruiting.entity.User;

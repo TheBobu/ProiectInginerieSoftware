@@ -162,7 +162,9 @@
                                                     ${interview.interviewStatus}
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <a href="#" role="button" class=" btn-profile col-xl btn btn-primary"><fmt:message key="label.profile.viewInt" /></a>
+
+                                                    <a href="${pageContext.request.contextPath}/Comment?id=${interview.id}" role="button" class=" btn-profile col-xl btn btn-primary"><fmt:message key="label.profile.viewInt" /></a>
+
                                                 </div></div>
                                         </div>
                                     </div>

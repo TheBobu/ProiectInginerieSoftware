@@ -15,8 +15,48 @@
 <fmt:setBundle basename="messages" />
 
 <!DOCTYPE html>
-<t:pageTemplate pageTitle="Comment-section">
+<t:pageTemplate pageTitle="Interview details">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <h1 class="mb-4">Interview details</h1>
+    
+    
+    <section class="content-item" id="details">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="mb-4">Job Post: ${interview.jobPost.title}</h3>
+                    <h3 class="mb-4">Candidate: ${interview.candidate.getName()} </h3>
+                    <h3 class="mb-4">Interviewer: ${interview.interviewer.getName()}</h3>
+                    <h3 class="mb-4">Interview status: ${interview.status}</h3> 
+                </div>
+                <div class="col-md-6">
+                    <c:if test="${interview.status=='WAITING_INTERVIEW_DATE'}">
+                        <h3>Date: not established yet</h3>
+                        <c:if test="${user.position!='CANDIDATE'}">
+                            <form method="POST" enctype="multipart/form-data" action="#">
+                                <h3 class="mb-4"><label> Date and time: </label>
+                                                 <input type="datetime" value="${interview.dateTime}" required></h3>
+                                <h3 class="mb-4"><label> Place: </label>
+                                                 <input type="text" value="${interview.place}" required></h3>
+                                <button class=" btn btn-profile col-xl btn btn-primary"  type="submit">Save the date</button>
+<!--<a href="${pageContext.request.contextPath}/Comment?id=${interview.id}" role="button" class=" btn-profile col-xl btn btn-primary">View Interview</a>-->
+                            </form>
+                        </c:if>
+                    </c:if>
+                    <c:if test="${interview.status=='BEFORE_INTERVIEW'}">
+                        <h3>Date & time: ${interview.dateTime}</h3>
+                        <h3>Place: ${interview.place}</h3>
+                        <c:if test="${user.position!='CANDIDATE'}">
+                            <form method="POST" enctype="multipart/form-data" action="#">
+                                <button class=" btn btn-profile"  type="submit">Request change</button>
+                            </form>
+                        </c:if>
+                    </c:if>
+                </div>
+            </div>
+    </section>
+
+
     <section class="content-item" id="comments">
         <div class="container">   
             <div class="row">
