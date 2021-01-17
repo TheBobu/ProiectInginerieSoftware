@@ -15,6 +15,13 @@ public abstract class Validator {
 
     HashMap<String, String> messageBag;
 
+    /**
+     * This method is used to validate would-be property values before creating
+     * or editing an entity
+     *
+     * @param messageBag this is where the error messages will be stored
+     * @return bool whether all values valid or not
+     */
     public Boolean passes(HashMap<String, String> messageBag) {
         this.messageBag = messageBag;
         validate();

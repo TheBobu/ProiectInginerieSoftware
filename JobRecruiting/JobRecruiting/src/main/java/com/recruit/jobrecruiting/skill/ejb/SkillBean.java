@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.recruit.jobrecruiting.ejb;
+package com.recruit.jobrecruiting.skill.ejb;
 
 import com.recruit.jobrecruiting.common.SkillDetails;
 import com.recruit.jobrecruiting.entity.Skill;
@@ -18,8 +18,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 /**
+ * EJB for {@link Skill} Entity.
  *
- * @author DENISA
+ * @author DENISA, robert
  */
 @Stateless
 public class SkillBean {
@@ -55,5 +56,36 @@ public class SkillBean {
         Skill skill = new Skill();
         skill.setName(name);
         em.persist(skill);
+    }
+
+    /**
+     * Gets a specific skill based on its id
+     *
+     * @param id the id of the skill you want to get
+     * @return Returns the skill
+     * @throws EJBException when the id could not be found
+     */
+    public SkillDetails getSkill(Integer id) throws EJBException {
+        try {
+            return em.find(Skill.class, id).detach();
+        } catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+    }
+
+    /**
+     * Edits a skill
+     *
+     * @param id the id of the skill to be edited
+     * @param updatedName the new name of the skill
+     * @throws EJBException when the id could not be found
+     */
+    public void updateSkill(Integer id, String updatedName) throws EJBException {
+        try {
+            Skill skill = em.find(Skill.class, id);
+            skill.setName(updatedName);
+        } catch (Exception ex) {
+            throw new EJBException(ex);
+        }
     }
 }

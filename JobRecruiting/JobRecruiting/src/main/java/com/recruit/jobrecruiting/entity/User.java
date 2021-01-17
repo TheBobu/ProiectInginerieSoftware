@@ -78,7 +78,7 @@ public class User implements Serializable {
     private Status status;
 
     @Enumerated(EnumType.STRING)
-    private Position position = Position.CANDIDATE;
+    private Position position;
 
     @Enumerated(EnumType.STRING)
     private Department department;
@@ -148,6 +148,9 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
+    public String getName(){
+        return this.getFirstName()+" "+this.getLastName();
+    }
     public String getAddress() {
         return address;
     }

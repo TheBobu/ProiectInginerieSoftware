@@ -16,6 +16,7 @@
     <c:if test="${jobPost.id != null }">
         <input type="hidden" name="id" value="${jobPost.id }">
     </c:if>
+    <input type="hidden" name="previous" value="${previous}">
 
     <div class="col-md-6 ">
         <div class="form-group mb-4">
@@ -26,7 +27,6 @@
         <div class="form-group mb-4">
             <label for="department" class="form-label">Department</label>
             <select class="form-select" id="department" name="department" required>
-                <option value="" disabled selected>Choose...</option>
                 <c:forEach var = "department" items = "${departments}">
                     <option value="${department}"
                             <c:if test="${department eq jobPost.department}">
@@ -37,40 +37,40 @@
             </select>
             <t:displayError error="department"/>
         </div>
-        <div class="form-group mb-4">
-            <label for="noOfPositionsFilled" class="form-label">Positions occupied</label>
-            <input type="number" class="form-control" min=0 value ="${jobPost.noOfPositionsFilled}" id="noOfPositionsFilled" name="noOfPositionsFilled">
-            <t:displayError error="noOfPositionsFilled"/>
-        </div>
 
         <div class="form-group mb-4">
-            <label for="description" class="form-label">Description</label>
-            <textarea type="text" wrap="hard" min=20 class="form-control" id="description" name="description" required>${jobPost.description}
+            <label for="requirements" class="form-label">Requirements</label>
+            <textarea type="text" wrap="hard" min=20 class="form-control" id="requirements" name="requirements" required>${jobPost.requirements}
             </textarea>
-            <t:displayError error="description"/>
+            <t:displayError error="requirements"/>
         </div>
-
-
         <div class="form-group mb-4">
-            <label for="status" class="form-label">Status</label>
-            <select class="form-select" id="status" name="status" required>
-                <option value="" disabled selected>Choose...</option>
-                <c:forEach var = "status" items = "${statuses}">
-                    <option value="${status}"
-                            <c:if test="${status eq jobPost.status}">
-                                selected
-                            </c:if>
-                            >${status.label}</option>
-                </c:forEach>
-            </select>
-            <t:displayError error="status"/>
+            <label for="resposabilities" class="form-label">Resposibilities</label>
+            <textarea type="text" wrap="hard" min=20 class="form-control" id="resposabilities" name="resposabilities" required>${jobPost.responsabilities}
+            </textarea>
+            <t:displayError error="responsabilities"/>
         </div>
+        
+        <c:if test="${isEdit&&(jobPost.statusShouldBeEditable() || pageContext.request.isUserInRole('GeneralDirectorRole'))}">
+            <div class="form-group mb-4">
+                <label for="status" class="form-label">Status</label>
+                <select class="form-select" id="status" name="status" required>
+                    <c:forEach var = "status" items = "${statuses}">
+                        <option value="${status}"
+                                <c:if test="${status eq jobPost.status}">
+                                    selected
+                                </c:if>
+                                >${status.label}</option>
+                    </c:forEach>
+                    <t:displayError error="status"/>
+                </select>
+            </div>
+        </c:if>
     </div>
     <div class="col-md-6">
         <div class="form-group mb-4">
             <label for="type" class="form-label">Type</label>
             <select class="form-select" id="type" name="type" required>
-                <option value="" disabled selected>Choose...</option>
                 <c:forEach var = "type" items = "${types}">
                     <option value="${type}"
                             <c:if test="${type eq jobPost.type}">

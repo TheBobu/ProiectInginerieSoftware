@@ -26,10 +26,10 @@
             <div class="col-md">
                 <c:choose>
                     <c:when test="${candidate}">    
-                        ${interview.getInterviewerFullName()}
+                        ${interview.interviewer.getName()}
                     </c:when>
                     <c:otherwise>
-                        ${interview.getCandidateFullName()}
+                        ${interview.candidate.getName()}
                     </c:otherwise>
                 </c:choose>
             </div>
