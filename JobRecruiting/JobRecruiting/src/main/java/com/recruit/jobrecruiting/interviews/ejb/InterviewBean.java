@@ -168,9 +168,8 @@ public class InterviewBean {
         InterviewDetails interviewDetails = new InterviewDetails(interview.getId(), interview.getJobPost(), interview.getCandidate(), interview.getInterviewer(), interview.getStatus());
         return interviewDetails;
     }
-
-    public InterviewDetails getInterviewById(Integer id) {
-        Interview interview = em.find(Interview.class, id);
-        return copyInterviewToDetails(interview);
+    
+    public Interview getInterviewById(Integer id){
+        return em.find(Interview.class, id);
     }
 }
