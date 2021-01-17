@@ -17,6 +17,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -66,7 +67,7 @@ public class SessionLocaleFilter implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("SessionFilter:DoAfterProcessing");
+            
         }
 
         // Write code here to process the request and/or response after
@@ -110,11 +111,13 @@ public class SessionLocaleFilter implements Filter {
         Throwable problem = null;
         try {
             HttpServletRequest req = (HttpServletRequest) request;
-        
             if (req.getParameter("sessionLocale") != null) {
                 req.getSession().setAttribute("lang", req.getParameter("sessionLocale"));
+                HttpServletResponse res= (HttpServletResponse) response;
+                res.sendRedirect(req.getContextPath());
             }
             chain.doFilter(request, response);
+            
         } catch (Throwable t) {
             // If an exception is thrown somewhere down the filter chain,
             // we still want to execute our after processing, and then
