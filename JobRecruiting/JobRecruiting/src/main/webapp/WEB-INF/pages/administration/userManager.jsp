@@ -31,6 +31,6 @@
 
     <form method="POST" action="${pageContext.request.contextPath}/PasswordReseter">
         <input type="hidden" name="id" value="${user.id}">
-        <input type="submit" value="<fmt:message key="label.jobManager.title" />">
+        <input type="submit" value="<fmt:message key="label.jobManager.passreset" />">
     </form>
 </t:pageTemplate>
