@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.recruit.jobrecruiting.jobpost.servlet;
+package com.recruit.jobrecruiting.jobPost.servlet;
 
 import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
 import com.recruit.jobrecruiting.entity.Status;
