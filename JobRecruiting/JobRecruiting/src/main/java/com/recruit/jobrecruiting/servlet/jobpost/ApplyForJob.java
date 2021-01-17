@@ -78,7 +78,7 @@ public class ApplyForJob extends HttpServlet {
                 String candidateurl = Util.getBaseUrl(request) + "/Profile?id=" + user.getId();
                 String body = interview.getCandidateFullName() + " has applied for " + joburl;
                 body += " .Here is a link to their profile: " + candidateurl;
-                emailBean.sendEmail(email, "Someone has applied to a job you created!", body);
+                emailBean.sendEmail(email, "Someone has applied to a job!", body);
             }).start();
         }
         response.sendRedirect(request.getContextPath() + "/JobPosts");
