@@ -68,7 +68,22 @@
 
         </div>
         <div class="">
-            <a class="btn btn-success"><span class="d-flex align-items-baseline"><i class="far fa-check-square me-2"></i> <span>Apply</span></span></a>
+            <c:if test="${jobpost.isAppliable()}">
+                <c:choose>
+                    <c:when test="${!jobPostsAppliedToIds.contains(jobpost.id)}">
+                        <a href="${pageContext.request.contextPath}/ApplyForJob?jobid=${jobpost.id}" class="btn btn-success">
+                            <span class="d-flex align-items-baseline">
+                                <i class="far fa-check-square me-2"></i> 
+                                <span>Apply</span>
+
+                            </span>
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <p><span class="badge bg-success">Applied</span></p>
+                    </c:otherwise>
+                </c:choose>
+            </c:if>
         </div>
 
         <h5 class="card-text mt-4">Cerinte:</h5>
@@ -79,7 +94,7 @@
                     </c:if>
                 </c:forEach>
         </ul>
-        
+
         <h5 class="card-text mt-4">Responsabilitati:</h5>
         <ul>
             <c:forEach var ="bullet" items = "${jobPost.bullets(jobPost.responsabilities)}">

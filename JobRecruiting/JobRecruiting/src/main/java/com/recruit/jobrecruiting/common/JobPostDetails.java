@@ -159,4 +159,8 @@ public class JobPostDetails {
         return Arrays.asList(string.split("~"));
     }
 
+    public boolean isAppliable() {
+        return status == Status.ACTIVE;
+    }
+
 }

@@ -8,6 +8,9 @@ package com.recruit.jobrecruiting.servlet.jobpost;
 
 import com.recruit.jobrecruiting.common.JobPostDetails;
 import com.recruit.jobrecruiting.ejb.JobPostBean;
+import com.recruit.jobrecruiting.entity.User;
+import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
+import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -29,6 +32,12 @@ public class JobPost extends HttpServlet {
     @Inject
     private JobPostBean jobPostBean;
 
+    @Inject
+    private InterviewBean interviewBean;
+
+    @Inject
+    private UserBean userBean;
+
     /** 
      * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
@@ -43,6 +52,9 @@ public class JobPost extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         JobPostDetails jobPost = jobPostBean.getJobPost(id);
         request.setAttribute("jobPost", jobPost);
+
+        User user = userBean.getUserByUsername(request.getRemoteUser());
+        request.setAttribute("jobPostsAppliedToIds", interviewBean.getAllJobPostsAsCandidate(user.getId()));
 
         request.getRequestDispatcher("/WEB-INF/pages/jobpost/jobpost.jsp").forward(request, response);
     } 

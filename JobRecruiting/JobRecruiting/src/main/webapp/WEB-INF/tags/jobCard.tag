@@ -16,7 +16,7 @@
 <%@attribute name="id"%>
 <%@attribute name="salary"%>
 <%@attribute name="type"%>
-<%@attribute name="hasApplied"%>
+<%@attribute name="appliable"%>
 
 <div class="text-center col-11 bg-white position-relative shadow-sm rounded">
     <t:ifHasRole role="RecruiterRole">
@@ -35,20 +35,12 @@
         <img src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
         <h5 class="mb-0"><a href="${viewLink}" class="text-decoration-none ">${title}</a></h5>
         <span class="small text-uppercase text-muted">${type}</span>
-       
-        <div class="card-text">
-            <p class="card-text mt-1 ">Salary: <span style="font-weight:bold">${salary}$</span></p>
-            <c:choose>
-                <c:when test="${!hasApplied}">
-                    <a href="${pageContext.request.contextPath}/ApplyForJob?jobid=${id}" class="mt-1 me-3 btn  btn-success fs-5">
-                        Apply
-                    </a>
-                </c:when>
-                <c:otherwise>
-                    <p>Applied</p>
-                </c:otherwise>
-            </c:choose>
 
+        <div class="card-text mt-3">
+            <p class="card-text mt-1 ">Salary: <span style="font-weight:bold">${salary}$</span></p>
+            <div class="mt-3">
+                <t:applyForJobButton id="${id}" appliable="${appliable}"/>
+            </div>
         </div>
     </div>
 </div>
