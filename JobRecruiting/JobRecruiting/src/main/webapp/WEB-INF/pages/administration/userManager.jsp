@@ -15,7 +15,7 @@
 
 <t:pageTemplate pageTitle="User">
 
-    <h1 class="mb-4"><fmt:message key="label.jobManager.title" /></h1>
+    <h1 class="mb-4"><fmt:message key="label.userManager.title" /></h1>
     <h3>${username}</h3>
     <form method="POST" action="${pageContext.request.contextPath}/UserManager">
         <select name="position" id="position">
@@ -26,11 +26,11 @@
         <input type="hidden" name="id" value="${user.id}">
         <input type="submit">
     </form>
-    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/UserActivator?id=${user.id}" role="button"><fmt:message key="label.jobManager.activate" />Activate User</a>
-    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/UserDeactivator?id=${user.id}" role="button"><fmt:message key="label.jobManager.deactivate" />Deactivate User</a>
+    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/UserActivator?id=${user.id}" role="button"><fmt:message key="label.userManager.activate" />Activate User</a>
+    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/UserDeactivator?id=${user.id}" role="button"><fmt:message key="label.userManager.deactivate" />Deactivate User</a>
 
     <form method="POST" action="${pageContext.request.contextPath}/PasswordReseter">
         <input type="hidden" name="id" value="${user.id}">
-        <input type="submit" value="<fmt:message key="label.jobManager.passreset" />">
+        <input type="submit" value="<fmt:message key="label.userManager.passreset" />">
     </form>
 </t:pageTemplate>
