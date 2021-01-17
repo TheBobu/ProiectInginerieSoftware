@@ -8,6 +8,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style><%@include file="/WEB-INF/css/comment.css"%></style>
+<style><%@include file="/WEB-INF/css/main.css"%></style>
 
 <!DOCTYPE html>
 <t:pageTemplate pageTitle="Comment-section">
