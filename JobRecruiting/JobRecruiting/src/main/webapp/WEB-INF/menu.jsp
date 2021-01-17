@@ -50,7 +50,6 @@
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="?sessionLocale=en">EN</a>
                     <a class="dropdown-item" href="?sessionLocale=ro">RO</a>
-                    <a class="dropdown-item" href="?sessionLocale=de">DE</a>
                 </div>
             </li>
             <c:choose>
