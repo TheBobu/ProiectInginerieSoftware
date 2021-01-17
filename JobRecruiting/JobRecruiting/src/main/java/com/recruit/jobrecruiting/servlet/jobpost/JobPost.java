@@ -11,6 +11,8 @@ import com.recruit.jobrecruiting.ejb.JobPostBean;
 import java.io.IOException;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DENISA
  */
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"CandidateRole"}))
 @WebServlet(name = "JobPost", urlPatterns = {"/JobPost"})
 public class JobPost extends HttpServlet {
 
