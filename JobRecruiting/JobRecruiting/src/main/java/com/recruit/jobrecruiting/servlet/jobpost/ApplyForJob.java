@@ -5,18 +5,12 @@
  */
 package com.recruit.jobrecruiting.servlet.jobpost;
 
-import com.recruit.jobrecruiting.common.InterviewDetails;
 import com.recruit.jobrecruiting.ejb.JobPostBean;
-import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
-import com.recruit.jobrecruiting.interviews.ejb.ViewCandidatesBean;
-import com.recruit.jobrecruiting.mail.EmailBean;
-import com.recruit.jobrecruiting.util.Util;
 import com.recruit.jobrecruiting.validators.ApplicationValidator;
 import com.recruit.jobrecruiting.validators.Validator;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.HttpConstraint;
@@ -40,13 +34,6 @@ public class ApplyForJob extends HttpServlet {
     @Inject
     private JobPostBean jobPostBean;
 
-    @Inject
-    ViewCandidatesBean viewCandidateBean;
-
-    @Inject
-    private EmailBean emailBean;
-
-
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -66,19 +53,7 @@ public class ApplyForJob extends HttpServlet {
         Validator validator = new ApplicationValidator(jobPost_id, jobPostBean);
 
         if (validator.passes(messageBag)) {
-            System.out.println("yooo");
-            InterviewDetails interview = interviewBean.createInterview(jobPost_id, username);
-            if (interview.getJobpost().getStatus() == Status.INACTIVE) {
-                List<String> emails = viewCandidateBean.getAllCandidateEmail(Integer.parseInt(jobPost_id));
-
-                new Thread(() -> {
-                    String url = Util.getBaseUrl(request) + "/JobPost?id=" + jobPost_id;
-                    emails.forEach((String email) -> {
-                        emailBean.sendEmail(email, "Position closed", url);
-                    });
-                }).start();
-
-            }
+            interviewBean.createInterview(jobPost_id, username);
         }
         response.sendRedirect(request.getContextPath() + "/JobPosts");
     }
