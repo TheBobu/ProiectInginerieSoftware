@@ -9,6 +9,9 @@ import com.recruit.jobrecruiting.common.JobPostDetails;
 import com.recruit.jobrecruiting.ejb.JobPostBean;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.Type;
+import com.recruit.jobrecruiting.entity.User;
+import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
+import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
@@ -31,6 +34,12 @@ public class JobPosts extends HttpServlet {
     @Inject
     private JobPostBean jobPostBean;
 
+    @Inject
+    private InterviewBean interviewBean;
+
+    @Inject
+    private UserBean userBean;
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -50,6 +59,11 @@ public class JobPosts extends HttpServlet {
         String salary = request.getParameter("salary");
         String status = request.getParameter("status");
 
+        User user = userBean.getUserByUsername(request.getRemoteUser());
+
+        List<Integer> jobPostsAppliedToIds = interviewBean.getAllJobPostsAsCandidate(user.getId());
+
+
 
         if (!request.isUserInRole("RecruiterRole")) {
             status = Status.ACTIVE.toString();
@@ -66,6 +80,8 @@ public class JobPosts extends HttpServlet {
         request.setAttribute("salary", salary);
         request.setAttribute("type", type);
         request.setAttribute("status", status);
+
+        request.setAttribute("jobPostsAppliedToIds", jobPostsAppliedToIds);
 
         System.out.println(status);
 

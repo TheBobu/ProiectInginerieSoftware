@@ -48,12 +48,13 @@ public class ApplyForJob extends HttpServlet {
             throws ServletException, IOException {
 
         String username = request.getRemoteUser();
-        String jobPost_id = request.getParameter("jobpostid");
+        String jobPost_id = request.getParameter("jobid");
 
         HashMap<String, String> messageBag = new HashMap<>();
         Validator validator = new ApplicationValidator(jobPost_id, jobPostBean);
 
         if (validator.passes(messageBag)) {
+            System.out.println("yooo");
             interviewBean.createInterview(jobPost_id, username);
         }
         response.sendRedirect(request.getContextPath() + "/JobPosts");

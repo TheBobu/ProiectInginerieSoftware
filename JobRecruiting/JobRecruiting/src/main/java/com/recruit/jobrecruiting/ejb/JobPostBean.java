@@ -11,7 +11,6 @@ import com.recruit.jobrecruiting.entity.JobPost;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.Type;
 import com.recruit.jobrecruiting.entity.User;
-import com.recruit.jobrecruiting.mail.EmailBean;
 import com.recruit.jobrecruiting.util.Detachable;
 import com.recruit.jobrecruiting.util.Util;
 import java.util.Arrays;
@@ -38,9 +37,6 @@ public class JobPostBean {
 
     @Inject
     private SkillBean skillBean;
-
-    @Inject
-    private EmailBean emailBean;
 
     public List<JobPostDetails> getAllJobPosts() {
         LOG.info("getAllJobPosts");
@@ -195,6 +191,12 @@ public class JobPostBean {
         em.persist(copiedJobPost);
 
         return copiedJobPost.detach();
+    }
 
+    public void increasePositionsFilled(JobPost jobPost) {
+        int old = jobPost.getNoOfPositionsFilled();
+        jobPost.setNoOfPositionsFilled(old + 1);
+
+        setJobpostStatus(jobPost, jobPost.getStatus().toString());
     }
 }

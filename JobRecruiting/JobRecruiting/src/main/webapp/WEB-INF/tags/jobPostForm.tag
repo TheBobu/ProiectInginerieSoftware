@@ -48,7 +48,7 @@
             </textarea>
             <t:displayError error="description"/>
         </div>
-        <c:if test="${isEdit&&(jobPost.statusShouldBeEditable()) || pageContext.request.isUserInRole('GeneralDirectorRole')}">
+        <c:if test="${isEdit&&(jobPost.statusShouldBeEditable() || pageContext.request.isUserInRole('GeneralDirectorRole'))}">
             <div class="form-group mb-4">
                 <label for="status" class="form-label">Status</label>
                 <select class="form-select" id="status" name="status" required>

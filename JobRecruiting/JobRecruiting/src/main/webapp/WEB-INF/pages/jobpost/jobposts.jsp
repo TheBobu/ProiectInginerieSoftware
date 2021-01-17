@@ -19,7 +19,7 @@
         <a class="btn btn-primary" href="${pageContext.request.contextPath}/JobPost/Create">create</a>
     </t:ifHasRole>
     
-    
+    ${jobPostsAppliedToIds}
     <div class="row row-cols-1 row-cols-md-2 g-4 mt-4">
         <c:forEach var="jobpost" items="${jobPosts}">
             <div class="col">
@@ -32,7 +32,7 @@
                     copyLink="${pageContext.request.contextPath}/JobPost/Copy?id=${jobpost.id}"
                     editLink="${pageContext.request.contextPath}/JobPost/Edit?id=${jobpost.id}"
                     id="${jobpost.id}"
-                    hasApplied="${false}"
+                    hasApplied="${jobPostsAppliedToIds.contains(jobpost.id)}"
                     />
             </div>
         </c:forEach>

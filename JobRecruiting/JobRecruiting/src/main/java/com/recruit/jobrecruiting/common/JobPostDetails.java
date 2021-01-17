@@ -140,4 +140,5 @@ public class JobPostDetails {
     public boolean statusShouldBeEditable() {
         return status != Status.WAITING_FOR_APPROVAL;
     }
+
 }
