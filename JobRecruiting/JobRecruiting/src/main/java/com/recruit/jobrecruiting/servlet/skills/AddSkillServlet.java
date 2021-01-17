@@ -9,8 +9,11 @@ import com.recruit.jobrecruiting.ejb.SkillBean;
 import com.recruit.jobrecruiting.validators.SkillValidator;
 import java.io.IOException;
 import java.util.HashMap;
+import javax.annotation.security.DeclareRoles;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DENISA
  */
+@DeclareRoles({"RecruiterRole"})
+@ServletSecurity(value = @HttpConstraint(rolesAllowed={"RecruiterRole"}))
 @WebServlet(name = "AddSkillServlet", urlPatterns = {"/Skills/Create"})
 public class AddSkillServlet extends HttpServlet {
 

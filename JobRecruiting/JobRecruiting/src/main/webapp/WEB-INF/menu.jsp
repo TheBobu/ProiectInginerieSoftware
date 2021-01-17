@@ -30,6 +30,17 @@
                 </li>
             </c:if>
 
+            <c:if test="${pageContext.request.isUserInRole('DepartmentDirectorRole')}">
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/JobPostsByDepartment">JobPosts & Candidates Management</a>
+                </li>
+            </c:if>
+
+            <c:if test="${pageContext.request.isUserInRole('RecruiterRole')}">
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/Skills">Skills Management</a>
+                </li>
+            </c:if>
 
         </ul>
         <ul class="navbar-nav ml-auto">
@@ -44,7 +55,7 @@
                     </li>
                 </c:when>
                 <c:otherwise>
-                     <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/Logout">Logout</a>
                     </li>
                 </c:otherwise>
