@@ -64,12 +64,11 @@ public class JobPostBean {
         LOG.info("filterJobPosts" + status);
 
         try {
-            Query query = em.createQuery("SELECT j FROM JobPost j where (lower(j.title) like :keyword or lower(j.description) like :keyword ) and j.type in :types  and j.salary >= :salary and j.status in :statuses")
+            Query query = em.createQuery("SELECT j FROM JobPost j where (lower(j.title) like :keyword or lower(j.requirements) like :keyword or lower(j.responsabilities) like :keyword) and j.type in :types  and j.salary >= :salary and j.status in :statuses")
                     .setParameter("keyword", "%" + Util.string(keyword).toLowerCase() + "%")
                     .setParameter("salary", Util.number(salary))
                     .setParameter("types", Util.types(type))
                     .setParameter("statuses", Util.statuses(status));
-
             return Util.detachEntities(query.getResultList());
 
         } catch (Exception ex) {
@@ -96,13 +95,14 @@ public class JobPostBean {
         }
     }
 
-    public JobPostDetails createJobPost(String title, String description, String noOfPositionsAvailable, String[] skillIds, String department, int poster, String status, String type, String salary) {
+    public JobPostDetails createJobPost(String title, String requirements, String responsabilities, String noOfPositionsAvailable, String[] skillIds, String department, int poster, String status, String type, String salary) {
 
         LOG.info("createJobPost");
         JobPost jobPost = new JobPost();
 
         jobPost.setTitle(title);
-        jobPost.setDescription(description);
+        jobPost.setRequirements(requirements);
+        jobPost.setResponsabilities(responsabilities);
         User user = em.find(User.class, poster);
         jobPost.setPoster(user);
 
@@ -128,13 +128,14 @@ public class JobPostBean {
         }
     }
 
-    public JobPostDetails editJobPost(int id, String title, String description, String noOfPositionsAvailable, String[] skillIds, String department, String status, String type, String salary) {
+    public JobPostDetails editJobPost(int id, String title, String requirements, String responsabilities, String noOfPositionsAvailable, String[] skillIds, String department, String status, String type, String salary) {
 
         LOG.info("editJobPost");
         try {
             JobPost jobPost = em.find(JobPost.class, id);
             jobPost.setTitle(title);
-            jobPost.setDescription(description);
+            jobPost.setRequirements(requirements);
+            jobPost.setResponsabilities(responsabilities);
             jobPost.setDepartment(Department.valueOf(department));
             jobPost.setNoOfPositionsAvailable(Util.number(noOfPositionsAvailable));
 

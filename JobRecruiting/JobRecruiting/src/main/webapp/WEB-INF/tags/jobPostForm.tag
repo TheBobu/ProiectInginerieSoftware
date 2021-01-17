@@ -38,11 +38,18 @@
         </div>
 
         <div class="form-group mb-4">
-            <label for="description" class="form-label">Description</label>
-            <textarea type="text" wrap="hard" min=20 class="form-control" id="description" name="description" required>${jobPost.description}
+            <label for="requirements" class="form-label">Requirements</label>
+            <textarea type="text" wrap="hard" min=20 class="form-control" id="requirements" name="requirements" required>${jobPost.requirements}
             </textarea>
-            <t:displayError error="description"/>
+            <t:displayError error="requirements"/>
         </div>
+        <div class="form-group mb-4">
+            <label for="resposabilities" class="form-label">Resposibilities</label>
+            <textarea type="text" wrap="hard" min=20 class="form-control" id="resposabilities" name="resposabilities" required>${jobPost.responsabilities}
+            </textarea>
+            <t:displayError error="responsabilities"/>
+        </div>
+        
         <c:if test="${isEdit&&(jobPost.statusShouldBeEditable() || pageContext.request.isUserInRole('GeneralDirectorRole'))}">
             <div class="form-group mb-4">
                 <label for="status" class="form-label">Status</label>

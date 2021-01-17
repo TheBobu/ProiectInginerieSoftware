@@ -73,7 +73,7 @@
 
         <h5 class="card-text mt-4">Cerinte:</h5>
         <ul>
-            <c:forEach var ="bullet" items = "${jobPost.bullets()}">
+            <c:forEach var ="bullet" items = "${jobPost.bullets(jobPost.requirements)}">
                 <c:if test="${!bullet.equals('')}">
                     <li class="">${bullet}</li>
                     </c:if>
@@ -82,7 +82,7 @@
         
         <h5 class="card-text mt-4">Responsabilitati:</h5>
         <ul>
-            <c:forEach var ="bullet" items = "${jobPost.bullets()}">
+            <c:forEach var ="bullet" items = "${jobPost.bullets(jobPost.responsabilities)}">
                 <c:if test="${!bullet.equals('')}">
                     <li class="">${bullet}</li>
                     </c:if>

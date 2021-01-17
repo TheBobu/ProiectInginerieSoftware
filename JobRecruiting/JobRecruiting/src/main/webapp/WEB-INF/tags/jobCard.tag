@@ -10,7 +10,6 @@
 
 <%-- The list of normal or fragment attributes can be specified here: --%>
 <%@attribute name="title"%>
-<%@attribute name="description"%>
 <%@attribute name="viewLink"%>
 <%@attribute name="copyLink"%>
 <%@attribute name="editLink"%>
@@ -36,7 +35,6 @@
         <img src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
         <h5 class="mb-0"><a href="${viewLink}" class="text-decoration-none ">${title}</a></h5>
         <span class="small text-uppercase text-muted">${type}</span>
-        <p class="card-text mt-4">${description}</p>
        
         <div class="card-text">
             <p class="card-text mt-1 ">Salary: <span style="font-weight:bold">${salary}$</span></p>

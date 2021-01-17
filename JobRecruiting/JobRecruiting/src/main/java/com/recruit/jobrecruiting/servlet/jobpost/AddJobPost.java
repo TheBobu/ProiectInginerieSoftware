@@ -82,7 +82,8 @@ public class AddJobPost extends HttpServlet {
         String username = request.getRemoteUser();
         HashMap<String, String> messageBag = new HashMap<>();
         String title = request.getParameter("title");
-        String description = request.getParameter("description");
+        String requirements = request.getParameter("requirements");
+        String resposabilities = request.getParameter("resposabilities");
         String department = request.getParameter("department");
         String[] skills = request.getParameterValues("skills");
 
@@ -98,10 +99,10 @@ public class AddJobPost extends HttpServlet {
         User user = userBean.getUserByUsername(username);
         int poster = user.getId();
 
-        JobPostValidator validator = new JobPostValidator(title, description, nopositionsAvailable, department, status, skills, type, salary);
+        JobPostValidator validator = new JobPostValidator(title, requirements, resposabilities, nopositionsAvailable, department, status, skills, type, salary);
 
         if (validator.passes(messageBag)) {
-            int jobpost_id = jobPostBean.createJobPost(title, description, nopositionsAvailable, skills, department, poster, status, type, salary).getId();
+            int jobpost_id = jobPostBean.createJobPost(title, requirements, resposabilities, nopositionsAvailable, skills, department, poster, status, type, salary).getId();
             if (!request.isUserInRole("GeneralDirectorRole")) {
                 sendEmail(request, jobpost_id);
             }

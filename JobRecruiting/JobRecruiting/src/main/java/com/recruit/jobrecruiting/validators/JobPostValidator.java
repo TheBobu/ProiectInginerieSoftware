@@ -15,18 +15,19 @@ import com.recruit.jobrecruiting.util.Util;
 public class JobPostValidator extends Validator {
 
     private String title;
-    private String description;
     private String noOfPositionsAvailable;
-    private String noOfPositionsFilled;
+    private String requirements;
+    private String resposabilities;
     private String department;
     private String status;
     private String[] skills;
     private String type;
     private String salary;
 
-    public JobPostValidator(String title, String description, String noOfPositionsAvailable, String department, String status, String[] skills, String type, String salary) {
+    public JobPostValidator(String title, String requirements, String resposabilities, String noOfPositionsAvailable, String department, String status, String[] skills, String type, String salary) {
         this.title = title;
-        this.description = description;
+        this.resposabilities = resposabilities;
+        this.requirements = requirements;
         this.noOfPositionsAvailable = noOfPositionsAvailable;
         this.department = department;
         this.status = status;
@@ -39,7 +40,8 @@ public class JobPostValidator extends Validator {
     @Override
     protected void validate() {
         title();
-        description();
+        requirements();
+        resposabilities();
         noOfPositionsAvailable();
         status();
         department();
@@ -58,11 +60,20 @@ public class JobPostValidator extends Validator {
     }
 
     /**
-     * Validator for jobpost description
+     * Validator for jobpost requirements
      */
-    private void description() {
-        if (!Rules.lengthGreaterThan(description, 20)) {
-            messageBag.put("description", "Please provide a valid description");
+    private void requirements() {
+        if (!Rules.lengthGreaterThan(requirements, 20)) {
+            messageBag.put("requirements", "Please provide valid requirements");
+        }
+    }
+
+    /**
+     * Validator for jobpost resposabilities
+     */
+    private void resposabilities() {
+        if (!Rules.lengthGreaterThan(resposabilities, 20)) {
+            messageBag.put("resposabilities", "Please provide valid resposabilities");
         }
     }
 
