@@ -9,6 +9,7 @@ import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.Type;
 import com.recruit.jobrecruiting.entity.User;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -139,6 +140,10 @@ public class JobPostDetails {
 
     public boolean statusShouldBeEditable() {
         return status != Status.WAITING_FOR_APPROVAL;
+    }
+
+    public List<String> bullets() {
+        return Arrays.asList(description.split("#{1}"));
     }
 
 }

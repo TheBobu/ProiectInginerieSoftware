@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import javax.json.bind.annotation.JsonbTransient;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -46,6 +47,7 @@ public class JobPost implements Serializable, Detachable {
 
     private String title;
 
+    @Column(length = 1500)
     private String description;
 
     @ManyToMany(fetch = FetchType.LAZY)

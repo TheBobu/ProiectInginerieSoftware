@@ -24,6 +24,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DENISA
  */
+
+/**
+ * Servlet used fro applying for a job. It is accesible only to logged in users
+ *
+ */
 @ServletSecurity(value = @HttpConstraint(rolesAllowed = {"CandidateRole"}))
 @WebServlet(name = "ApplyForJob", urlPatterns = {"/ApplyForJob"})
 public class ApplyForJob extends HttpServlet {

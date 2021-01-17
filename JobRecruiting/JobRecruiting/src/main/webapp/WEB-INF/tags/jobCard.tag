@@ -37,6 +37,7 @@
         <h5 class="mb-0"><a href="${viewLink}" class="text-decoration-none ">${title}</a></h5>
         <span class="small text-uppercase text-muted">${type}</span>
         <p class="card-text mt-4">${description}</p>
+       
         <div class="card-text">
             <p class="card-text mt-1 ">Salary: <span style="font-weight:bold">${salary}$</span></p>
             <c:choose>
