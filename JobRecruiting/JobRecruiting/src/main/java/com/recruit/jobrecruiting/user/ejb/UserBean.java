@@ -152,6 +152,8 @@ public class UserBean {
         user.setLastName(lastName);
         user.setAddress(address);
         user.setShortBio(shortBio);
+        user.setStatus(Status.INACTIVE);
+        user.setPosition(Position.CANDIDATE);
         em.persist(user);
 
         return user.getId();

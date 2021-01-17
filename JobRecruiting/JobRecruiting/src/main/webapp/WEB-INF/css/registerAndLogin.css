@@ -44,7 +44,7 @@ a,
 .container__child {
   width: 50%;
   height: 100%;
-  color: #fff;
+  color: #000;
 }
 .signup__thumbnail {
   position: relative;
@@ -86,7 +86,7 @@ h2 {
 label {
   font-size: .85rem;
   text-transform: uppercase;
-  color: #ccc;
+  color: #000;
   margin-top:2%;
     margin-bottom:1%;
 }

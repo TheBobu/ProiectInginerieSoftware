@@ -36,6 +36,7 @@ public class AddUser extends HttpServlet {
 
     @Inject
     UserBean userBean;
+    
     @Inject
     EmailBean emailBean;
 
@@ -50,7 +51,6 @@ public class AddUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().removeAttribute("errors");
         request.getRequestDispatcher("/WEB-INF/pages/user/addUser.jsp").forward(request, response);
     }
 
@@ -100,7 +100,7 @@ public class AddUser extends HttpServlet {
                 emailBean.sendEmail(email, "Job Recruiting Platform", "Your account was succesfully created. Please wait for the administrator to activate your account. Thank you!");
                 response.sendRedirect(request.getContextPath());
             } else {
-                request.getSession().setAttribute("errors", messageBag);
+                request.setAttribute("errors", messageBag);
                 request.getRequestDispatcher("/WEB-INF/pages/user/addUser.jsp").include(request, response);
             }
         } catch (NoSuchAlgorithmException ex) {
