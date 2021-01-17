@@ -80,8 +80,8 @@ public class ViewCandidatesBean {
 
     public List<String> getAllCandidateEmail(Integer jobpostId) {
         LOG.info("getAllCandidateEmail:" + jobpostId);
-        Query query = em.createQuery("SELECT u.email from Users u where u.id IN (SELECT i.candidate_key FROM interviews i WHERE i.jobpost_key = :jobPosId)")
-                .setParameter("jobPosId", jobpostId);
+        Query query = em.createQuery("SELECT i.candidate.email FROM Interview i WHERE i.jobPost.id = :jobPostId")
+                .setParameter("jobPostId", jobpostId);
         return query.getResultList();
     }
 

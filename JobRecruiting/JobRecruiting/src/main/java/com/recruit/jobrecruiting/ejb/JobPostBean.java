@@ -182,7 +182,7 @@ public class JobPostBean {
 
     }
 
-    public JobPost copyJobPost(int id, Status status) {
+    public JobPostDetails copyJobPost(int id, Status status) {
 
         LOG.info("copyJobPost," + id);
 
@@ -194,7 +194,7 @@ public class JobPostBean {
 
         em.persist(copiedJobPost);
 
-        return copiedJobPost;
+        return copiedJobPost.detach();
 
     }
 }
