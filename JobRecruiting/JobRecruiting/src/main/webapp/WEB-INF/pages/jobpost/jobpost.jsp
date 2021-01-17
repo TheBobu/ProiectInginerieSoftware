@@ -68,10 +68,10 @@
 
         </div>
         <div class="">
-            <c:if test="${jobpost.isAppliable()}">
+            <c:if test="${jobPost.isAppliable()}">
                 <c:choose>
-                    <c:when test="${!jobPostsAppliedToIds.contains(jobpost.id)}">
-                        <a href="${pageContext.request.contextPath}/ApplyForJob?jobid=${jobpost.id}" class="btn btn-success">
+                    <c:when test="${!jobPostsAppliedToIds.contains(jobPost.id)}">
+                        <a href="${pageContext.request.contextPath}/ApplyForJob?jobid=${jobPost.id}" class="btn btn-success">
                             <span class="d-flex align-items-baseline">
                                 <i class="far fa-check-square me-2"></i> 
                                 <span>Apply</span>
