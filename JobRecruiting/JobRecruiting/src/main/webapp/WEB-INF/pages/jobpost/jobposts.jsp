@@ -9,15 +9,15 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style><%@include file="/WEB-INF/css/main.css"%></style>
-
+<style><%@include file="/WEB-INF/css/jobs.css"%></style>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages" />
 
 <t:pageTemplate pageTitle="Jobs">
 
-    <h1 class="mb-4"><fmt:message key="label.jobPosts.title" /></h1>
     <!-- Team item -->
+    <div class="job-container"> 
     <t:filterJobPostForm/>
     <a class="btn btn-primary" href="${pageContext.request.contextPath}/JobPost/Create"><fmt:message key="label.jobPosts.create" /></a>
     <div class="row row-cols-1 row-cols-md-2 g-4 mt-4">
@@ -34,5 +34,6 @@
                     />
             </div>
         </c:forEach>
+    </div>
     </div>
 </t:pageTemplate>

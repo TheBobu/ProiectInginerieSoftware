@@ -341,7 +341,7 @@ public class UserBean {
     public User getUserByUsername(String username) {
         try {
             TypedQuery<User> typedQuery = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
-                    .setParameter("username", username).setParameter("username", username);
+                    .setParameter("username", username);
             User user = typedQuery.getResultList().get(0);
             return user;
         } catch (Exception ex) {
