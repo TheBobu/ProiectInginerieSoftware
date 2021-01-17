@@ -5,6 +5,7 @@
 --%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style><%@include file="/WEB-INF/css/main.css"%></style>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <t:pageTemplate pageTitle="User">

@@ -28,7 +28,7 @@
         </a>
     </div>
     <div class=" py-5 px-4">
-        <img src="http://static.dnaindia.com/sites/default/files/styles/square/public/2016/12/08/526857-apple-logo-black-flickr.jpg" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+        <img src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
         <h5 class="mb-0"><a href="${viewLink}" class="text-decoration-none ">${title}</a></h5>
         <span class="small text-uppercase text-muted">${type}</span>
         <p class="card-text mt-4">${description}</p>
