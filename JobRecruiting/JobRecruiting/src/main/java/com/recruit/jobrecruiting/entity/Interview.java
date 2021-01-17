@@ -59,8 +59,7 @@ public class Interview implements Serializable {
     @Enumerated(EnumType.STRING)
     private InterviewStatus status;
 
-    @JsonbTransient
-    @OneToMany(mappedBy = "interview")
+    @OneToMany(mappedBy = "interview", fetch = FetchType.LAZY)
     private Collection<Comment> comments;
 
     public Integer getId() {

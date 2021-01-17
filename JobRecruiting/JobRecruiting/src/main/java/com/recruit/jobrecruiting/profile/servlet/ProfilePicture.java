@@ -8,7 +8,6 @@ package com.recruit.jobrecruiting.profile.servlet;
 import com.recruit.jobrecruiting.entity.Photo;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.annotation.security.DeclareRoles;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
