@@ -110,3 +110,10 @@ label {
 .login-form{
     margin-top:30%;
 }
+
+@media screen and (max-width: 1366px) {
+  .signup-container {
+    height: 87%;
+    top: 55%;
+  }
+}
