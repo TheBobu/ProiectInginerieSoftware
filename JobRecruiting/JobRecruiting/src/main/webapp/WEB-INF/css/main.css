@@ -1,0 +1,46 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 16-Jan-2021, 17:18:14
+    Author     : Andreea Purta
+*/
+
+
+body {
+    font: 100% / 1.414 "Open Sans", "Roboto", arial, sans-serif;
+    background: url('http://andreeapurta.com/proiectIngSoftware/6172-min.png');
+}
+
+.main-title-homepage{
+    text-align:right;
+    color:#fafafa;
+    margin-top: 26%;
+    margin-right: 20%;
+    margin-bottom:0%;
+    font-size: 3em;
+}
+
+.main-subtitle-homepage{
+    font-size: 1.2em;
+    color:#fafafa;
+    text-align:right;
+    margin-top: 5%;
+    margin-right: 20%;
+    opacity: 40%;
+}
+
+.btn-homepage{
+    float: right;
+    margin-right: 20%;
+    margin-top:5%;
+        background-color: #8dedb1 !important;
+    border: none;
+    color: #170e47 !important;;
+    font-weight: 600 !important;;
+    font-size: 1.3em !important;
+    border-radius: 25px 25px 25px 25px !important;
+    padding: 10px 30px 10px 30px !important;
+}

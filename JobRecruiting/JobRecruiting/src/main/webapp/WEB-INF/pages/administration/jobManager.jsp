@@ -5,11 +5,16 @@
 --%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style><%@include file="/WEB-INF/css/main.css"%></style>
+
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages" />
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <t:pageTemplate pageTitle="User">
 
-    <h1 class="mb-4">Job Management</h1>
+    <h1 class="mb-4"><fmt:message key="label.jobManager.title" /></h1>
 
     <div class="row">
          <div class="col-md"> ${job.title}</div>
@@ -21,5 +26,5 @@
         <div class="col-md">${job.description}</div>
 
     </div>
-    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/JobActivatorDeactivator?id=${job.id}" role="button">Activate/Deactivatesss Job</a>
+    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/JobActivatorDeactivator?id=${job.id}" role="button"><fmt:message key="label.jobManager.activatedeactivate" /></a>
 </t:pageTemplate>

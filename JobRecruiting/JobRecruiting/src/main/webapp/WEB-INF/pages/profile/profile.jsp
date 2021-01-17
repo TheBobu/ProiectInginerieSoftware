@@ -7,6 +7,9 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style><%@include file="/WEB-INF/css/profile.css"%></style>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages" />
 <t:pageTemplate pageTitle="Login">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -21,11 +24,11 @@
                     <div class="media-body col-sm-9">
                         <div class="card-body">
                             <h2 class="media-heading">${user.firstName} ${user.lastName}  
-                                <small> - Profile</small>
+                                <small> - <fmt:message key="label.profile.title" /></small>
                             </h2>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 >Full Name</h6>
+                                    <h6 ><fmt:message key="label.profile.name" /></h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${user.firstName} ${user.lastName} 
@@ -34,7 +37,7 @@
                             <hr />
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6>Email</h6>
+                                    <h6><fmt:message key="label.profile.email" /></h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${user.email}
@@ -43,7 +46,7 @@
                             <hr />
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 >Birth Date</h6>
+                                    <h6 ><fmt:message key="label.profile.date" /></h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${user.birthDate} 
@@ -52,7 +55,7 @@
                             <hr />
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6>User Type</h6>
+                                    <h6><fmt:message key="label.profile.type" /></h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${user.position} 
@@ -61,7 +64,7 @@
                             <hr />
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 >Address</h6>
+                                    <h6 ><fmt:message key="label.profile.address" /></h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${ user.address }
@@ -70,16 +73,20 @@
                             <hr />
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6>Department</h6>
+                                    <h6><fmt:message key="label.profile.department" /></h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     ${user.department}
                                 </div>
                             </div>
                             <div class="row">
-                                <a  target="_blank" href="${pageContext.request.contextPath}/ProfilePicture?id=${user.id}&typeId=1" class="col-md-4 btn btn-profile btn-primary"  role="button">Download CV</a>
-                                <div class="col-md-4"></div>
-                                <a href="${pageContext.request.contextPath}/Profile/Update?id=${user.id}" role="button" class=" btn-profile col-md-4 btn btn-primary">Edit User</a>
+                                <div class="col-xl">
+                                    <a  target="_blank" href="${pageContext.request.contextPath}/ProfilePicture?id=${user.id}&typeId=1" class="col-xl btn btn-profile btn-primary"  role="button"><fmt:message key="label.profile.cv" /></a>
+                                </div>
+
+                                <div class="col-xl">
+                                    <a href="${pageContext.request.contextPath}/Profile/Update" role="button" class=" btn-profile col-xl btn btn-primary"><fmt:message key="label.profile.edit" /></a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -93,7 +100,7 @@
                         <span class="panel-icon">
                             <i class="fa fa-star"></i>
                         </span>
-                        <span class="panel-title"> About Me</span>
+                        <span class="panel-title"><fmt:message key="label.profile.about" /></span>
                     </div>
                     <div class="panel-body pn">
                         <p> ${user.shortBio}
@@ -105,7 +112,7 @@
                         <span class="panel-icon">
                             <i class="fa fa-trophy"></i>
                         </span>
-                        <span class="panel-title"> My Skills</span>
+                        <span class="panel-title"><fmt:message key="label.profile.skills" /></span>
                     </div>
                     <div class="panel-body pb5">
                         <ul id="faves">
@@ -120,7 +127,7 @@
                         <span class="panel-icon">
                             <i class="fa fa-pencil"></i>
                         </span>
-                        <span class="panel-title">My Experience</span>
+                        <span class="panel-title"><fmt:message key="label.profile.xp" /></span>
                     </div>
                     <div class="panel-body pb5">
                         <p>${user.userExperience}</p>
@@ -129,92 +136,69 @@
             </div>
             <div class="col-md-8">
                 <div class="tab-block">
-                    <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a href="#tab1" data-toggle="tab">My Interviews</a>
+
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class=" nav-item " role="presentation">
+                            <a class="nav-link active" id="interviews-tab" data-toggle="tab" href="#interviews" role="tab" aria-controls="interviews" aria-selected="true"><fmt:message key="label.profile.interviews" /></a>
                         </li>
-                        <li>
-                            <a href="#tab1" data-toggle="tab">My job Applications</a>
+                        <li class=" nav-item " role="presentation">
+                            <a class="nav-link" id="applications-tab" data-toggle="tab" href="#applications" role="tab" aria-controls="applications" aria-selected="false"><fmt:message key="label.profile.applications" /></a>
                         </li>
+
                     </ul>
-                    <div class="tab-content p30" style="height: 730px;">
-                        <div id="tab1" class="tab-pane active">
-                            <div class="media">
-                                <a class="pull-left" href="#"> <img class="media-object mn thumbnail mw50" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="..."> </a>
-                                <div class="media-body">
-                                    <h5 class="media-heading mb20">Simon Rivers Posted
-                                        <small> - 3 hours ago</small>
-                                    </h5>
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="mw140 mr25 mb20">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar8.png" class="mw140 mr25 mb20"> 
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="mw140 mb20">
-                                    <div class="media-links">
-                                        <span class="text-light fs12 mr10">
-                                            <span class="fa fa-thumbs-o-up text-primary mr5"></span> Like </span>
-                                        <span class="text-light fs12 mr10">
-                                            <span class="fa fa-share text-primary mr5"></span> Share </span>
-                                        <span class="text-light fs12 mr10">
-                                            <span class="fa fa-floppy-o text-primary mr5"></span> Save </span>
-                                        <span class="text-light fs12 mr10">
-                                            <span class="fa fa-comment text-primary mr5"></span> Comment </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="media mt25">
-                                <a class="pull-left" href="#"> <img class="media-object mn thumbnail thumbnail-sm rounded mw40" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="..."> </a>
-                                <div class="media-body mb5">
-                                    <h5 class="media-heading mbn">Simon Rivers Posted
-                                        <small> - 3 hours ago</small>
-                                    </h5>
-                                    <p> Omg so freaking sweet dude.</p>
-                                    <div class="media pb10">
-                                        <a class="pull-left" href="#"> <img class="media-object mn thumbnail thumbnail-sm rounded mw40" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="..."> </a>
-                                        <div class="media-body mb5">
-                                            <h5 class="media-heading mbn">Jessica Wong
-                                                <small> - 3 hours ago</small>
-                                            </h5>
-                                            <p>Omgosh I'm in love</p>
+
+                    <div class="tab-content" id="myTabContent" style="height: 470px;">
+                        <div class="tab-pane fade show active" id="interviews" role="tabpanel" aria-labelledby="interviews">
+
+                            <c:forEach var="interview" items="${interviews}" varStatus="status">
+                                <c:if test="${interview.interviewStatus!='APPLIED_FOR'}" >
+                                    <div class="row">
+                                        <div class="col-sm-3 interview-title">
+                                            <h6 class="mb-0">${interview.jobpost.title}</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <div class="row">
+                                                <div class="col-md-8 interview-status">
+                                                    ${interview.interviewStatus}
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <a href="#" role="button" class=" btn-profile col-xl btn btn-primary"><fmt:message key="label.profile.viewInt" /></a>
+                                                </div></div>
                                         </div>
                                     </div>
-                                    <div class="media mtn">
-                                        <a class="pull-left" href="#"> <img class="media-object mn thumbnail thumbnail-sm rounded mw40" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="..."> </a>
-                                        <div class="media-body mb5">
-                                            <h5 class="media-heading mbn">Jessica Wong
-                                                <small> - 3 hours ago</small>
-                                            </h5>
-                                            <p>Omgosh I'm in love</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="media mt25">
-                                <a class="pull-left" href="#"> <img class="media-object thumbnail mw50" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="..."> </a>
-                                <div class="media-body">
-                                    <h5 class="media-heading mb20">Simon Rivers Posted
-                                        <small> - 3 hours ago</small>
-                                    </h5>
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="mw140 mr25 mb20">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="mw140 mr25 mb20"> 
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar4.png" class="mw140 mb20">
-                                    <div class="media-links">
-                                        <span class="text-light fs12 mr10">
-                                            <span class="fa fa-thumbs-o-up text-primary mr5"></span> Like </span>
-                                        <span class="text-light fs12 mr10">
-                                            <span class="fa fa-share text-primary mr5"></span> Share </span>
-                                        <span class="text-light fs12 mr10">
-                                            <span class="fa fa-floppy-o text-primary mr5"></span> Save </span>
-                                        <span class="text-light fs12 mr10">
-                                            <span class="fa fa-comment text-primary mr5"></span> Comment </span>
-                                    </div>
-                                </div>
-                            </div>
+                                    <hr />
+                                </c:if>
+                            </c:forEach>
                         </div>
-                        <div id="tab2" class="tab-pane"></div>
-                        <div id="tab3" class="tab-pane"></div>
-                        <div id="tab4" class="tab-pane"></div>
+
+                        <div class="tab-pane fade" id="applications" role="tabpanel" aria-labelledby="applications">
+                            <c:forEach var="interview" items="${interviews}" varStatus="status">
+                                <c:if test="${interview.interviewStatus=='APPLIED_FOR'}" >
+                                    <div class="row">
+                                        <div class="col-sm-3 interview-title">
+                                            <h6 class="mb-0">${interview.jobpost.title}</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <div class="row">
+                                                <div class="col-md-7 interview-status">
+                                                    ${interview.interviewStatus}
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <a href="#" role="button" class=" btn-profile col-xl btn btn-primary"><fmt:message key="label.profile.viewApp" /></a>
+                                                </div></div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                </c:if>
+                            </c:forEach>
+
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
     </section>
 </t:pageTemplate>
+
+
