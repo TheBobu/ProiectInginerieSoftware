@@ -11,9 +11,13 @@ import com.recruit.jobrecruiting.ejb.SkillBean;
 import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.Type;
+import com.recruit.jobrecruiting.interviews.ejb.ViewCandidatesBean;
+import com.recruit.jobrecruiting.mail.EmailBean;
+import com.recruit.jobrecruiting.util.Util;
 import com.recruit.jobrecruiting.validators.JobPostValidator;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,6 +37,12 @@ public class EditJobPost extends HttpServlet {
 
     @Inject
     private SkillBean skillBean;
+
+    @Inject
+    ViewCandidatesBean viewCandidateBean;
+
+    @Inject
+    private EmailBean emailBean;
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -91,8 +101,11 @@ public class EditJobPost extends HttpServlet {
 
         if (validator.passes(messageBag)) {
             JobPostDetails jobPost = jobPostBean.editJobPost(id, title, description, noOfPositionsFilled, nopositionsAvailable, skills, department, status, type, salary);
+            List<String> emails = viewCandidateBean.getAllCandidateEmail(id);
             if (jobPost.getStatus() == Status.INACTIVE) {
-                //Email all users who applied
+                sendModifiedJobPostEmail(request, emails, id, "Job Post closed");
+            } else {
+                sendModifiedJobPostEmail(request, emails, id, "Job Post modified");
             }
             response.sendRedirect(request.getContextPath() + "/JobPosts");
         } else {
@@ -110,6 +123,15 @@ public class EditJobPost extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
+    }
+
+    protected void sendModifiedJobPostEmail(HttpServletRequest request, List<String> emails, int jobpost_id, String subject) {
+        new Thread(() -> {
+            String url = Util.getBaseUrl(request) + "/JobPost?id=" + jobpost_id;
+            emails.forEach((String email) -> {
+                emailBean.sendEmail(email, subject, url);
+            });
+        }).start();
     }
 
 }

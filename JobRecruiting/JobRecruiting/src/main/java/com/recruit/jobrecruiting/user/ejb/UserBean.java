@@ -34,7 +34,7 @@ import javax.persistence.TypedQuery;
 /**
  * Bean for the {@link User} entity.
  *
- * @author robert, andrei, Andreea Purta
+ * @author robert, andrei, Andreea Purta, DENISA
  */
 @Stateless
 public class UserBean {
@@ -322,6 +322,12 @@ public class UserBean {
         return photo;
     }
 
+    public List<UserLightDetails> getAllCandidatesForInterview() {
+        Query query = em.createQuery("SELECT u FROM User u");
+        List<User> users = (List<User>) query.getResultList();
+        return copyUsersToLightDetails(users);
+    }
+
     private List<UserDetails> copyUsersToDetails(List<User> users) {
         List<UserDetails> detailsList = new ArrayList<>();
         for (User user : users) {
@@ -339,5 +345,4 @@ public class UserBean {
         }
         return detailsList;
     }
-
 }
