@@ -11,7 +11,7 @@
 <%@attribute name="title"%>
 <%@attribute name="description"%>
 <%@attribute name="viewLink"%>
-<%@attribute name="deleteLink"%>
+<%@attribute name="copyLink"%>
 <%@attribute name="editLink"%>
 <%@attribute name="id"%>
 <%@attribute name="salary"%>
@@ -19,9 +19,9 @@
 
 <div class="text-center col-11 bg-white position-relative shadow-sm rounded">
     <div class="d-flex justify-content-end w-100 position-absolute mt-2">
-        <form method="post" class="d-inline" action="${deleteLink}">
+        <form method="post" class="d-inline" action="${copyLink}">
             <input type="hidden" value="${id}">
-            <button type="submit" class="mt-1 me-4 btn p-0 text-decoration-none link-danger fs-5"> <i class="fas fa-trash"></i></button>
+            <button type="submit" class="mt-1 me-4 btn p-0 text-decoration-none link-secondary fs-5"> <i class="far fa-copy"></i></button>
         </form>
         <a href="${editLink}" class=" mt-1 me-3 text-decoration-none link-secondary fs-5">
             <i class="far fa-edit"></i>

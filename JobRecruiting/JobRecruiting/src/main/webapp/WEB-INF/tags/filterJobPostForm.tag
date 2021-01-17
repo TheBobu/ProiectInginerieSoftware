@@ -36,7 +36,8 @@
             <label for="type" class="form-label">Min-salary</label>
             <input type="number" class="form-control" value ="${salary}" id="salary" name="salary">
         </div>
-        <t:ifHasntRole role="CandidateRole">
+
+        <t:ifHasRole role="RecruiterRole">
             <div class="form-group col-md mb-4">
                 <label for="status" class="form-label">Status</label>
                 <select class="form-select" id="status" name="status">
@@ -51,8 +52,7 @@
                     </c:forEach>
                 </select>
             </div>
-        </t:ifHasntRole>
-
+        </t:ifHasRole>
     </div>
     <div class="col-2 mb-4 mt-auto">
         <button class=" btn rounded btn-primary"><i class="fas fa-search"></i></button>

@@ -322,11 +322,11 @@ public class UserBean {
         return photo;
     }
 
-    public List<UserLightDetails> getAllCandidatesForInterview() {
-        Query query = em.createQuery("SELECT u FROM User u");
-        List<User> users = (List<User>) query.getResultList();
-        return copyUsersToLightDetails(users);
-    }
+//    public List<UserLightDetails> getAllCandidatesForInterview() {
+//        Query query = em.createQuery("SELECT i FROM interviews i WHERE i.candidate_key = :id", Interview.class);
+//        List<User> users = (List<User>) query.getResultList();
+//        return copyUsersToLightDetails(users);
+//    }
 
     private List<UserDetails> copyUsersToDetails(List<User> users) {
         List<UserDetails> detailsList = new ArrayList<>();

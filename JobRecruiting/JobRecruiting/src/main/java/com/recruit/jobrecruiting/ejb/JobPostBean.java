@@ -30,12 +30,12 @@ import javax.persistence.Query;
  */
 @Stateless
 public class JobPostBean {
-    
+
     private static final Logger LOG = Logger.getLogger(JobPostBean.class.getName());
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Inject
     private SkillBean skillBean;
 
@@ -81,7 +81,7 @@ public class JobPostBean {
             //return getAllJobPosts();
         }
     }
-    
+
     public JobPostDetails getJobPost(int id) {
         LOG.info("getJobPost");
         try {
@@ -104,26 +104,26 @@ public class JobPostBean {
 
         LOG.info("createJobPost");
         JobPost jobPost = new JobPost();
-        
+
         jobPost.setTitle(title);
         jobPost.setDescription(description);
         User user = em.find(User.class, poster);
         jobPost.setPoster(user);
         jobPost.setNoOfPositionsFilled(Util.number(noOfPositionsFilled));
-        
+
         jobPost.setNoOfPositionsAvailable(Util.number(noOfPositionsAvailable));
         jobPost.setDepartment(Department.valueOf(department));
         jobPost.setStatus(Status.valueOf(status));
         jobPost.setType(Type.valueOf(type));
         jobPost.setSalary(Util.number(salary));
-        
+
         jobPost.setSkills(skillBean.findSkills(Arrays.asList(skillIds)));
-        
+
         em.persist(jobPost);
 
         return jobPost.detach();
     }
-    
+
     public void deleteJobPost(int id) {
         LOG.info("deleteJobPost");
         try {
@@ -159,9 +159,6 @@ public class JobPostBean {
      * Closes the position automatically when there are enough applicants,
      * otherwise sets the desired status
      *
-     * @param jobPost the job post to be updated
-     * @param status the desired status
-     * @return bool whether all values valid or not
      */
     protected void setJobpostStatus(JobPost jobPost, String status) {
         if (jobPost.getNoOfPositionsFilled() >= jobPost.getNoOfPositionsAvailable()) {
@@ -170,10 +167,10 @@ public class JobPostBean {
             jobPost.setStatus(Status.valueOf(status));
         }
     }
-    
+
     public void activateDeactivateJobPost(Integer id) {
         JobPost jobPost = em.find(JobPost.class, id);
-        
+
         if (jobPost.getStatus() == Status.ACTIVE) {
             jobPost.setStatus(Status.INACTIVE);
         } else {
@@ -182,6 +179,22 @@ public class JobPostBean {
         JobPost oldJobPost = em.find(JobPost.class, id);
         em.remove(oldJobPost);
         em.persist(jobPost);
-        
+
+    }
+
+    public JobPost copyJobPost(int id, Status status) {
+
+        LOG.info("copyJobPost," + id);
+
+        JobPost jobPost = getJobPostEntity(id);
+
+        JobPost copiedJobPost = (JobPost) jobPost.copy();
+
+        copiedJobPost.setStatus(status);
+
+        em.persist(copiedJobPost);
+
+        return copiedJobPost;
+
     }
 }

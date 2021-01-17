@@ -8,7 +8,7 @@ package com.recruit.jobrecruiting.entity;
 /**
  * An enum with 3 possible states: INACTIVE, ACTIVE.
  * 
- * @author robert
+ * @author robert, DENISA
  */
 public enum Status {
     INACTIVE("Inactive"),

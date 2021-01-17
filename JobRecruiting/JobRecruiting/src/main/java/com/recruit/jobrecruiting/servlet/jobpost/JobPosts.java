@@ -47,9 +47,11 @@ public class JobPosts extends HttpServlet {
         String salary = request.getParameter("salary");
         String status = request.getParameter("status");
 
-        if (request.isUserInRole("CandidateRole")) {
+
+        if (!request.isUserInRole("RecruiterRole")) {
             status = Status.ACTIVE.toString();
         }
+
         List<JobPostDetails> jobPosts = jobPostBean.filterJobPosts(
                 keyword,
                 type,

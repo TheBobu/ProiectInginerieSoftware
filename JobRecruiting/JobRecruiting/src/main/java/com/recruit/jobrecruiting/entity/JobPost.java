@@ -253,4 +253,19 @@ public class JobPost implements Serializable, Detachable {
                 salary
         );
     }
+
+    public JobPost copy() {
+        JobPost jobPost = new JobPost();
+
+        jobPost.setTitle(title);
+        jobPost.setDescription(description);
+        jobPost.setDepartment(department);
+        jobPost.setNoOfPositionsFilled(0);
+        jobPost.setNoOfPositionsAvailable(noOfPositionsAvailable);
+        jobPost.setType(type);
+        jobPost.setSalary(salary);
+        jobPost.setSkills(skills);
+
+        return jobPost;
+    }
 }
