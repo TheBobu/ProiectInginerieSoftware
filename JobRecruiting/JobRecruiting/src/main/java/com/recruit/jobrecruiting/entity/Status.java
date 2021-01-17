@@ -7,12 +7,13 @@ package com.recruit.jobrecruiting.entity;
 
 /**
  * An enum with 3 possible states: INACTIVE, ACTIVE.
- * 
+ *
  * @author robert, DENISA
  */
 public enum Status {
-    INACTIVE("Inactive"),
+
     ACTIVE("Active"),
+    INACTIVE("Inactive"),
     WAITING_FOR_APPROVAL("Waiting for approval");
 
     public final String label;

@@ -41,7 +41,6 @@
             <div class="form-group col-md mb-4">
                 <label for="status" class="form-label">Status</label>
                 <select class="form-select" id="status" name="status">
-                    <option value="" >Any</option>
                     <c:forEach var = "existingstatus" items = "${statuses}">
                         <option value="${existingstatus}"
                                 <option value="${existingstatus}"
@@ -50,6 +49,7 @@
                                 </c:if>
                                 >${existingstatus.label}</option>
                     </c:forEach>
+                    <option value="" >Any</option>    
                 </select>
             </div>
         </t:ifHasRole>
