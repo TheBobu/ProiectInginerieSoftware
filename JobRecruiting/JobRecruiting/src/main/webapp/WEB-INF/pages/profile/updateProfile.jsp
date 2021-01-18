@@ -7,6 +7,9 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style><%@include file="/WEB-INF/css/profile.css"%></style>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages" />
 <t:pageTemplate pageTitle="Login">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <section id="content" style="    margin-top: 5%" class="container">
@@ -98,8 +101,8 @@
                                   <hr />
                                 <div class="row">
                                     <input type="hidden" id="id" name="id" value="${user.id}">
-                                        <div class="col-md-8"></div>
-                                    <div class="col-xl col-md-4" style="float:right;">
+                                        <div class="col-md-7"></div>
+                                    <div class="col-xl col-md-5" style="float:right;">
                                         <a href="${pageContext.request.contextPath}/PasswordReseter?id=${user.id}"   role="button" class=" btn btn-profile btn-profile">Change Password</a>
                                         <button class=" btn btn-profile"  type="submit">Update profile</button>
                                     </div>
@@ -139,12 +142,7 @@
                             <li>Java</li>
                             <li>C</li>
                         </ul>
-                        <div class="form-group mb-4">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" minlength=6 class="form-control" id="add" name="name"  >
-                            <input type="button" id="btnAdd" value="Add" onclick="addItem()">
-                            <t:displayError error="name"/>
-                        </div>
+             
                     </div>
                 </div>
                 <div class="panel">
@@ -156,23 +154,69 @@
                 </div>
             </div>
             </form>
-            <div class="col-md-8">
+                  <div class="col-md-8">
                 <div class="tab-block">
-                    <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a href="#tab1" data-toggle="tab">My Interviews</a>
+
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class=" nav-item " role="presentation">
+                            <a class="nav-link active" id="interviews-tab" data-toggle="tab" href="#interviews" role="tab" aria-controls="interviews" aria-selected="true"><fmt:message key="label.profile.interviews" /></a>
                         </li>
-                        <li>
-                            <a href="#tab1" data-toggle="tab">My job Applications</a>
+                        <li class=" nav-item " role="presentation">
+                            <a class="nav-link" id="applications-tab" data-toggle="tab" href="#applications" role="tab" aria-controls="applications" aria-selected="false"><fmt:message key="label.profile.applications" /></a>
                         </li>
+
                     </ul>
-                    <div class="tab-content p30" style="height: 578px;">
-                        <div id="tab1" class="tab-pane active">
+
+                    <div class="tab-content" id="myTabContent" style="height: 470px;">
+                        <div class="tab-pane fade show active" id="interviews" role="tabpanel" aria-labelledby="interviews">
+
+                            <c:forEach var="interview" items="${interviews}" varStatus="status">
+                                <c:if test="${interview.interviewStatus!='APPLIED_FOR'}" >
+                                    <div class="row">
+                                        <div class="col-sm-3 interview-title">
+                                            <h6 class="mb-0">${interview.jobpost.title}</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <div class="row">
+                                                <div class="col-md-8 interview-status">
+                                                    ${interview.interviewStatus}
+                                                </div>
+                                                <div class="col-md-4">
+
+                                                    <a href="${pageContext.request.contextPath}/Comment?id=${interview.id}" role="button" class=" btn-profile col-xl btn btn-primary"><fmt:message key="label.profile.viewInt" /></a>
+
+                                                </div></div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                </c:if>
+                            </c:forEach>
                         </div>
-                        <div id="tab2" class="tab-pane"></div>
-                        <div id="tab3" class="tab-pane"></div>
-                        <div id="tab4" class="tab-pane"></div>
+
+                        <div class="tab-pane fade" id="applications" role="tabpanel" aria-labelledby="applications">
+                            <c:forEach var="interview" items="${interviews}" varStatus="status">
+                                <c:if test="${interview.interviewStatus=='APPLIED_FOR'}" >
+                                    <div class="row">
+                                        <div class="col-sm-3 interview-title">
+                                            <h6 class="mb-0">${interview.jobpost.title}</h6>
+                                        </div>
+                                        <div class="col-sm-9 text-secondary">
+                                            <div class="row">
+                                                <div class="col-md-7 interview-status">
+                                                    ${interview.interviewStatus}
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <a href="#" role="button" class=" btn-profile col-xl btn btn-primary"><fmt:message key="label.profile.viewApp" /></a>
+                                                </div></div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                </c:if>
+                            </c:forEach>
+
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
