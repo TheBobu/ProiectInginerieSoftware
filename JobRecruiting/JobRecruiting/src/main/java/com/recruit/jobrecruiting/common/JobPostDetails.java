@@ -160,7 +160,6 @@ public class JobPostDetails {
     }
 
     public boolean isAppliable(String username) {
-        //
         return status == Status.ACTIVE && !poster.getUsername().equals(username);
     }
 

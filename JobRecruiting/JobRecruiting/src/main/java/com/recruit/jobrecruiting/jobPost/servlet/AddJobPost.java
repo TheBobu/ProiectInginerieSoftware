@@ -5,13 +5,13 @@
  */
 package com.recruit.jobrecruiting.jobPost.servlet;
 
-import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
-import com.recruit.jobrecruiting.skill.ejb.SkillBean;
 import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.Type;
 import com.recruit.jobrecruiting.entity.User;
+import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
 import com.recruit.jobrecruiting.mail.EmailBean;
+import com.recruit.jobrecruiting.skill.ejb.SkillBean;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import com.recruit.jobrecruiting.util.Util;
 import com.recruit.jobrecruiting.validators.JobPostValidator;
@@ -99,13 +99,12 @@ public class AddJobPost extends HttpServlet {
         User user = userBean.getUserByUsername(username);
         int poster = user.getId();
 
-        System.out.println("user");
-        System.out.println(username);
-
-        JobPostValidator validator = new JobPostValidator(title, requirements, resposabilities, nopositionsAvailable, department, status, skills, type, salary);
+        JobPostValidator validator = new JobPostValidator(title, requirements, resposabilities, nopositionsAvailable,
+                department, status, skills, type, salary);
 
         if (validator.passes(messageBag)) {
-            int jobpost_id = jobPostBean.createJobPost(title, requirements, resposabilities, nopositionsAvailable, skills, department, poster, status, type, salary).getId();
+            int jobpost_id = jobPostBean.createJobPost(title, requirements, resposabilities, nopositionsAvailable,
+                    skills, department, poster, status, type, salary).getId();
             if (!request.isUserInRole("GeneralDirectorRole")) {
                 sendEmail(request, jobpost_id);
             }

@@ -48,7 +48,7 @@
                         <div class="card-text mt-3">
                             <p class="card-text mt-1 "><fmt:message key="label.jobpost.salary" /> :<span style="font-weight:bold">${jobpost.salary}$</span></p>
                             <div class="mt-3">
-                                <c:if test="${jobpost.isAppliable(pageContext.request.getRemoteUser())}">
+                                <c:if test="${showApplyButton && jobpost.isAppliable(pageContext.request.getRemoteUser())}">
                                     <c:choose>
                                         <c:when test="${!jobPostsAppliedToIds.contains(jobpost.id)}">
                                             <a href="${pageContext.request.contextPath}/ApplyForJob?jobid=${jobpost.id}" class="btn btn-success">

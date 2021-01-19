@@ -6,6 +6,7 @@
 package com.recruit.jobrecruiting.jobPost.servlet;
 
 import com.recruit.jobrecruiting.common.JobPostDetails;
+import com.recruit.jobrecruiting.entity.Position;
 import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
 import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
@@ -53,11 +54,13 @@ public class JobPost extends HttpServlet {
 
         try {
             User user = userBean.getUserByUsername(request.getRemoteUser());
-
+            boolean roleOk = Position.canApplyToJobs().contains(user.getPosition());
+            request.setAttribute("showApplyButton", roleOk);
             List<Integer> jobPostsAppliedToIds = interviewBean.getAllJobPostsAsCandidate(user.getId());
             request.setAttribute("jobPostsAppliedToIds", jobPostsAppliedToIds);
 
         } catch (Exception e) {
+            request.setAttribute("showApplyButton", true);
             System.out.println("user not logged in");
         }
 

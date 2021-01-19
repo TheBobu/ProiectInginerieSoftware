@@ -73,7 +73,7 @@
 
         </div>
         <div class="">
-            <c:if test="${jobPost.isAppliable(pageContext.request.getRemoteUser())}">
+            <c:if test="${showApplyButton && jobPost.isAppliable(pageContext.request.getRemoteUser())}">
                 <c:choose>
                     <c:when test="${!jobPostsAppliedToIds.contains(jobPost.id)}">
                         <a href="${pageContext.request.contextPath}/ApplyForJob?jobid=${jobPost.id}" class="btn btn-success">

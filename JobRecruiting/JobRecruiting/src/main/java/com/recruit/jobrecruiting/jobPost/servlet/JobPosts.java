@@ -6,6 +6,7 @@
 package com.recruit.jobrecruiting.jobPost.servlet;
 
 import com.recruit.jobrecruiting.common.JobPostDetails;
+import com.recruit.jobrecruiting.entity.Position;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.Type;
 import com.recruit.jobrecruiting.entity.User;
@@ -72,13 +73,17 @@ public class JobPosts extends HttpServlet {
         request.setAttribute("type", type);
         request.setAttribute("status", status);
 
+
         try {
             User user = userBean.getUserByUsername(request.getRemoteUser());
+            boolean roleOk = Position.canApplyToJobs().contains(user.getPosition());
+            request.setAttribute("showApplyButton", roleOk);
 
             List<Integer> jobPostsAppliedToIds = interviewBean.getAllJobPostsAsCandidate(user.getId());
             request.setAttribute("jobPostsAppliedToIds", jobPostsAppliedToIds);
 
         } catch (Exception e) {
+            request.setAttribute("showApplyButton", true);
             System.out.println("user not logged in");
         }
 
