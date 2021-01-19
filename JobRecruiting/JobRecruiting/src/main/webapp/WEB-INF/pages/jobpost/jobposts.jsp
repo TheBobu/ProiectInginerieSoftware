@@ -43,7 +43,7 @@
                     <div class=" py-5 px-4">
                         <img src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
                         <h5 class="mb-0"><a href="${pageContext.request.contextPath}/JobPost?id=${jobpost.id}" class="text-decoration-none ">${jobpost.title}</a></h5>
-                        <span class="small text-uppercase text-muted">${jobpost.type}</span>
+                        <span class="small text-uppercase text-muted">${jobpost.type.label}</span>
 
                         <div class="card-text mt-3">
                             <p class="card-text mt-1 ">Salary: <span style="font-weight:bold">${jobpost.salary}$</span></p>
