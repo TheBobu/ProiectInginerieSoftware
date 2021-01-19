@@ -183,7 +183,7 @@ public class JobPostBean {
      * @param dep the department of the job posts you want to get
      * @return Returns a list of JobPostDetails, from the specified department
      */
-    public List<JobPostDetails> JobPostsByDepartment(Department dep) {
+    public List<JobPostDetails> getJobPostsByDepartment(Department dep) throws EJBException {
         try {
             Query query = em.createQuery("SELECT j FROM JobPost j where j.department = :dep")
                     .setParameter("dep", dep);
@@ -192,10 +192,13 @@ public class JobPostBean {
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
+//        TypedQuery<JobPostDetails> typedQuery = em.createQuery("SELECT j FROM JobPost j where j.department = :dep", JobPostDetails.class)
+//                .setParameter("dep", dep);
+
+//        return typedQuery.getResultList();
     }
 
     public JobPostDetails copyJobPost(int id, Status status, String posterUsername) {
-
         LOG.info("copyJobPost," + id);
 
         JobPost jobPost = getJobPostEntity(id);
@@ -213,10 +216,16 @@ public class JobPostBean {
         return copiedJobPost.detach();
     }
 
-    public void increasePositionsFilled(JobPost jobPost) {
-        int old = jobPost.getNoOfPositionsFilled();
-        jobPost.setNoOfPositionsFilled(old + 1);
-
-        setJobpostStatus(jobPost, jobPost.getStatus().toString());
+    /**
+     * Increase the filled positions from a specific job post.
+     * Usually means that the Department Director gave their consent.
+     * 
+     * @param id the id of the jobPost whose filled positions number you want to increase
+     */
+    public void increasePositionsFilled(int id) {
+        JobPost jobPost = em.find(JobPost.class, id);
+        int currentNoOfPositionsFilled = jobPost.getNoOfPositionsFilled();
+        currentNoOfPositionsFilled++;
+        jobPost.setNoOfPositionsFilled(currentNoOfPositionsFilled);
     }
 }

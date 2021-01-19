@@ -103,10 +103,11 @@ public class InterviewBean {
      *
      * @param id the id of the interview
      */
-    public void finalAccept(Integer id) {
+    public void setFinalAccept(Integer id) {
         try {
             Interview interview = em.find(Interview.class, id);
             interview.setStatus(InterviewStatus.ACCEPTED_BY_DIRECTOR);
+            
             em.persist(interview);
         } catch (Exception ex) {
             throw new EJBException(ex);
@@ -119,7 +120,7 @@ public class InterviewBean {
      *
      * @param id the id of the interview
      */
-    public void finalReject(Integer id) {
+    public void setFinalReject(Integer id) {
         try {
             Interview interview = em.find(Interview.class, id);
             interview.setStatus(InterviewStatus.REJECTED_BY_DIRECTOR);

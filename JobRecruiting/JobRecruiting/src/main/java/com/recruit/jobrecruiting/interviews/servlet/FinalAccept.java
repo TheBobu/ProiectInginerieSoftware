@@ -6,6 +6,7 @@ package com.recruit.jobrecruiting.interviews.servlet;
  * and open the template in the editor.
  */
 import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
+import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.annotation.security.DeclareRoles;
@@ -31,6 +32,9 @@ public class FinalAccept extends HttpServlet {
 
     @Inject
     private InterviewBean interviewBean;
+    
+    @Inject
+    private JobPostBean jobPostBean;
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -44,7 +48,8 @@ public class FinalAccept extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Integer id = Integer.parseInt(request.getParameter("id"));
-        interviewBean.finalAccept(id);
+        interviewBean.setFinalAccept(id);
+        jobPostBean.increasePositionsFilled(interviewBean.getInterviewById(id).getJobPost().getId());
         response.sendRedirect(request.getHeader("referer"));
     }
 

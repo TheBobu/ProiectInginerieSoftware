@@ -54,7 +54,7 @@ public class JobPostsByDepartment extends HttpServlet {
         Department myDepartment = userBean.getDepartment(myUsername);
         request.setAttribute("myDepartment", myDepartment);
 
-        List<JobPostDetails> jobPosts = jobPostBean.JobPostsByDepartment(myDepartment);
+        List<JobPostDetails> jobPosts = jobPostBean.getJobPostsByDepartment(myDepartment);
         request.setAttribute("jobPosts", jobPosts);
 
         request.getRequestDispatcher("/WEB-INF/pages/jobpost/jobPostsByDepartment.jsp").forward(request, response);

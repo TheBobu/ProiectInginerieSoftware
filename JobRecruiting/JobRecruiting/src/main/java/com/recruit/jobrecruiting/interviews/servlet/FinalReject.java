@@ -43,7 +43,7 @@ public class FinalReject extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Integer id = Integer.parseInt(request.getParameter("id"));
-        interviewBean.finalReject(id);
+        interviewBean.setFinalReject(id);
         response.sendRedirect(request.getHeader("referer"));
     }
 
