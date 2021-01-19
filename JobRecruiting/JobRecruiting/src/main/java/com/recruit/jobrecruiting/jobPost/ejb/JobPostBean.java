@@ -192,10 +192,6 @@ public class JobPostBean {
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
-//        TypedQuery<JobPostDetails> typedQuery = em.createQuery("SELECT j FROM JobPost j where j.department = :dep", JobPostDetails.class)
-//                .setParameter("dep", dep);
-
-//        return typedQuery.getResultList();
     }
 
     public JobPostDetails copyJobPost(int id, Status status, String posterUsername) {
