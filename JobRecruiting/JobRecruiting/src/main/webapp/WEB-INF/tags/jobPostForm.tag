@@ -111,6 +111,12 @@
             <t:displayError error="skills"/>
         </div>
         
+         <div class="form-group mb-4">
+            <label for="noOfPositionsAvailable" class="form-label">Positions available</label>
+            <input type="number" class="form-control" min=1 value ="${jobPost.noOfPositionsAvailable}" id="noOfPositionsAvailable" name="noOfPositionsAvailable" required>
+            <t:displayError error="noOfPositionsAvailable"/>
+        </div>
+        
         <input type="submit" class="btnRegister"  value="<fmt:message key="label.general.save" />"/>
     </div>
 </form>
