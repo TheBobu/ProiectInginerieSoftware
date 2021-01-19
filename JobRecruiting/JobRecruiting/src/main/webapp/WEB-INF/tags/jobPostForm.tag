@@ -10,6 +10,10 @@
 <%-- The list of normal or fragment attributes can be specified here: --%>
 <%@attribute name="action"%>
 
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages" />
+
 <jsp:doBody />
 
 <form class="needs-validation row register-form" action="${action}" method="POST" novalidate>
@@ -20,12 +24,12 @@
 
     <div class="col-md-6 ">
         <div class="form-group mb-4">
-            <label for="title" class="form-label">Title</label>
+            <label for="title" class="form-label"><fmt:message key="label.jobpost.title" /></label>
             <input type="text" minlength=6 class="form-control" id="title" name="title" value ="${jobPost.title}" required>
             <t:displayError error="title"/>
         </div>
         <div class="form-group mb-4">
-            <label for="department" class="form-label">Department</label>
+            <label for="department" class="form-label"><fmt:message key="label.jobpost.department" /></label>
             <select class="form-select" id="department" name="department" required>
                 <c:forEach var = "department" items = "${departments}">
                     <option value="${department}"
@@ -39,19 +43,19 @@
         </div>
 
         <div class="form-group mb-4">
-            <label for="requirements" class="form-label">Requirements</label>
+            <label for="requirements" class="form-label"><fmt:message key="label.jobpost.requirements" /></label>
             <textarea type="text" wrap="hard" min=20 class="form-control" id="requirements" name="requirements" required>${jobPost.requirements}
             </textarea>
             <t:displayError error="requirements"/>
         </div>
         <div class="form-group mb-4">
-            <label for="resposabilities" class="form-label">Resposibilities</label>
+            <label for="resposabilities" class="form-label"><fmt:message key="label.jobpost.responsibilities" /></label>
             <textarea type="text" wrap="hard" min=20 class="form-control" id="resposabilities" name="resposabilities" required>${jobPost.responsabilities}
             </textarea>
             <t:displayError error="responsabilities"/>
         </div>
         
-        <c:if test="${isEdit&&(jobPost.statusShouldBeEditable() || pageContext.request.isUserInRole('GeneralDirectorRole'))}">
+        <c:if test="${isEdit && (jobPost.statusShouldBeEditable() || pageContext.request.isUserInRole('GeneralDirectorRole'))}">
             <div class="form-group mb-4">
                 <label for="status" class="form-label">Status</label>
                 <select class="form-select" id="status" name="status" required>
@@ -69,7 +73,7 @@
     </div>
     <div class="col-md-6">
         <div class="form-group mb-4">
-            <label for="type" class="form-label">Type</label>
+            <label for="type" class="form-label"><fmt:message key="label.jobpost.type" /></label>
             <select class="form-select" id="type" name="type" required>
                 <c:forEach var = "type" items = "${types}">
                     <option value="${type}"
@@ -84,20 +88,14 @@
 
         <div class="form-group mb-4">
 
-            <label for="salary" class="form-label">Salary</label>
+            <label for="salary" class="form-label"><fmt:message key="label.jobpost.salary" /></label>
             <input type="number" class="form-control" min=1 value ="${jobPost.salary}" id="salary" name="salary" required>
             <t:displayError error="salary"/>
         </div>
 
         <div class="form-group mb-4">
-            <label for="noOfPositionsAvailable" class="form-label">Positions available</label>
-            <input type="number" class="form-control" min=1 value ="${jobPost.noOfPositionsAvailable}" id="noOfPositionsAvailable" name="noOfPositionsAvailable" required>
-            <t:displayError error="noOfPositionsAvailable"/>
-        </div>
-
-        <div class="form-group mb-4">
             <label for="skills" class="form-label">
-                Skills 
+                <fmt:message key="label.jobpost.skills" /> 
                 <a href="${pageContext.request.contextPath}/Skills/Create" class="link text-purple">
                     <i class="fas fa-plus-circle"></i></a> 
             </label>
@@ -112,7 +110,7 @@
             </select>
             <t:displayError error="skills"/>
         </div>
-
-        <input type="submit" class="btnRegister"  value="Save"/>
+        
+        <input type="submit" class="btnRegister"  value="<fmt:message key="label.general.save" />"/>
     </div>
 </form>

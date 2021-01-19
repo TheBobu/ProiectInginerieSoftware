@@ -46,7 +46,7 @@
                         <span class="small text-uppercase text-muted">${jobpost.type.label}</span>
 
                         <div class="card-text mt-3">
-                            <p class="card-text mt-1 ">Salary: <span style="font-weight:bold">${jobpost.salary}$</span></p>
+                            <p class="card-text mt-1 "><fmt:message key="label.jobpost.salary" /> :<span style="font-weight:bold">${jobpost.salary}$</span></p>
                             <div class="mt-3">
                                 <c:if test="${jobpost.isAppliable(pageContext.request.getRemoteUser())}">
                                     <c:choose>
@@ -54,13 +54,13 @@
                                             <a href="${pageContext.request.contextPath}/ApplyForJob?jobid=${jobpost.id}" class="btn btn-success">
                                                 <span class="d-flex align-items-baseline">
                                                     <i class="far fa-check-square me-2"></i> 
-                                                    <span>Apply</span>
+                                                    <span><fmt:message key="label.jobpost.apply" /></span>
 
                                                 </span>
                                             </a>
                                         </c:when>
                                         <c:otherwise>
-                                            <p><span class="badge bg-success">Applied</span></p>
+                                            <p><span class="badge bg-success"><fmt:message key="label.jobpost.aplied" /></span></p>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:if>
