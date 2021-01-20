@@ -103,19 +103,33 @@ public class Comment extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getRemoteUser();
-        String comment = request.getParameter("comment");
-        Integer id = Integer.parseInt(request.getParameter("id"));
-        commentBean.createComment(username, comment, id);
+        System.out.println("PPPPPPPOOOOOOOSSSSSSSSSTTTTTTT");
+        System.out.println (request.getParameter("form"));
         
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        System.out.println (request.getParameter("date"));
-        System.out.println (request.getParameter("time"));
-        LocalDate interviewDate = LocalDate.parse(request.getParameter("date"));
-        LocalTime interviewTime = LocalTime.parse(request.getParameter("time"));
-        interviewBean.setDateTime(id, interviewDate, interviewTime);
-        String interviewPlace = request.getParameter("place");
-        interviewBean.setPlace(id, interviewPlace);
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        String formPosted = request.getParameter("form");
+        
+        if(formPosted.contentEquals("schedule")){
+            System.out.println("SCHEDULE");
+            System.out.println (request.getParameter("date"));
+            System.out.println (request.getParameter("time"));
+            LocalDate interviewDate = LocalDate.parse(request.getParameter("date"));
+            LocalTime interviewTime = LocalTime.parse(request.getParameter("time"));
+            interviewBean.setDateTime(id, interviewDate, interviewTime);
+            String interviewPlace = request.getParameter("place");
+            interviewBean.setPlace(id, interviewPlace);
+        }
+        else{
+            if(formPosted.contentEquals("change")){
+                
+            }
+            else{   //comment
+                String username = request.getRemoteUser();
+                String comment = request.getParameter("comment");
+                commentBean.createComment(username, comment, id);
+            }
+        }
+           
         response.sendRedirect(request.getContextPath()+"/Comment?id="+id.toString());
         
     }

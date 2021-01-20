@@ -33,12 +33,13 @@
                         <h3>Interview is not established yet</h3>
                         <!--${interview.dateTime}-->
                         <c:if test="${user.id==interview.interviewer.id}">
-                            <form method="POST" action="${pageContext.request.contextPath}/Comment?id=${id}">
-                                <h3 class="mb-4"><label> Date: </label></h3>
-                                <c:if test="${interview.dateTime != null}">
+                            <form method="POST" action="${pageContext.request.contextPath}/Comment?id=${id}&form=schedule">
+                                <h3 class="mb-4"><label> Date: </label>
+                                    <c:if test="${interview.dateTime != null}">
 <!--                                    <input name="date" type="" value="" required>-->
-                                </c:if>
-                                                 <input name="date" type="date" value="" required>
+                                    </c:if>
+                                    <input name="date" type="date" value="" required>
+                                </h3>
                                                  <!--2021-01-19 22:09:55.271-->
                                 <h3 class="mb-4"><label> Time: </label>
                                                  <input name="time" type="time" value="" required ></h3>
@@ -50,12 +51,12 @@
                         </c:if>
                     </c:if>
                     <c:if test="${interview.status=='BEFORE_INTERVIEW'}">
-                        <h3>Interview is currently set for:</h3>
+<!--                        <h3>Interview is currently set for:</h3>-->
                         <h3>- date : ${interview.getDate()}</h3>
                         <h3>- time : ${interview.getTime()}</h3>
                         <h3>- place: ${interview.place}</h3>
                         <c:if test="${user.id==interview.interviewer.id}">
-                            <form method="POST" action="${pageContext.request.contextPath}/Comment?id=${id}">
+                            <form method="POST" action="${pageContext.request.contextPath}/Comment?id=${id}&form=change">
                                 <button class=" btn btn-profile"  type="submit">Request change</button>
                             </form>
                         </c:if>
@@ -83,7 +84,7 @@
                     </c:forEach>
                     <!-- COMMENT - END -->
                     
-                    <form method="POST" action="${pageContext.request.contextPath}/Comment?id=${id}">
+                    <form method="POST" action="${pageContext.request.contextPath}/Comment?id=${id}&form=comment">
                         <h3 class="pull-left"><fmt:message key="label.comment-section.newcomment" /></h3>
                         <fieldset>
                             <div class="row">
