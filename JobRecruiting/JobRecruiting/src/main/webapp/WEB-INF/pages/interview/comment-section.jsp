@@ -36,7 +36,7 @@
                             <form method="POST" action="${pageContext.request.contextPath}/Comment?id=${id}">
                                 <h3 class="mb-4"><label> Date: </label></h3>
                                 <c:if test="${interview.dateTime != null}">
-                                    <input name="date" type="" value="" required>
+<!--                                    <input name="date" type="" value="" required>-->
                                 </c:if>
                                                  <input name="date" type="date" value="" required>
                                                  <!--2021-01-19 22:09:55.271-->
