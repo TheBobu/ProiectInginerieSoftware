@@ -12,7 +12,7 @@
 <t:pageTemplate pageTitle="Jobs">
 
     <h1 class="mb-4" style="color:white">Final <span style="color:green; background-color:white"> acceptance</span>  list for <br> ${jobPostTitle}</h1>
-    <a class="btn btn-secondary glyphicon glyphicon-chevron-left" href="${pageContext.request.contextPath}/JobPostsByDepartment" role="button"><<</a>
+    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/JobPostsByDepartment" role="button"><<</a>
     <div class="row" style="color:white">
         <div class="col-md">
             <b>Candidate Name</b>
