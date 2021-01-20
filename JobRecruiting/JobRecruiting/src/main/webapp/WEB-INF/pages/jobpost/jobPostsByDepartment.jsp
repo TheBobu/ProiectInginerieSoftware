@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="col-md">
-                        ${jobPost.poster}
+                        ${jobPost.poster.name}
                     </div>
 
                     <div class="col-md">
