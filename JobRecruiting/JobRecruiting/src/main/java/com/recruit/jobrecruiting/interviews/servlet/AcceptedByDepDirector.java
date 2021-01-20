@@ -5,9 +5,14 @@
  */
 package com.recruit.jobrecruiting.interviews.servlet;
 
+import com.recruit.jobrecruiting.common.InterviewDetails;
+import com.recruit.jobrecruiting.entity.InterviewStatus;
 import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
+import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.annotation.security.DeclareRoles;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.HttpConstraint;
@@ -18,18 +23,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet for granting final reject to a candidate already accepted by
- * Recruiter/Interviewer. Servlet can only be accessed by users who are
- * Department Directors.
+ * See final accepted candidates list for a specific jobPost.
  *
  * @author robert
  */
-@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"DepartmentDirectorRole"}))
-@WebServlet(name = "FinalReject", urlPatterns = {"/Interview/FinalReject"})
-public class FinalReject extends HttpServlet {
+@DeclareRoles({"DepartmentDirectorRole"})
+@ServletSecurity(value = @HttpConstraint(rolesAllowed={"DepartmentDirectorRole"}))
+@WebServlet(name = "AcceptedByDepDirector", urlPatterns = {"/AcceptedByDepDirector"})
+public class AcceptedByDepDirector extends HttpServlet {
 
     @Inject
     private InterviewBean interviewBean;
+
+    @Inject
+    private JobPostBean jobPostBean;
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -42,9 +49,15 @@ public class FinalReject extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Integer id = Integer.parseInt(request.getParameter("id"));
-        interviewBean.setFinalReject(id);
-        response.sendRedirect(request.getHeader("referer"));
+        Integer jobPostId = Integer.parseInt(request.getParameter("id"));
+
+        List<InterviewDetails> interviews = interviewBean.getInterviewsForJobPost(jobPostId, InterviewStatus.ACCEPTED_BY_DIRECTOR);
+        request.setAttribute("interviews", interviews);
+
+        String jobPostTitle = jobPostBean.getJobPost(jobPostId).getTitle();
+        request.setAttribute("jobPostTitle", jobPostTitle);
+
+        request.getRequestDispatcher("/WEB-INF/pages/interview/acceptedByDepDirector.jsp").forward(request, response);
     }
 
     /**
@@ -54,7 +67,6 @@ public class FinalReject extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Department Director gives final reject to proposed candidate";
+        return "Acceptance by dep director";
     }
-
 }
