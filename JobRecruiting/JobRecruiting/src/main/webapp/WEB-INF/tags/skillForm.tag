@@ -25,7 +25,7 @@
     <div class="col-md-6 mx-auto">
         <div class="form-group mb-4">
             <label for="name" class="form-label"><fmt:message key="label.skill.name" /></label>
-            <input type="text" minlength=6 class="form-control" id="name" name="name" value ="${skill.name}" required>
+            <input type="text" class="form-control" id="name" name="name" value ="${skill.name}" required>
             <t:displayError error="name"/>
         </div>
         
