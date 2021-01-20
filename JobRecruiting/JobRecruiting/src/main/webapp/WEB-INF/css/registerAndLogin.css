@@ -82,6 +82,7 @@ h2 {
 .signup__form {
   padding: 2.5rem;
   background: #fafafa;
+  overflow: auto;
 }
 label {
   font-size: .85rem;

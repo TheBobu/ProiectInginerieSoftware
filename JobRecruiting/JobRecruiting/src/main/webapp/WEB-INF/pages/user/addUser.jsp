@@ -22,7 +22,7 @@
                 </div>
                 <div class="signup__overlay"></div>
             </div>
-            <div class="container__child signup__form col-md-6 h-auto">
+            <div class="container__child signup__form col-md-6">
                 <form class="needs-validation" novalidate method="POST" action="${pageContext.request.contextPath}/Users/Create" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="firstName"><fmt:message key="label.register.firstName" /></label>
