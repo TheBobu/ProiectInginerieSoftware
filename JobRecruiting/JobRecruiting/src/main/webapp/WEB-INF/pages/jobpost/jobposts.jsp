@@ -43,24 +43,24 @@
                     <div class=" py-5 px-4">
                         <img src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
                         <h5 class="mb-0"><a href="${pageContext.request.contextPath}/JobPost?id=${jobpost.id}" class="text-decoration-none ">${jobpost.title}</a></h5>
-                        <span class="small text-uppercase text-muted">${jobpost.type}</span>
+                        <span class="small text-uppercase text-muted">${jobpost.type.label}</span>
 
                         <div class="card-text mt-3">
-                            <p class="card-text mt-1 ">Salary: <span style="font-weight:bold">${jobpost.salary}$</span></p>
+                            <p class="card-text mt-1 "><fmt:message key="label.jobpost.salary" /> :<span style="font-weight:bold">${jobpost.salary}$</span></p>
                             <div class="mt-3">
-                                <c:if test="${jobpost.isAppliable(pageContext.request.getRemoteUser())}">
+                                <c:if test="${showApplyButton && jobpost.isAppliable(pageContext.request.getRemoteUser())}">
                                     <c:choose>
                                         <c:when test="${!jobPostsAppliedToIds.contains(jobpost.id)}">
                                             <a href="${pageContext.request.contextPath}/ApplyForJob?jobid=${jobpost.id}" class="btn btn-success">
                                                 <span class="d-flex align-items-baseline">
                                                     <i class="far fa-check-square me-2"></i> 
-                                                    <span>Apply</span>
+                                                    <span><fmt:message key="label.jobpost.apply" /></span>
 
                                                 </span>
                                             </a>
                                         </c:when>
                                         <c:otherwise>
-                                            <p><span class="badge bg-success">Applied</span></p>
+                                            <p><span class="badge bg-success"><fmt:message key="label.jobpost.aplied" /></span></p>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:if>

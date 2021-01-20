@@ -6,13 +6,13 @@
 package com.recruit.jobrecruiting.jobPost.servlet;
 
 import com.recruit.jobrecruiting.common.JobPostDetails;
-import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
-import com.recruit.jobrecruiting.skill.ejb.SkillBean;
 import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.Type;
 import com.recruit.jobrecruiting.interviews.ejb.ViewCandidatesBean;
+import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
 import com.recruit.jobrecruiting.mail.EmailBean;
+import com.recruit.jobrecruiting.skill.ejb.SkillBean;
 import com.recruit.jobrecruiting.util.Util;
 import com.recruit.jobrecruiting.validators.JobPostValidator;
 import java.io.IOException;
@@ -101,10 +101,17 @@ public class EditJobPost extends HttpServlet {
         String type = request.getParameter("type");
         String salary = request.getParameter("salary");
 
-        JobPostValidator validator = new JobPostValidator(title, requirements, resposabilities, nopositionsAvailable, department, status, skills, type, salary);
+        // status is not editable => it's waiting for approval
+        if (status == null) {
+            status = Status.WAITING_FOR_APPROVAL.toString();
+        }
+
+        JobPostValidator validator = new JobPostValidator(title, requirements, resposabilities, nopositionsAvailable,
+                department, status, skills, type, salary);
 
         if (validator.passes(messageBag)) {
-            JobPostDetails jobPost = jobPostBean.editJobPost(id, title, requirements, resposabilities, nopositionsAvailable, skills, department, status, type, salary);
+            JobPostDetails jobPost = jobPostBean.editJobPost(id, title, requirements, resposabilities, nopositionsAvailable,
+                    skills, department, status, type, salary);
             List<String> emails = viewCandidateBean.getAllCandidateEmail(id);
             if (jobPost.getStatus() == Status.INACTIVE) {
                 sendModifiedJobPostEmail(request, emails, id, "Job Post closed");

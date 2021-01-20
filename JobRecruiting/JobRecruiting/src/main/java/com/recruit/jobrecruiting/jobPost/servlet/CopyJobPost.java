@@ -6,9 +6,10 @@
 
 package com.recruit.jobrecruiting.jobPost.servlet;
 
-import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
 import com.recruit.jobrecruiting.entity.Status;
+import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
 import com.recruit.jobrecruiting.mail.EmailBean;
+import com.recruit.jobrecruiting.user.ejb.UserBean;
 import com.recruit.jobrecruiting.util.Util;
 import java.io.IOException;
 import javax.inject.Inject;
@@ -33,6 +34,9 @@ public class CopyJobPost extends HttpServlet {
 
     @Inject
     private EmailBean emailBean;
+
+    @Inject
+    private UserBean userBean;
 
     /** 
      * Handles the HTTP <code>GET</code> method.
@@ -86,8 +90,9 @@ public class CopyJobPost extends HttpServlet {
 
     protected void sendEmail(HttpServletRequest request, int jobpost_id) {
         new Thread(() -> {
+            String email = userBean.getGeneralDirectorEmail();
             String url = Util.getBaseUrl(request) + "/JobPost?id=" + jobpost_id;
-            emailBean.sendEmail("denisa.halmaghi@ulbsibiu.ro", "New jobpost created", url);
+            emailBean.sendEmail(email, "New jobpost created", url);
         }).start();
     }
 
