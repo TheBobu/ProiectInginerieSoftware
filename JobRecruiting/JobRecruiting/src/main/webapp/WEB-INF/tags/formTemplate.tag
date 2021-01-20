@@ -13,7 +13,7 @@
     }
 
     body{
-        background-image: linear-gradient(to right, #5f72bd 0%, #9b23ea 100%);
+        background: url('http://andreeapurta.com/proiectIngSoftware/6172-min.png');
     }
 
     .register{

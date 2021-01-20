@@ -1,6 +1,6 @@
 <%-- 
-    Document   : successfulInterviews
-    Created on : Jan 16, 2021, 9:54:29 PM
+    Document   : rejectedByDepDirector
+    Created on : Jan 20, 2021, 10:57:12 AM
     Author     : Robert-PC
 --%>
 
@@ -11,7 +11,7 @@
 
 <t:pageTemplate pageTitle="Jobs">
 
-    <h1 class="mb-4" style="color:white">Accepted Candidates by Recruiter/Interviewer for the JobPost <br> ${jobPostTitle}</h1>
+    <h1 class="mb-4" style="color:white">Final <span style="color:red; background-color:white"> rejection</span> list for <br> ${jobPostTitle}</h1>
     <a class="btn btn-secondary glyphicon glyphicon-chevron-left" href="${pageContext.request.contextPath}/JobPostsByDepartment" role="button"><<</a>
     <div class="row" style="color:white">
         <div class="col-md">
@@ -19,11 +19,7 @@
         </div>
 
         <div class="col-md">
-            <b>Candidate Profile</b>
-        </div>
-
-        <div class="col-md">
-            <b>Interviewed by</B>
+            <b>Candidate's mail</b>
         </div>
 
         <div class="col-md">
@@ -37,18 +33,17 @@
                     <div class="col-md">
                         ${interview.candidate.firstName} ${interview.candidate.lastName}
                     </div>
+                    
+                     <div class="col-md">
+                        ${interview.candidate.email}
+                    </div>
 
                     <div class="col-md">
                         <a class="btn btn-secondary" href="${pageContext.request.contextPath}/Profile?id=${interview.candidate.id}" role="button">View profile</a>
                     </div>
 
                     <div class="col-md">
-                         ${interview.interviewer.firstName} ${interview.interviewer.lastName}
-                    </div>
-
-                    <div class="col-md">
-                        <a class="btn btn-success" href="${pageContext.request.contextPath}/Interview/FinalAccept?id=${interview.id}">Final accept</a>
-                        <a class="btn btn-danger" href="${pageContext.request.contextPath}/Interview/FinalReject?id=${interview.id}">Final reject</a>
+                         ${interview.status}
                     </div>
                 </div>
             </div>
@@ -56,3 +51,4 @@
         <br>
     </c:forEach>
 </t:pageTemplate>
+

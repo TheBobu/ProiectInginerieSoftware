@@ -79,6 +79,25 @@ public class InterviewBean {
     }
 
     /**
+     * Gets all interviews for a specific job post with a specific status.
+     *
+     * @param id the id of the JobPost
+     * @param status the status of the interview
+     * @return Returns the list of interviews
+     */
+    public List<InterviewDetails> getInterviewsForJobPost(Integer id, InterviewStatus status) {
+        try {
+            TypedQuery<InterviewDetails> typedQuery = em.createQuery("SELECT i FROM Interview i WHERE i.jobPost.id = :id AND i.status = :status", InterviewDetails.class)
+                    .setParameter("id", id)
+                    .setParameter("status", status);
+
+            return typedQuery.getResultList();
+        } catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+    }
+
+    /**
      * Gets all successful interviews (candidates accepted by
      * recruiter/interviewer) for a specific job post.
      *
@@ -107,7 +126,7 @@ public class InterviewBean {
         try {
             Interview interview = em.find(Interview.class, id);
             interview.setStatus(InterviewStatus.ACCEPTED_BY_DIRECTOR);
-            
+
             em.persist(interview);
         } catch (Exception ex) {
             throw new EJBException(ex);
@@ -169,8 +188,8 @@ public class InterviewBean {
         InterviewDetails interviewDetails = new InterviewDetails(interview.getId(), interview.getJobPost(), interview.getCandidate(), interview.getInterviewer(), interview.getStatus());
         return interviewDetails;
     }
-    
-    public Interview getInterviewById(Integer id){
+
+    public Interview getInterviewById(Integer id) {
         return em.find(Interview.class, id);
     }
 }

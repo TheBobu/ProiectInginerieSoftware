@@ -7,10 +7,9 @@ package com.recruit.jobrecruiting.interviews.servlet;
 
 import com.recruit.jobrecruiting.common.InterviewDetails;
 import com.recruit.jobrecruiting.entity.InterviewStatus;
-import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
 import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
+import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.annotation.security.DeclareRoles;
 import javax.inject.Inject;
@@ -23,22 +22,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet for accessing the successful interviews (candidates already accepted
- * by Recruiter/Interviewer) for a specific Jobpost. Servlet can only be
- * accessed by users who are Department Directors.
+ * See final rejected candidates list for a specific jobPost.
  *
  * @author robert
  */
 @DeclareRoles({"DepartmentDirectorRole"})
 @ServletSecurity(value = @HttpConstraint(rolesAllowed = {"DepartmentDirectorRole"}))
-@WebServlet(name = "SuccessfulInterviews", urlPatterns = {"/SuccessfulInterviewsForJobPost"})
-public class SuccessfulInterviewsForJobPost extends HttpServlet {
+@WebServlet(name = "RejectedByDepDirector", urlPatterns = {"/RejectedByDepDirector"})
+public class RejectedByDepDirector extends HttpServlet {
 
     @Inject
     private InterviewBean interviewBean;
 
     @Inject
-    JobPostBean jobPostBean;
+    private JobPostBean jobPostBean;
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -53,19 +50,13 @@ public class SuccessfulInterviewsForJobPost extends HttpServlet {
             throws ServletException, IOException {
         Integer jobPostId = Integer.parseInt(request.getParameter("id"));
 
-        List<InterviewDetails> interviews = interviewBean.getInterviewsForJobPost(jobPostId, InterviewStatus.ACCEPTED_BY_RECRUITER);
+        List<InterviewDetails> interviews = interviewBean.getInterviewsForJobPost(jobPostId, InterviewStatus.REJECTED_BY_DIRECTOR);
         request.setAttribute("interviews", interviews);
 
         String jobPostTitle = jobPostBean.getJobPost(jobPostId).getTitle();
         request.setAttribute("jobPostTitle", jobPostTitle);
 
-        request.getRequestDispatcher("/WEB-INF/pages/interview/successfulInterviewsForJobPost.jsp").forward(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        request.getRequestDispatcher("/WEB-INF/pages/interview/successfulInterviewsForJobPost.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/interview/rejectedByDepDirector.jsp").forward(request, response);
     }
 
     /**
@@ -75,6 +66,6 @@ public class SuccessfulInterviewsForJobPost extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Successful interviews for the a specific jobpost";
+        return "Acceptance by dep director";
     }
 }
