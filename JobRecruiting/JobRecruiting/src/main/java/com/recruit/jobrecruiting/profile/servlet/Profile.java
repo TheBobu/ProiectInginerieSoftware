@@ -56,13 +56,7 @@ public class Profile extends HttpServlet {
 //            request.getRequestDispatcher("/WEB-INF/pages/profile/profile.jsp").forward(request, response);
             Integer id=user.getId();
             List<InterviewDetails> interviews;
-            if(user.getPosition().compareTo(Position.CANDIDATE)==0)
-            {
-                interviews = interviewBean.getAllInterviewsAsCandidate(id);
-            }         
-            else
-                interviews = interviewBean.getAllInterviewsAsInterviewer(id);
-
+            interviews = interviewBean.getAllInterviewsAsCandidate(id);
             request.getSession().setAttribute("interviews", interviews);   
             request.getRequestDispatcher("/WEB-INF/pages/profile/profile.jsp").forward(request, response);
         }
