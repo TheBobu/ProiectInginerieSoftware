@@ -6,8 +6,11 @@
 package com.recruit.jobrecruiting.entity;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Objects;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
@@ -124,6 +127,14 @@ public class Interview implements Serializable {
 
     public void setComments(Collection<Comment> comments) {
         this.comments = comments;
+    }
+    
+    public LocalDate getDate (){
+        return this.dateTime.toLocalDate();
+    }
+    
+    public LocalTime getTime (){
+        return this.dateTime.toLocalTime();
     }
 
     @Override
