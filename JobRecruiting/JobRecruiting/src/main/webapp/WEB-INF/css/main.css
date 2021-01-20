@@ -44,3 +44,13 @@ body {
     border-radius: 25px 25px 25px 25px !important;
     padding: 10px 30px 10px 30px !important;
 }
+
+.btn-homepage a{
+    text-decoration: none;
+    color: black;
+}
+
+.btn-homepage a:hover{
+    text-decoration: none;
+    color: black;
+}

@@ -17,7 +17,9 @@
             <div class="col-md-6">
                 <h2 class="main-title-homepage"><fmt:message key="label.home.title" /></h2>
                 <p class="main-subtitle-homepage">Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br> Aenean in vulputate mauris. Morbi interdum orci sit amet lobortis lobortis. <br>Maecenas id finibus dolor. Suspendisse tincidunt pharetra fringilla.</p>
-                <button type="button" class="btn btn-homepage"><fmt:message key="label.home.button" /></button>
+                <button type="button" class="btn btn-homepage">
+                    <a href="${pageContext.request.contextPath}/Users/Create"><fmt:message key="label.home.button" /></a>
+                </button>
             </div>
         </div>
     </div>
