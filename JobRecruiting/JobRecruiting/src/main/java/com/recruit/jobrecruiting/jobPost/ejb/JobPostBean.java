@@ -229,5 +229,6 @@ public class JobPostBean {
         int currentNoOfPositionsFilled = jobPost.getNoOfPositionsFilled();
         currentNoOfPositionsFilled++;
         jobPost.setNoOfPositionsFilled(currentNoOfPositionsFilled);
+        setJobpostStatus(jobPost, jobPost.getStatus().toString()); 
     }
 }
