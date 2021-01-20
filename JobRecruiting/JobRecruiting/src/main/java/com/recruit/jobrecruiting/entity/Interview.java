@@ -136,6 +136,12 @@ public class Interview implements Serializable {
     public LocalTime getTime (){
         return this.dateTime.toLocalTime();
     }
+    
+    public Boolean checkAfterInterview(){
+        if((this.status==InterviewStatus.BEFORE_INTERVIEW) && (LocalDate.now().isAfter(this.getDate())))
+            return Boolean.TRUE;
+        return Boolean.FALSE;
+    }
 
     @Override
     public int hashCode() {

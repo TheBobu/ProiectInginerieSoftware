@@ -54,7 +54,14 @@ public class InterviewBean {
             TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM Interview i WHERE (i.interviewer.id = :id AND i.status <> :st)", Interview.class)
                     .setParameter("id", userId).setParameter("st", InterviewStatus.APPLIED_FOR);
             List<Interview> interviews = (List<Interview>) typedQuery.getResultList();
-
+            for(Interview interview:interviews){
+                if(interview.checkAfterInterview()){
+                    interview.setStatus(InterviewStatus.AFTER_INTERVIEW);
+//                    TypedQuery<Interview> setStatus = em.createQuery("SELECT i FROM Interview i WHERE (i.interviewer.id = :id AND i.status <> :st)", Interview.class)
+//                            UPDATE Interview i SET i.               
+                    em.persist(interview);
+                }
+            }
             List<InterviewDetails> x = copyInterviewToDetails(interviews);
             return x;
         } catch (Exception ex) {
@@ -67,6 +74,12 @@ public class InterviewBean {
             TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM Interview i WHERE i.candidate.id = :id", Interview.class)
                     .setParameter("id", userId);
             List<Interview> interviews = (List<Interview>) typedQuery.getResultList();
+            for(Interview interview:interviews){
+                if(interview.checkAfterInterview()){
+                    interview.setStatus(InterviewStatus.AFTER_INTERVIEW);
+                    em.persist(interview);
+                }
+            }
             List<InterviewDetails> x = copyInterviewToDetails(interviews);
             return x;
         } catch (Exception ex) {
@@ -204,6 +217,13 @@ public class InterviewBean {
             throw new EJBException(ex);
         }
     } 
+    
+    //trebuie in clasa Interview
+//    public Boolean checkAfterInterview(Interview interview){
+//        if((interview.getStatus()==InterviewStatus.BEFORE_INTERVIEW) && (LocalDate.now().isAfter(interview.getDate())))
+//            return Boolean.TRUE;
+//        return Boolean.FALSE;
+//    }
     
 //    private String getDateTime() {
 //    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");

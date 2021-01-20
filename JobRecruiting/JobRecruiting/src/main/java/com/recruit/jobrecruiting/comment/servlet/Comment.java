@@ -12,6 +12,8 @@ import com.recruit.jobrecruiting.entity.Interview;
 import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
+import com.recruit.jobrecruiting.validators.InterviewValidator;
+import com.recruit.jobrecruiting.validators.UserValidator;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
@@ -19,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import javax.annotation.security.DeclareRoles;
 import javax.inject.Inject;
@@ -115,9 +118,18 @@ public class Comment extends HttpServlet {
             System.out.println (request.getParameter("time"));
             LocalDate interviewDate = LocalDate.parse(request.getParameter("date"));
             LocalTime interviewTime = LocalTime.parse(request.getParameter("time"));
-            interviewBean.setDateTime(id, interviewDate, interviewTime);
-            String interviewPlace = request.getParameter("place");
-            interviewBean.setPlace(id, interviewPlace);
+            HashMap<String, String> messageBag = new HashMap<>();
+            InterviewValidator validator = new InterviewValidator(interviewDate, interviewBean);
+            if (validator.passes(messageBag)) {
+                interviewBean.setDateTime(id, interviewDate, interviewTime);
+                String interviewPlace = request.getParameter("place");
+                interviewBean.setPlace(id, interviewPlace);
+            }
+            else{
+                request.setAttribute("errors", messageBag);
+                request.getRequestDispatcher("/WEB-INF/pages/interview/comment-section.jsp").include(request, response);
+            }
+         
         }
         else{
             if(formPosted.contentEquals("change")){
