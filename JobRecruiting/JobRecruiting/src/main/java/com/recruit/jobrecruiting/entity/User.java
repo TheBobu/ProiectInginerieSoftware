@@ -339,12 +339,9 @@ public class User implements Serializable {
         }
         return true;
     }
-    
-
-
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", birthDate=" + birthDate + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", shortBio=" + shortBio + ", skills=" + skills + ", profilePhoto=" + profilePhoto + ", cv=" + cv + ", status=" + status + ", position=" + position + ", department=" + department + ", interviewsAsCandidate=" + interviewsAsCandidate + ", interviewsAsInterviewer=" + interviewsAsInterviewer + ", jobPostsAsPoster=" + jobPostsAsPoster + '}';
+        return "User{" + "id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", birthDate=" + birthDate + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", shortBio=" + shortBio + ", userExperience=" + userExperience + ", skills=" + skills + ", profilePhoto=" + profilePhoto + ", cv=" + cv + ", status=" + status + ", position=" + position + ", department=" + department + ", interviewsAsCandidate=" + interviewsAsCandidate + ", interviewsAsInterviewer=" + interviewsAsInterviewer + ", jobPostsAsPoster=" + jobPostsAsPoster + '}';
     }
 }

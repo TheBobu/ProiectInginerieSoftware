@@ -6,6 +6,7 @@
 package com.recruit.jobrecruiting.interviews.servlet;
 
 import com.recruit.jobrecruiting.common.InterviewDetails;
+import com.recruit.jobrecruiting.entity.InterviewStatus;
 import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
 import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
 import java.io.IOException;
@@ -22,20 +23,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet for accessing the successful interviews (candidates already accepted by Recruiter/Interviewer) 
- * for a specific Jobpost. Servlet can only be accessed by users who are Department Directors. 
+ * Servlet for accessing the successful interviews (candidates already accepted
+ * by Recruiter/Interviewer) for a specific Jobpost. Servlet can only be
+ * accessed by users who are Department Directors.
  *
  * @author robert
  */
 @DeclareRoles({"DepartmentDirectorRole"})
-@ServletSecurity(value = @HttpConstraint(rolesAllowed={"DepartmentDirectorRole"}))
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"DepartmentDirectorRole"}))
 @WebServlet(name = "SuccessfulInterviews", urlPatterns = {"/SuccessfulInterviewsForJobPost"})
 public class SuccessfulInterviewsForJobPost extends HttpServlet {
 
     @Inject
     private InterviewBean interviewBean;
-    
-    @Inject JobPostBean jobPostBean;
+
+    @Inject
+    JobPostBean jobPostBean;
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -48,13 +52,19 @@ public class SuccessfulInterviewsForJobPost extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Integer jobPostId = Integer.parseInt(request.getParameter("id"));
-        
-        List<InterviewDetails> interviews = interviewBean.getAllSuccessfulInterviewsForJobPost(jobPostId);
+
+        List<InterviewDetails> interviews = interviewBean.getInterviewsForJobPost(jobPostId, InterviewStatus.ACCEPTED_BY_RECRUITER);
         request.setAttribute("interviews", interviews);
-        
+
         String jobPostTitle = jobPostBean.getJobPost(jobPostId).getTitle();
         request.setAttribute("jobPostTitle", jobPostTitle);
-                
+
+        request.getRequestDispatcher("/WEB-INF/pages/interview/successfulInterviewsForJobPost.jsp").forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         request.getRequestDispatcher("/WEB-INF/pages/interview/successfulInterviewsForJobPost.jsp").forward(request, response);
     }
 
