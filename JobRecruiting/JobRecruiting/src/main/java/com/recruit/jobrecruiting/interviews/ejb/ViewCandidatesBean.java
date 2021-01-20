@@ -46,10 +46,6 @@ public class ViewCandidatesBean {
                     .setParameter("interviewStatus", InterviewStatus.APPLIED_FOR);
 
             List<Interview> candidates = (List<Interview>) typedQuery.getResultList();
-//        Query query = em.createQuery("SELECT i FROM Interviews i WHERE i.status = :interviewStatus")
-//                .setParameter("interviewStatusid", InterviewStatus.WAITING_INTERVIEW_DATE);
-
-            //List<Interview> candidates = (List<Interview>)query.getResultList();
             List<InterviewDetails> x = copyCandidateToDetails(candidates);
             return x;
         } catch (Exception ex) {
@@ -57,18 +53,6 @@ public class ViewCandidatesBean {
         }
     }
 
-//    public List<InterviewDetails> getAllInterviewsAsCandidate(Integer userId)
-//    {
-//        try {
-//            TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM interviews i WHERE i.candidate_key = :id", Interview.class)
-//                .setParameter("id", userId);
-//        List<Interview> interviews = (List<Interview>)typedQuery.getResultList();
-//        List<InterviewDetails> x = copyInterviewToDetails(interviews);
-//        return x;
-//        } catch (Exception ex) {
-//            throw new EJBException(ex);
-//        }
-//    }
     private List<InterviewDetails> copyCandidateToDetails(List<Interview> candidates) {
         List<InterviewDetails> detailsList = new ArrayList<>();
         for (Interview candidate : candidates) {

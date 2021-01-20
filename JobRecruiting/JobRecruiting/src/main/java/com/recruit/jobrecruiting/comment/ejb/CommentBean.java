@@ -33,8 +33,6 @@ public class CommentBean {
     public List<CommentDetails> getAllComments(Integer interviewId) {
         LOG.info("getAllComments");
         try {
-            //List<Comment> comments = (List<Comment>) em.createQuery("SELECT c FROM Comment c WHERE ").getResultList();
-            //return comments;
             TypedQuery<Comment> typedQuery = em.createQuery("SELECT c FROM Comment c WHERE c.interview.id = :id", Comment.class)
                 .setParameter("id", interviewId);
         List<Comment> comments = (List<Comment>)typedQuery.getResultList();

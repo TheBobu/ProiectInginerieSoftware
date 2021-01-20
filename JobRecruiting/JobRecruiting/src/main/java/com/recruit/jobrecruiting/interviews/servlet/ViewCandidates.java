@@ -71,8 +71,6 @@ public class ViewCandidates extends HttpServlet {
             throws ServletException, IOException {
         
         List<InterviewDetails> candidates = viewCandidatesBean.getAllCandidates();
-         
-        //request.getSession().setAttribute("candidates", candidates);
         request.getSession().setAttribute("candidates", candidates);   
         request.getRequestDispatcher("/WEB-INF/pages/interview/viewCandidates.jsp").forward(request, response);
 

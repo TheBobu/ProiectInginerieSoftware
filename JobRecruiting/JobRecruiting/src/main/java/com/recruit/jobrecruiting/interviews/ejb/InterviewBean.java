@@ -6,7 +6,6 @@
 package com.recruit.jobrecruiting.interviews.ejb;
 
 import com.recruit.jobrecruiting.common.InterviewDetails;
-import com.recruit.jobrecruiting.common.UserDetails;
 import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
 import com.recruit.jobrecruiting.entity.Interview;
 import com.recruit.jobrecruiting.entity.InterviewStatus;
@@ -14,12 +13,10 @@ import com.recruit.jobrecruiting.entity.JobPost;
 import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import com.recruit.jobrecruiting.util.Util;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJBException;
@@ -48,7 +45,7 @@ public class InterviewBean {
     @PersistenceContext
     private EntityManager em;
 
-    public List<InterviewDetails> getAllInterviewsAsInterviewer(Integer userId)///////////doar cele pt care s-a stabilit interviul
+    public List<InterviewDetails> getAllInterviewsAsInterviewer(Integer userId)//doar cele pt care s-a stabilit interviul
     {
         try {
             TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM Interview i WHERE (i.interviewer.id = :id AND i.status <> :st)", Interview.class)
@@ -56,9 +53,7 @@ public class InterviewBean {
             List<Interview> interviews = (List<Interview>) typedQuery.getResultList();
             for(Interview interview:interviews){
                 if(interview.checkAfterInterview()){
-                    interview.setStatus(InterviewStatus.AFTER_INTERVIEW);
-//                    TypedQuery<Interview> setStatus = em.createQuery("SELECT i FROM Interview i WHERE (i.interviewer.id = :id AND i.status <> :st)", Interview.class)
-//                            UPDATE Interview i SET i.               
+                    interview.setStatus(InterviewStatus.AFTER_INTERVIEW);    
                     em.persist(interview);
                 }
             }
@@ -238,18 +233,4 @@ public class InterviewBean {
         }
     } 
     
-    //trebuie in clasa Interview
-//    public Boolean checkAfterInterview(Interview interview){
-//        if((interview.getStatus()==InterviewStatus.BEFORE_INTERVIEW) && (LocalDate.now().isAfter(interview.getDate())))
-//            return Boolean.TRUE;
-//        return Boolean.FALSE;
-//    }
-    
-//    private String getDateTime() {
-//    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-//    Date date = new Date();
-//    return dateFormat.format(date);
-//}
-//    var dt = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(Math.Round(1372061224000 / 1000d)).ToLocalTime();
-//Console.WriteLine(dt); // Prints: 6/24/2013 10:07:04 AM
 }

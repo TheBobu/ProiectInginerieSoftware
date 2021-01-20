@@ -2,7 +2,6 @@ package com.recruit.jobrecruiting.profile.servlet;
 
 import com.recruit.jobrecruiting.comment.ejb.CommentBean;
 import com.recruit.jobrecruiting.common.InterviewDetails;
-import com.recruit.jobrecruiting.entity.Position;
 import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
@@ -49,11 +48,7 @@ public class Profile extends HttpServlet {
             User user = userBean.getUserByUsername(username);
             request.setAttribute("user", user);
             
-            //My interviews
-//            List<InterviewDetails> interviews = interviewBean.getAllInterviewsAsCandidate(user.getId());
-//              request.setAttribute("interviews", interviews);
-//              
-//            request.getRequestDispatcher("/WEB-INF/pages/profile/profile.jsp").forward(request, response);
+
             Integer id=user.getId();
             List<InterviewDetails> interviews;
             interviews = interviewBean.getAllInterviewsAsCandidate(id);
