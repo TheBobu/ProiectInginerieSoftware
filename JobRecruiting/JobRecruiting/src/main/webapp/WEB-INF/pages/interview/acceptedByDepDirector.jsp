@@ -23,7 +23,7 @@
         </div>
 
         <div class="col-md">
-            <b>Candidate Profile</b>
+            <b>Candidate's Profile</b>
         </div>
 
         <div class="col-md">

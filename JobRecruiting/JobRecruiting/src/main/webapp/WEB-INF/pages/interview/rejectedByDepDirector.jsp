@@ -23,6 +23,10 @@
         </div>
 
         <div class="col-md">
+            <b>Candidate's profile</b>
+        </div>
+        
+        <div class="col-md">
             <b>Final Decision</b>
         </div>
     </div>
