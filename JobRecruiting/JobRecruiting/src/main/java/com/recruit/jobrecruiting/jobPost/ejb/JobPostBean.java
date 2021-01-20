@@ -6,12 +6,12 @@
 package com.recruit.jobrecruiting.jobPost.ejb;
 
 import com.recruit.jobrecruiting.common.JobPostDetails;
-import com.recruit.jobrecruiting.skill.ejb.SkillBean;
 import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.JobPost;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.Type;
 import com.recruit.jobrecruiting.entity.User;
+import com.recruit.jobrecruiting.skill.ejb.SkillBean;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import com.recruit.jobrecruiting.util.Detachable;
 import com.recruit.jobrecruiting.util.Util;
@@ -69,7 +69,13 @@ public class JobPostBean {
         LOG.info("filterJobPosts" + status);
 
         try {
-            Query query = em.createQuery("SELECT j FROM JobPost j where (lower(j.title) like :keyword or lower(j.requirements) like :keyword or lower(j.responsabilities) like :keyword) and j.type in :types  and j.salary >= :salary and j.status in :statuses")
+            Query query = em.createQuery("SELECT j FROM JobPost j "
+                    + "where (lower(j.title) like :keyword "
+                    + "or lower(j.requirements) like :keyword "
+                    + "or lower(j.responsabilities) like :keyword) "
+                    + "and j.type in :types  "
+                    + "and j.salary >= :salary "
+                    + "and j.status in :statuses")
                     .setParameter("keyword", "%" + Util.string(keyword).toLowerCase() + "%")
                     .setParameter("salary", Util.number(salary))
                     .setParameter("types", Util.types(type))

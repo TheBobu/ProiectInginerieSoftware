@@ -14,7 +14,12 @@ import com.recruit.jobrecruiting.entity.JobPost;
 import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import com.recruit.jobrecruiting.util.Util;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJBException;
@@ -192,4 +197,39 @@ public class InterviewBean {
     public Interview getInterviewById(Integer id) {
         return em.find(Interview.class, id);
     }
+    
+    public LocalDateTime toDateTime(LocalDate date, LocalTime time){
+        return LocalDateTime.of(date, time);
+    }
+    
+     public void setDateTime(Integer id, LocalDate date, LocalTime time){
+        try {
+            Interview interview = em.find(Interview.class, id);
+            LocalDateTime interviewDateTime=LocalDateTime.of(date, time);
+            interview.setDateTime(interviewDateTime);
+            interview.setStatus(InterviewStatus.BEFORE_INTERVIEW);
+            em.persist(interview);
+        } catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+     }
+        
+    public void setPlace(Integer id, String place){
+        try {
+            Interview interview = em.find(Interview.class, id);
+            interview.setPlace(place);
+            interview.setStatus(InterviewStatus.BEFORE_INTERVIEW);
+            em.persist(interview);
+        } catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+    } 
+    
+//    private String getDateTime() {
+//    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//    Date date = new Date();
+//    return dateFormat.format(date);
+//}
+//    var dt = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(Math.Round(1372061224000 / 1000d)).ToLocalTime();
+//Console.WriteLine(dt); // Prints: 6/24/2013 10:07:04 AM
 }

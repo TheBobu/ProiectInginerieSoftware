@@ -9,6 +9,11 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style><%@include file="/WEB-INF/css/main.css"%></style>
 
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages" />
+
+
 <t:pageTemplate pageTitle="${jobPost.title}">
 
     <div class="col-10 mt-5 mb-5 mx-auto bg-white position-relative shadow-sm rounded p-5">
@@ -25,24 +30,24 @@
         <div class="mt-5 d-flex align-items-center" style="line-height: 1.2;">
             <div class="me-4">
                 <div class="d-flex align-items-center mb-3">
-                    <i class="fas fa-briefcase"></i><h6 class="mb-0 ms-2"> Tip job:</h6> 
+                    <i class="fas fa-briefcase"></i><h6 class="mb-0 ms-2"> <fmt:message key="label.jobpost.type" />:</h6> 
                 </div>
 
                 <div class="me-2">
                     <div class="d-flex align-items-center mb-3">
-                        <i class="fas fa-users"></i><h6 class="mb-0 ms-2"> Posturi disponibile:</h6> 
+                        <i class="fas fa-users"></i><h6 class="mb-0 ms-2"> <fmt:message key="label.jobpost.positionsAvailable" />:</h6> 
                     </div>
                 </div>
 
                 <div class="me-2">
                     <div class="d-flex align-items-center mb-3">
-                        <i class="far fa-money-bill-alt"></i><h6 class="mb-0 ms-2"> Salariu:</h6> 
+                        <i class="far fa-money-bill-alt"></i><h6 class="mb-0 ms-2"> <fmt:message key="label.jobpost.salary" />:</h6> 
                     </div>
                 </div>
 
                 <div class="me-2">
                     <div class="d-flex align-items-center mb-3">
-                        <i class="fas fa-building"></i><h6 class="mb-0 ms-2"> Departament:</h6> 
+                        <i class="fas fa-building"></i><h6 class="mb-0 ms-2"> <fmt:message key="label.jobpost.department" />:</h6> 
                     </div>
                 </div>
 
@@ -68,19 +73,19 @@
 
         </div>
         <div class="">
-            <c:if test="${jobPost.isAppliable(pageContext.request.getRemoteUser())}">
+            <c:if test="${showApplyButton && jobPost.isAppliable(pageContext.request.getRemoteUser())}">
                 <c:choose>
                     <c:when test="${!jobPostsAppliedToIds.contains(jobPost.id)}">
                         <a href="${pageContext.request.contextPath}/ApplyForJob?jobid=${jobPost.id}" class="btn btn-success">
                             <span class="d-flex align-items-baseline">
                                 <i class="far fa-check-square me-2"></i> 
-                                <span>Apply</span>
+                                <span><fmt:message key="label.jobpost.apply" /></span>
 
                             </span>
                         </a>
                     </c:when>
                     <c:otherwise>
-                        <p><span class="badge bg-success">Applied</span></p>
+                        <p><span class="badge bg-success"><fmt:message key="label.jobpost.aplied" /></span></p>
                     </c:otherwise>
                 </c:choose>
             </c:if>

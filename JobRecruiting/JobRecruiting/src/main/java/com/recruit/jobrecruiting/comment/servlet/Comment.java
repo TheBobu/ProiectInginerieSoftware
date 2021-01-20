@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.security.DeclareRoles;
@@ -84,7 +86,7 @@ public class Comment extends HttpServlet {
 //        request.getSession().setAttribute("interviewer", interviewer);
 //        request.getSession().setAttribute("status", status);
         List<CommentDetails> comments = commentBean.getAllComments(id);
-        Interview interview= interviewBean.getInterviewById(id);
+        Interview interview = interviewBean.getInterviewById(id);
         request.getSession().setAttribute("comments", comments);
         request.getSession().setAttribute("interview", interview);
         request.getRequestDispatcher("/WEB-INF/pages/interview/comment-section.jsp").forward(request, response);
@@ -101,11 +103,35 @@ public class Comment extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getRemoteUser();
-        String comment = request.getParameter("comment");
+        System.out.println("PPPPPPPOOOOOOOSSSSSSSSSTTTTTTT");
+        System.out.println (request.getParameter("form"));
+        
         Integer id = Integer.parseInt(request.getParameter("id"));
-        commentBean.createComment(username, comment, id);
+        String formPosted = request.getParameter("form");
+        
+        if(formPosted.contentEquals("schedule")){
+            System.out.println("SCHEDULE");
+            System.out.println (request.getParameter("date"));
+            System.out.println (request.getParameter("time"));
+            LocalDate interviewDate = LocalDate.parse(request.getParameter("date"));
+            LocalTime interviewTime = LocalTime.parse(request.getParameter("time"));
+            interviewBean.setDateTime(id, interviewDate, interviewTime);
+            String interviewPlace = request.getParameter("place");
+            interviewBean.setPlace(id, interviewPlace);
+        }
+        else{
+            if(formPosted.contentEquals("change")){
+                
+            }
+            else{   //comment
+                String username = request.getRemoteUser();
+                String comment = request.getParameter("comment");
+                commentBean.createComment(username, comment, id);
+            }
+        }
+           
         response.sendRedirect(request.getContextPath()+"/Comment?id="+id.toString());
+        
     }
 
     /**
