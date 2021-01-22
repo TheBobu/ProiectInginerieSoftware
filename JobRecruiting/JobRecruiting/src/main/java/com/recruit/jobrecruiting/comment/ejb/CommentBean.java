@@ -20,7 +20,7 @@ import javax.persistence.TypedQuery;
 
 /**
  *
- * @author Deea
+ * @author Deea, (Doly)
  */
 @Stateless
 public class CommentBean {
@@ -33,8 +33,6 @@ public class CommentBean {
     public List<CommentDetails> getAllComments(Integer interviewId) {
         LOG.info("getAllComments");
         try {
-            //List<Comment> comments = (List<Comment>) em.createQuery("SELECT c FROM Comment c WHERE ").getResultList();
-            //return comments;
             TypedQuery<Comment> typedQuery = em.createQuery("SELECT c FROM Comment c WHERE c.interview.id = :id", Comment.class)
                 .setParameter("id", interviewId);
         List<Comment> comments = (List<Comment>)typedQuery.getResultList();
@@ -72,7 +70,8 @@ public class CommentBean {
         interview.getComments().add(comment);
         if(interview.getStatus()==InterviewStatus.APPLIED_FOR){
             interview.setStatus(InterviewStatus.WAITING_INTERVIEW_DATE);
-        }
+        }//the status of the interview is updated when the interviewer
+         //writes the first comment
         comment.setInterview(interview);
 
         em.persist(comment);

@@ -1,7 +1,7 @@
 <%-- 
     Document   : comment-section
     Created on : Jan 11, 2021, 7:36:18 PM
-    Author     : Deea
+    Author     : Deea, Doly, Denisa, Robert
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -26,32 +26,22 @@
                     <h3 class="mb-4">Job Post: ${interview.jobPost.title}</h3>
                     <h3 class="mb-4">Candidate: ${interview.candidate.getName()} </h3>
                     <h3 class="mb-4">Interviewer: ${interview.interviewer.getName()}</h3>
-                    <c:if test="${LocalDate.now().isAfter(interview.getdate())}">
-                        interview
-                    </c:if>
                     <h3 class="mb-4">Interview status: ${interview.status}</h3> 
                 </div>
                 <div class="col-md-6">
                     <c:if test="${interview.status=='WAITING_INTERVIEW_DATE'}">
                         <h3>Interview is not established yet</h3>
-                        <!--${interview.dateTime}-->
                         <c:if test="${user.id==interview.interviewer.id}">
-<!--                            <form action = "/cgi-bin/test.cgi" name = "myForm" onsubmit = "return(validate());">-->
-                            <form method="POST" action="${pageContext.request.contextPath}/Comment?id=${id}&form=schedule" name="schedule" onsubmit = "return(validate());">
+                            <form method="POST" action="${pageContext.request.contextPath}/Comment?id=${id}&form=schedule" onsubmit="return(validate());">
                                 <h3 class="mb-4"><label> Date: </label>
-                                    <c:if test="${interview.dateTime != null}">
-<!--                                    <input name="date" type="" value="" required>-->
-                                    </c:if>
                                     <input name="date" type="date" value="" required>
                                     <t:displayError error="date"/>
                                 </h3>
-                                                 <!--2021-01-19 22:09:55.271-->
                                 <h3 class="mb-4"><label> Time: </label>
                                                  <input name="time" type="time" value="" required ></h3>
                                 <h3 class="mb-4"><label> Place: </label>
                                                  <input name="place" type="text" value="${interview.place}" placeholder="Place" required></h3>
                                 <button class=" btn btn-profile col-xl btn btn-primary"  type="submit">Schedule interview</button>
-<!--<a href="${pageContext.request.contextPath}/Comment?id=${interview.id}" role="button" class=" btn-profile col-xl btn btn-primary">View Interview</a>-->
                             </form>
                             <t:formValidate/>
                         </c:if>
@@ -61,14 +51,10 @@
                         <h3>- date : ${interview.getDate()}</h3>
                         <h3>- time : ${interview.getTime()}</h3>
                         <h3>- place: ${interview.place}</h3>
-<!--                        <c:if test="${user.id==interview.interviewer.id}">
-                            <form method="POST" action="${pageContext.request.contextPath}/Comment?id=${id}&form=change">
-                                <button class=" btn btn-profile"  type="submit">Request change</button>
-                            </form>
-                            </c:if>-->
                     </c:if>
-                </div>
+                </div>                
             </div>
+        </div>
     </section>
                 
     <section class="content-item" id="comments">
@@ -106,37 +92,4 @@
         </div>
     </section>
                         
-<!--    <script type = "text/javascript">
-      // Form validation code will come here.
-      function validate() {
-         System.out.println("VALIDATE DATA FUNCTION");
-         if( document.schedule.date.toLocaleString().localeCompare(Date.getDate().toLocaleString()) <= 0 ) {
-            System.out.println("DATA TRECUTA");
-            alert( "Please set a future day!" );
-            document.date.focus() ;
-            return false;
-         }
-         System.out.println("DATA OK");
-         return (true);
-         }
-         
-//         if( document.myForm.EMail.value == "" ) {
-//            alert( "Please provide your Email!" );
-//            document.myForm.EMail.focus() ;
-//            return false;
-//         }
-//         if( document.myForm.Zip.value == "" || isNaN( document.myForm.Zip.value ) ||
-//            document.myForm.Zip.value.length != 5 ) {
-//            
-//            alert( "Please provide a zip in the format #####." );
-//            document.myForm.Zip.focus() ;
-//            return false;
-//         }
-//         if( document.myForm.Country.value == "-1" ) {
-//            alert( "Please provide your country!" );
-//            return false;
-//         }
-//         return( true );
-//      }
-</script>-->
 </t:pageTemplate>

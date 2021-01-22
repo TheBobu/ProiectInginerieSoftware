@@ -6,7 +6,6 @@
 package com.recruit.jobrecruiting.interviews.ejb;
 
 import com.recruit.jobrecruiting.common.InterviewDetails;
-import com.recruit.jobrecruiting.common.UserDetails;
 import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
 import com.recruit.jobrecruiting.entity.Interview;
 import com.recruit.jobrecruiting.entity.InterviewStatus;
@@ -14,12 +13,10 @@ import com.recruit.jobrecruiting.entity.JobPost;
 import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import com.recruit.jobrecruiting.util.Util;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJBException;
@@ -32,7 +29,7 @@ import javax.persistence.TypedQuery;
 
 /**
  *
- * @author Doly, robert, denisa
+ * @author Andrei, Doly, robert, denisa
  */
 @Stateless
 public class InterviewBean {
@@ -48,7 +45,13 @@ public class InterviewBean {
     @PersistenceContext
     private EntityManager em;
 
-    public List<InterviewDetails> getAllInterviewsAsInterviewer(Integer userId)///////////doar cele pt care s-a stabilit interviul
+    /**
+     * Gets all interviews for a specific interviewer.
+     *
+     * @param userId the id of the Interviewer
+     * @return Returns the list of interview details
+     */
+    public List<InterviewDetails> getAllInterviewsAsInterviewer(Integer userId)
     {
         try {
             TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM Interview i WHERE (i.interviewer.id = :id AND i.status <> :st)", Interview.class)
@@ -56,9 +59,7 @@ public class InterviewBean {
             List<Interview> interviews = (List<Interview>) typedQuery.getResultList();
             for(Interview interview:interviews){
                 if(interview.checkAfterInterview()){
-                    interview.setStatus(InterviewStatus.AFTER_INTERVIEW);
-//                    TypedQuery<Interview> setStatus = em.createQuery("SELECT i FROM Interview i WHERE (i.interviewer.id = :id AND i.status <> :st)", Interview.class)
-//                            UPDATE Interview i SET i.               
+                    interview.setStatus(InterviewStatus.AFTER_INTERVIEW);    
                     em.persist(interview);
                 }
             }
@@ -69,6 +70,12 @@ public class InterviewBean {
         }
     }
 
+    /**
+     * Gets all interviews for a specific candidate.
+     *
+     * @param userId the id of the Candidate
+     * @return Returns the list of interview details
+     */
     public List<InterviewDetails> getAllInterviewsAsCandidate(Integer userId) {
         try {
             TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM Interview i WHERE i.candidate.id = :id", Interview.class)
@@ -87,6 +94,12 @@ public class InterviewBean {
         }
     }
 
+    /**
+     * Gets all interview details for an Interview list.
+     *
+     * @param interviews the list of interview objects
+     * @return Returns the list of interview details
+     */
     private List<InterviewDetails> copyInterviewToDetails(List<Interview> interviews) {
         List<InterviewDetails> detailsList = new ArrayList<>();
         for (Interview interview : interviews) {
@@ -207,6 +220,12 @@ public class InterviewBean {
         return interviewDetails;
     }
 
+     /**
+     * Gets an interview by its id.
+     *
+     * @param id the id of the interview
+     * @return Returns the interview object
+     */
     public Interview getInterviewById(Integer id) {
         return em.find(Interview.class, id);
     }
@@ -215,6 +234,13 @@ public class InterviewBean {
         return LocalDateTime.of(date, time);
     }
     
+    /**
+     * Sets the dateTime attribute of an interview. 
+     *
+     * @param id the id of the interview
+     * @param date when the interview is scheduled
+     * @param time when the interview is scheduled
+     */
      public void setDateTime(Integer id, LocalDate date, LocalTime time){
         try {
             Interview interview = em.find(Interview.class, id);
@@ -227,6 +253,12 @@ public class InterviewBean {
         }
      }
         
+    /**
+     * Sets the place of the recently scheduled interview.
+     * 
+     * @param id
+     * @param place 
+     */
     public void setPlace(Integer id, String place){
         try {
             Interview interview = em.find(Interview.class, id);
@@ -238,18 +270,4 @@ public class InterviewBean {
         }
     } 
     
-    //trebuie in clasa Interview
-//    public Boolean checkAfterInterview(Interview interview){
-//        if((interview.getStatus()==InterviewStatus.BEFORE_INTERVIEW) && (LocalDate.now().isAfter(interview.getDate())))
-//            return Boolean.TRUE;
-//        return Boolean.FALSE;
-//    }
-    
-//    private String getDateTime() {
-//    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-//    Date date = new Date();
-//    return dateFormat.format(date);
-//}
-//    var dt = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(Math.Round(1372061224000 / 1000d)).ToLocalTime();
-//Console.WriteLine(dt); // Prints: 6/24/2013 10:07:04 AM
 }

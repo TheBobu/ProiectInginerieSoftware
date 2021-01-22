@@ -6,7 +6,6 @@
 package com.recruit.jobrecruiting.interviews.servlet;
 
 import com.recruit.jobrecruiting.common.InterviewDetails;
-import com.recruit.jobrecruiting.entity.Position;
 import com.recruit.jobrecruiting.entity.User;
 import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
@@ -15,15 +14,18 @@ import java.io.PrintWriter;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Doly
+/**Servlet that manages the interviews to be transmitted to interviews.jsp
+ * Candidate access is forbidden!!!
+ * @author Andrei, Doly
  */
+@ServletSecurity(value = @HttpConstraint(rolesAllowed={"AdminRole","DepartmentDirectorRole","GeneralDirectorRole","HRDirectorRole","RecruiterRole"}))
 @WebServlet(name = "Interviews", urlPatterns = {"/Interviews"})
 public class Interviews extends HttpServlet {
 
@@ -72,41 +74,13 @@ public class Interviews extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("INTERVIEWS.JAVA");
         String username=request.getRemoteUser();
         User user=userBean.getUserByUsername(username);
         Integer userId=user.getId();
-        //String userId=request.getParameter("id");
-        //userId=request.
-        //Integer userIdInt=Integer.parseInt(userId);
-        //String requestedBy=request.getParameter("requestedBy");/////////////////////params
-        
-        List<InterviewDetails> interviews;         //!!!!!!!!schimbare light details
-//        if(request.isUserInRole("CandidateRole"))
-//            interviews = interviewBean.getAllInterviewsAsCandidate(userId);
-//        else
-//            interviews = interviewBean.getAllInterviewsAsInterviewer(userId);
-//        Boolean candidate=Boolean.FALSE;
-//        if(user.getPosition().compareTo(Position.CANDIDATE)==0)
-//        {
-//            interviews = interviewBean.getAllInterviewsAsCandidate(userId);
-//            candidate=Boolean.TRUE;
-//        }         
-//        else
-//            interviews = interviewBean.getAllInterviewsAsInterviewer(userId);
-//        if (request.getPathInfo().compareTo("/Profile")==0)
-//        {
-         interviews=interviewBean.getAllInterviewsAsInterviewer(userId);
-//        }
-//        else
-//        {
-//            interviews = interviewBean.getAllInterviewsAsCandidate(userId);
-//        }
-        
-        //interv as candidate
-         
+
+        List<InterviewDetails> interviews;      
+        interviews=interviewBean.getAllInterviewsAsInterviewer(userId);
         request.getSession().setAttribute("interviews", interviews);   
-        //request.getSession().setAttribute("candidate", candidate);
         request.getRequestDispatcher("/WEB-INF/pages/interview/interviews.jsp").forward(request, response);
 
     }
@@ -122,18 +96,6 @@ public class Interviews extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        String id=request.getParameter("id");
-//        String jobpost=request.getParameter("jobpost");
-//        String candidate=request.getParameter("candidate");
-//        String interviewer=request.getParameter("interviewer");
-//        String status=request.getParameter("status");
-//        
-//        request.getSession().setAttribute("id", id);   
-//        request.getSession().setAttribute("jobpost", jobpost);
-//        request.getSession().setAttribute("candidate", candidate);
-//        request.getSession().setAttribute("interviewer", interviewer);
-//        request.getSession().setAttribute("status", status);
-//        request.getRequestDispatcher("/WEB-INF/pages/interview/comment-section.jsp").forward(request, response);
         
     }
 
