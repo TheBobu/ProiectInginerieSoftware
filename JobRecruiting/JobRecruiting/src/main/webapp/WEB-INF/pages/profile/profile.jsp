@@ -1,7 +1,7 @@
 <%-- 
     Document   : profile
     Created on : 12-Jan-2021, 12:13:31
-    Author     : Andreea Purta
+    Author     : Andreea Purta, (Doly)
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
@@ -146,7 +146,7 @@
                         </li>
 
                     </ul>
-                            <%--my interviews--%>
+                    <%--my interviews--%>
                     <div class="tab-content" id="myTabContent" style="height: 470px;">
                         <div class="tab-pane fade show active" id="interviews" role="tabpanel" aria-labelledby="interviews">
 

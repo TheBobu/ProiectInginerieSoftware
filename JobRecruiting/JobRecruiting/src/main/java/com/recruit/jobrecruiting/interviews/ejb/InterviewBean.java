@@ -29,7 +29,7 @@ import javax.persistence.TypedQuery;
 
 /**
  *
- * @author Doly, robert, denisa
+ * @author Andrei, Doly, robert, denisa
  */
 @Stateless
 public class InterviewBean {
@@ -45,7 +45,13 @@ public class InterviewBean {
     @PersistenceContext
     private EntityManager em;
 
-    public List<InterviewDetails> getAllInterviewsAsInterviewer(Integer userId)//doar cele pt care s-a stabilit interviul
+    /**
+     * Gets all interviews for a specific interviewer.
+     *
+     * @param userId the id of the Interviewer
+     * @return Returns the list of interview details
+     */
+    public List<InterviewDetails> getAllInterviewsAsInterviewer(Integer userId)
     {
         try {
             TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM Interview i WHERE (i.interviewer.id = :id AND i.status <> :st)", Interview.class)
@@ -64,6 +70,12 @@ public class InterviewBean {
         }
     }
 
+    /**
+     * Gets all interviews for a specific candidate.
+     *
+     * @param userId the id of the Candidate
+     * @return Returns the list of interview details
+     */
     public List<InterviewDetails> getAllInterviewsAsCandidate(Integer userId) {
         try {
             TypedQuery<Interview> typedQuery = em.createQuery("SELECT i FROM Interview i WHERE i.candidate.id = :id", Interview.class)
@@ -82,6 +94,12 @@ public class InterviewBean {
         }
     }
 
+    /**
+     * Gets all interview details for an Interview list.
+     *
+     * @param interviews the list of interview objects
+     * @return Returns the list of interview details
+     */
     private List<InterviewDetails> copyInterviewToDetails(List<Interview> interviews) {
         List<InterviewDetails> detailsList = new ArrayList<>();
         for (Interview interview : interviews) {
@@ -202,6 +220,12 @@ public class InterviewBean {
         return interviewDetails;
     }
 
+     /**
+     * Gets an interview by its id.
+     *
+     * @param id the id of the interview
+     * @return Returns the interview object
+     */
     public Interview getInterviewById(Integer id) {
         return em.find(Interview.class, id);
     }
@@ -210,6 +234,13 @@ public class InterviewBean {
         return LocalDateTime.of(date, time);
     }
     
+    /**
+     * Sets the dateTime attribute of an interview. 
+     *
+     * @param id the id of the interview
+     * @param date when the interview is scheduled
+     * @param time when the interview is scheduled
+     */
      public void setDateTime(Integer id, LocalDate date, LocalTime time){
         try {
             Interview interview = em.find(Interview.class, id);
@@ -222,6 +253,12 @@ public class InterviewBean {
         }
      }
         
+    /**
+     * Sets the place of the recently scheduled interview.
+     * 
+     * @param id
+     * @param place 
+     */
     public void setPlace(Integer id, String place){
         try {
             Interview interview = em.find(Interview.class, id);

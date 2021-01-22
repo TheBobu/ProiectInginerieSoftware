@@ -19,7 +19,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
+/**Servlet that manages the candidates to be seen on viewCandidates JSP
+ * Only doGet method is implemented
+ * Candidates access is forbidden!
  *
  * @author Doly
  */

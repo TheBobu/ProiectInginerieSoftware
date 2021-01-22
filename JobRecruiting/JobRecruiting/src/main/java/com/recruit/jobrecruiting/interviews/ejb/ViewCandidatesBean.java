@@ -23,7 +23,7 @@ import javax.persistence.TypedQuery;
 
 /**
  *
- * @author Doly
+ * @author Doly,...
  */
 @Stateless
 public class ViewCandidatesBean {

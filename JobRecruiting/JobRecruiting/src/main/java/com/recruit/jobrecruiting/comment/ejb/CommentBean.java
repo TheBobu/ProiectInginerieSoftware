@@ -20,7 +20,7 @@ import javax.persistence.TypedQuery;
 
 /**
  *
- * @author Deea
+ * @author Deea, (Doly)
  */
 @Stateless
 public class CommentBean {
@@ -70,7 +70,8 @@ public class CommentBean {
         interview.getComments().add(comment);
         if(interview.getStatus()==InterviewStatus.APPLIED_FOR){
             interview.setStatus(InterviewStatus.WAITING_INTERVIEW_DATE);
-        }
+        }//the status of the interview is updated when the interviewer
+         //writes the first comment
         comment.setInterview(interview);
 
         em.persist(comment);

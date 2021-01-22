@@ -14,15 +14,18 @@ import java.io.PrintWriter;
 import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Doly
+/**Servlet that manages the interviews to be transmitted to interviews.jsp
+ * Candidate access is forbidden!!!
+ * @author Andrei, Doly
  */
+@ServletSecurity(value = @HttpConstraint(rolesAllowed={"AdminRole","DepartmentDirectorRole","GeneralDirectorRole","HRDirectorRole","RecruiterRole"}))
 @WebServlet(name = "Interviews", urlPatterns = {"/Interviews"})
 public class Interviews extends HttpServlet {
 
@@ -74,7 +77,7 @@ public class Interviews extends HttpServlet {
         String username=request.getRemoteUser();
         User user=userBean.getUserByUsername(username);
         Integer userId=user.getId();
-        
+
         List<InterviewDetails> interviews;      
         interviews=interviewBean.getAllInterviewsAsInterviewer(userId);
         request.getSession().setAttribute("interviews", interviews);   

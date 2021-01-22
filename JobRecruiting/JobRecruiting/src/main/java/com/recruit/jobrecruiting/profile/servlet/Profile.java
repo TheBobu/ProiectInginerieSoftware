@@ -17,9 +17,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
+/**Servlet that manages candidate's information to be sent to remoteProfile.jsp /
+ * user's information + personal interviews information for profile.jsp
  *
- * @author Andreea Purta
+ * @author Andreea Purta, (Doly)
  */
 @DeclareRoles({"AdminRole", "CandidateRole", "DepartmentDirectorRole", "GeneralDirectorRole", "HRDirectorRole", "RecruiterRole"})
 @ServletSecurity(value = @HttpConstraint(rolesAllowed = {"AdminRole", "CandidateRole", "DepartmentDirectorRole", "GeneralDirectorRole", "HRDirectorRole", "RecruiterRole"}))
@@ -47,8 +48,6 @@ public class Profile extends HttpServlet {
             String username = request.getRemoteUser();
             User user = userBean.getUserByUsername(username);
             request.setAttribute("user", user);
-            
-
             Integer id=user.getId();
             List<InterviewDetails> interviews;
             interviews = interviewBean.getAllInterviewsAsCandidate(id);

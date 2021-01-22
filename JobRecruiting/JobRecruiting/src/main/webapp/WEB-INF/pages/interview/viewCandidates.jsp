@@ -1,7 +1,7 @@
 <%-- 
     Document   : viewCandidates
     Created on : Jan 15, 2021, 10:26:33 AM
-    Author     : Doly
+    Author     : Doly, Andreea Purta
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -18,20 +18,17 @@
         <h1 class="mb-4">Candidates</h1>
         <c:forEach var="candidate" items="${candidates}">
             <div class="row">
+                <div class="col-md">${candidate.getCandidateFullName()}</div>
+                <div class="col-md">${candidate.jobpost.title}</div>
                 <div class="col-md">
-                    ${candidate.getCandidateFullName()}
+                    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/Profile?id=${candidate.candidate.id}" role="button">
+                        <fmt:message key="label.viewCandidates.viewProfile" />
+                    </a>
                 </div>
-
-                <div class="col-md">
-                    ${candidate.jobpost.title}
-                </div>
-
-                <div class="col-md">
-                    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/Profile?id=${candidate.candidate.id}" role="button"><fmt:message key="label.viewCandidates.viewProfile" /></a>
-                </div>
-
-                <div class="col-md"> <%-------------------TO DO---------------------------------%>
-                    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/Comment?id=${candidate.id}" role="button"><fmt:message key="label.viewCandidates.planInterview" /></a>
+                <div class="col-md"> 
+                    <a class="btn btn-secondary" href="${pageContext.request.contextPath}/Comment?id=${candidate.id}" role="button">
+                        <fmt:message key="label.viewCandidates.planInterview" />
+                    </a>
                 </div>
             </div>
         </c:forEach>

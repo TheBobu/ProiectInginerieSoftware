@@ -27,9 +27,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
+/**Servlet that manages comments and interview
+ * Linked to comment-section.jsp
  *
- * @author Deea
+ * @author Deea, Doly, Robert
  */
 @DeclareRoles({"AdminRole", "CandidateRole", "DepartmentDirectorRole", "GeneralDirectorRole", "HRDirectorRole", "RecruiterRole"})
 @ServletSecurity(value = @HttpConstraint(rolesAllowed={"AdminRole", "CandidateRole", "DepartmentDirectorRole", "GeneralDirectorRole", "HRDirectorRole", "RecruiterRole"}))
@@ -70,8 +71,7 @@ public class Comment extends HttpServlet {
             throws ServletException, IOException {
         Integer id = Integer.parseInt(request.getParameter("id"));
         String username=request.getRemoteUser();
-        User user=userBean.getUserByUsername(username);
-        
+        User user=userBean.getUserByUsername(username);        
         request.getSession().setAttribute("id", id);   
         request.getSession().setAttribute("user", user);
         List<CommentDetails> comments = commentBean.getAllComments(id);
@@ -95,9 +95,7 @@ public class Comment extends HttpServlet {
         Integer id = Integer.parseInt(request.getParameter("id"));
         String formPosted = request.getParameter("form");
         
-        if(formPosted.contentEquals("schedule")){
-            System.out.println (request.getParameter("date"));
-            System.out.println (request.getParameter("time"));
+        if(formPosted.equals("schedule")){
             LocalDate interviewDate = LocalDate.parse(request.getParameter("date"));
             LocalTime interviewTime = LocalTime.parse(request.getParameter("time"));
             HashMap<String, String> messageBag = new HashMap<>();
@@ -110,18 +108,12 @@ public class Comment extends HttpServlet {
             else{
                 request.setAttribute("errors", messageBag);
                 request.getRequestDispatcher("/WEB-INF/pages/interview/comment-section.jsp").include(request, response);
-            }
-         
+            }       
         }
-        else{
-            if(formPosted.contentEquals("change")){
-                
-            }
-            else{   //comment
-                String username = request.getRemoteUser();
-                String comment = request.getParameter("comment");
-                commentBean.createComment(username, comment, id);
-            }
+        else{   //comment
+            String username = request.getRemoteUser();
+            String comment = request.getParameter("comment");
+            commentBean.createComment(username, comment, id);
         }
            
         response.sendRedirect(request.getContextPath()+"/Comment?id="+id.toString());

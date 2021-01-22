@@ -1,7 +1,7 @@
 <%-- 
     Document   : comment-section
     Created on : Jan 11, 2021, 7:36:18 PM
-    Author     : Deea
+    Author     : Deea, Doly, Denisa, Robert
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -26,16 +26,13 @@
                     <h3 class="mb-4">Job Post: ${interview.jobPost.title}</h3>
                     <h3 class="mb-4">Candidate: ${interview.candidate.getName()} </h3>
                     <h3 class="mb-4">Interviewer: ${interview.interviewer.getName()}</h3>
-                    <c:if test="${LocalDate.now().isAfter(interview.getdate())}">
-                        interview
-                    </c:if>
                     <h3 class="mb-4">Interview status: ${interview.status}</h3> 
                 </div>
                 <div class="col-md-6">
                     <c:if test="${interview.status=='WAITING_INTERVIEW_DATE'}">
                         <h3>Interview is not established yet</h3>
                         <c:if test="${user.id==interview.interviewer.id}">
-                            <form method="POST" action="${pageContext.request.contextPath}/Comment?id=${id}&form=schedule" name="schedule" onsubmit = "return(validate());">
+                            <form method="POST" action="${pageContext.request.contextPath}/Comment?id=${id}&form=schedule" onsubmit="return(validate());">
                                 <h3 class="mb-4"><label> Date: </label>
                                     <input name="date" type="date" value="" required>
                                     <t:displayError error="date"/>
@@ -55,8 +52,9 @@
                         <h3>- time : ${interview.getTime()}</h3>
                         <h3>- place: ${interview.place}</h3>
                     </c:if>
-                </div>
+                </div>                
             </div>
+        </div>
     </section>
                 
     <section class="content-item" id="comments">
