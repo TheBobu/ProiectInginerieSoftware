@@ -5,12 +5,15 @@
  */
 package com.recruit.jobrecruiting.servlet.skills;
 
-import com.recruit.jobrecruiting.ejb.SkillBean;
+import com.recruit.jobrecruiting.skill.ejb.SkillBean;
 import com.recruit.jobrecruiting.validators.SkillValidator;
 import java.io.IOException;
 import java.util.HashMap;
+import javax.annotation.security.DeclareRoles;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DENISA
  */
+@DeclareRoles({"RecruiterRole"})
+@ServletSecurity(value = @HttpConstraint(rolesAllowed={"RecruiterRole"}))
 @WebServlet(name = "AddSkillServlet", urlPatterns = {"/Skills/Create"})
 public class AddSkillServlet extends HttpServlet {
 
@@ -37,6 +42,7 @@ public class AddSkillServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.getSession().setAttribute("previous", request.getHeader("referer"));
         request.getRequestDispatcher("/WEB-INF/pages/skills/addskill.jsp").forward(request, response);
     }
 
@@ -58,10 +64,10 @@ public class AddSkillServlet extends HttpServlet {
 
         if (new SkillValidator(name).passes(messageBag)) {
             skillBean.createSkill(name);
-            response.sendRedirect(request.getContextPath() + "/JobPost/Create");
+            response.sendRedirect(request.getParameter("previous"));
         } else {
             request.getSession().setAttribute("errors", messageBag);
-            response.sendRedirect(request.getHeader("Referer"));
+            request.getRequestDispatcher("/WEB-INF/pages/skills/addskill.jsp").forward(request, response);
         }
     }
 

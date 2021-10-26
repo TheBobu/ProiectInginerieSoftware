@@ -44,7 +44,7 @@ a,
 .container__child {
   width: 50%;
   height: 100%;
-  color: #fff;
+  color: #000;
 }
 .signup__thumbnail {
   position: relative;
@@ -82,11 +82,12 @@ h2 {
 .signup__form {
   padding: 2.5rem;
   background: #fafafa;
+  overflow: auto;
 }
 label {
   font-size: .85rem;
   text-transform: uppercase;
-  color: #ccc;
+  color: #000;
   margin-top:2%;
     margin-bottom:1%;
 }
@@ -109,4 +110,11 @@ label {
 
 .login-form{
     margin-top:30%;
+}
+
+@media screen and (max-width: 1366px) {
+  .signup-container {
+    height: 87%;
+    top: 55%;
+  }
 }

@@ -9,7 +9,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style><%@include file="/WEB-INF/css/comment.css"%></style>
 <style><%@include file="/WEB-INF/css/main.css"%></style>
-
+<style><%@include file="/WEB-INF/css/management.css"%></style>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages" />
@@ -17,8 +17,62 @@
 <!DOCTYPE html>
 <t:pageTemplate pageTitle="Comment-section">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <section class="content-item" id="details">
+        <div class="container-management">
+            <h1 class="mb-4">Interview details</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="mb-4">Job Post: ${interview.jobPost.title}</h3>
+                    <h3 class="mb-4">Candidate: ${interview.candidate.getName()} </h3>
+                    <h3 class="mb-4">Interviewer: ${interview.interviewer.getName()}</h3>
+                    <c:if test="${LocalDate.now().isAfter(interview.getdate())}">
+                        interview
+                    </c:if>
+                    <h3 class="mb-4">Interview status: ${interview.status}</h3> 
+                </div>
+                <div class="col-md-6">
+                    <c:if test="${interview.status=='WAITING_INTERVIEW_DATE'}">
+                        <h3>Interview is not established yet</h3>
+                        <!--${interview.dateTime}-->
+                        <c:if test="${user.id==interview.interviewer.id}">
+<!--                            <form action = "/cgi-bin/test.cgi" name = "myForm" onsubmit = "return(validate());">-->
+                            <form method="POST" action="${pageContext.request.contextPath}/Comment?id=${id}&form=schedule" name="schedule" onsubmit = "return(validate());">
+                                <h3 class="mb-4"><label> Date: </label>
+                                    <c:if test="${interview.dateTime != null}">
+<!--                                    <input name="date" type="" value="" required>-->
+                                    </c:if>
+                                    <input name="date" type="date" value="" required>
+                                    <t:displayError error="date"/>
+                                </h3>
+                                                 <!--2021-01-19 22:09:55.271-->
+                                <h3 class="mb-4"><label> Time: </label>
+                                                 <input name="time" type="time" value="" required ></h3>
+                                <h3 class="mb-4"><label> Place: </label>
+                                                 <input name="place" type="text" value="${interview.place}" placeholder="Place" required></h3>
+                                <button class=" btn btn-profile col-xl btn btn-primary"  type="submit">Schedule interview</button>
+<!--<a href="${pageContext.request.contextPath}/Comment?id=${interview.id}" role="button" class=" btn-profile col-xl btn btn-primary">View Interview</a>-->
+                            </form>
+                            <t:formValidate/>
+                        </c:if>
+                    </c:if>
+                    <c:if test="${interview.status=='BEFORE_INTERVIEW'}">
+                        <h3>Interview is set for:</h3>
+                        <h3>- date : ${interview.getDate()}</h3>
+                        <h3>- time : ${interview.getTime()}</h3>
+                        <h3>- place: ${interview.place}</h3>
+<!--                        <c:if test="${user.id==interview.interviewer.id}">
+                            <form method="POST" action="${pageContext.request.contextPath}/Comment?id=${id}&form=change">
+                                <button class=" btn btn-profile"  type="submit">Request change</button>
+                            </form>
+                            </c:if>-->
+                    </c:if>
+                </div>
+            </div>
+    </section>
+                
     <section class="content-item" id="comments">
-        <div class="container">   
+        <div class="container-management mt-0">   
             <div class="row">
                 <div class="col-sm-8">   
                    
@@ -36,7 +90,7 @@
                     </c:forEach>
                     <!-- COMMENT - END -->
                     
-                    <form method="POST" action="${pageContext.request.contextPath}/Comment?id=${id}">
+                    <form method="POST" action="${pageContext.request.contextPath}/Comment?id=${id}&form=comment">
                         <h3 class="pull-left"><fmt:message key="label.comment-section.newcomment" /></h3>
                         <fieldset>
                             <div class="row">
@@ -51,4 +105,38 @@
             </div>
         </div>
     </section>
+                        
+<!--    <script type = "text/javascript">
+      // Form validation code will come here.
+      function validate() {
+         System.out.println("VALIDATE DATA FUNCTION");
+         if( document.schedule.date.toLocaleString().localeCompare(Date.getDate().toLocaleString()) <= 0 ) {
+            System.out.println("DATA TRECUTA");
+            alert( "Please set a future day!" );
+            document.date.focus() ;
+            return false;
+         }
+         System.out.println("DATA OK");
+         return (true);
+         }
+         
+//         if( document.myForm.EMail.value == "" ) {
+//            alert( "Please provide your Email!" );
+//            document.myForm.EMail.focus() ;
+//            return false;
+//         }
+//         if( document.myForm.Zip.value == "" || isNaN( document.myForm.Zip.value ) ||
+//            document.myForm.Zip.value.length != 5 ) {
+//            
+//            alert( "Please provide a zip in the format #####." );
+//            document.myForm.Zip.focus() ;
+//            return false;
+//         }
+//         if( document.myForm.Country.value == "-1" ) {
+//            alert( "Please provide your country!" );
+//            return false;
+//         }
+//         return( true );
+//      }
+</script>-->
 </t:pageTemplate>

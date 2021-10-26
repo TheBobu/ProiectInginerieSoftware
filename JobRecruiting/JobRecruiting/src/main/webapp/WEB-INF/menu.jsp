@@ -27,12 +27,33 @@
                     <a class="nav-link" href="${pageContext.request.contextPath}/JobAdministration"><fmt:message key="label.jobManagement" /></a>
                 </li>
             </c:if>
+            <c:if test="${pageContext.request.isUserInRole('DepartmentDirectorRole')}">
+                <li class="nav-item ">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/JobPostsByDepartment"><fmt:message key="label.jobManagementByDepartment" /></a>
+                </li>
+            </c:if>
             <c:if test="${pageContext.request.isUserInRole('CandidateRole')}">
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/Profile"><fmt:message key="label.profile" /></a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/Interviews"><fmt:message key="label.interviews" /></a>
+                </li>
             </c:if>
 
+
+            <c:if test="${pageContext.request.isUserInRole('RecruiterRole')}">
+                <li class="nav-item ">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/Skills"><fmt:message key="label.skills" /></a>
+                </li>
+            </c:if>
+
+            <c:if test="${pageContext.request.isUserInRole('RecruiterRole')}">
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/ViewCandidates"><fmt:message key="label.viewCandidates" /></a>
+                </li>
+
+            </c:if>
 
         </ul>
 
@@ -42,7 +63,6 @@
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="?sessionLocale=en">EN</a>
                     <a class="dropdown-item" href="?sessionLocale=ro">RO</a>
-                    <a class="dropdown-item" href="?sessionLocale=de">DE</a>
                 </div>
             </li>
             <c:choose>

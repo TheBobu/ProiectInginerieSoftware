@@ -7,7 +7,7 @@ package com.recruit.jobrecruiting.admin.servlet;
 
 import com.recruit.jobrecruiting.common.JobPostDetails;
 import com.recruit.jobrecruiting.common.UserLightDetails;
-import com.recruit.jobrecruiting.ejb.JobPostBean;
+import com.recruit.jobrecruiting.jobPost.ejb.JobPostBean;
 import com.recruit.jobrecruiting.user.ejb.UserBean;
 import java.io.IOException;
 import java.io.PrintWriter;

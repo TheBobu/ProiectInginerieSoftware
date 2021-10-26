@@ -15,10 +15,10 @@ import com.recruit.jobrecruiting.entity.User;
  */
 public class InterviewDetails{// implements java.io.Serializable{
     private Integer id;
-    private JobPost jobpost;
-    private User candidate;
-    private User interviewer;
-    private InterviewStatus interviewStatus;
+    protected JobPost jobpost;
+    protected User candidate;
+    protected User interviewer;
+    protected InterviewStatus interviewStatus;
 
     public InterviewDetails(Integer id, JobPost jobpost, User candidate, User interviewer, InterviewStatus interviewStatus) {
         this.id = id;

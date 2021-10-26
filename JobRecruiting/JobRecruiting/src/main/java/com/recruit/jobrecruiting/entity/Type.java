@@ -10,16 +10,23 @@ package com.recruit.jobrecruiting.entity;
  * @author DENISA
  */
 public enum Type {
-    FULL_TIME("Full-time"),
-    PART_TIME("Part-time");
+    FULL_TIME("Full-time", "FT"),
+    PART_TIME("Part-time", "PT");
 
-    public final String label;
+    private final String label;
+    private final String abbreviation;
 
-    private Type(String label) {
+    private Type(String label, String abbreviation) {
         this.label = label;
+        this.abbreviation = abbreviation;
     }
 
     public String getLabel() {
         return label;
     }
+
+    public String getAbbreviation() {
+        return abbreviation;
+    }
+
 }

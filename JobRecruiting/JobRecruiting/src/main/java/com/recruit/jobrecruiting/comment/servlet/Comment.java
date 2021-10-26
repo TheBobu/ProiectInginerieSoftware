@@ -7,11 +7,21 @@ package com.recruit.jobrecruiting.comment.servlet;
 
 import com.recruit.jobrecruiting.comment.ejb.CommentBean;
 import com.recruit.jobrecruiting.common.CommentDetails;
+import com.recruit.jobrecruiting.common.InterviewDetails;
+import com.recruit.jobrecruiting.entity.Interview;
+import com.recruit.jobrecruiting.entity.User;
+import com.recruit.jobrecruiting.interviews.ejb.InterviewBean;
+import com.recruit.jobrecruiting.user.ejb.UserBean;
+import com.recruit.jobrecruiting.validators.InterviewValidator;
+import com.recruit.jobrecruiting.validators.UserValidator;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import javax.annotation.security.DeclareRoles;
 import javax.inject.Inject;
@@ -34,6 +44,12 @@ public class Comment extends HttpServlet {
 
     @Inject
     CommentBean commentBean;
+    
+    @Inject
+    InterviewBean interviewBean;
+    
+    @Inject
+    UserBean userBean;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -59,9 +75,23 @@ public class Comment extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Integer id = Integer.parseInt(request.getParameter("id"));
+        String username=request.getRemoteUser();
+        User user=userBean.getUserByUsername(username);
+//        String jobpost=request.getParameter("jobpost");
+//        String candidate=request.getParameter("candidate");
+//        String interviewer=request.getParameter("interviewer");
+//        String status=request.getParameter("status");
+        
+        request.getSession().setAttribute("id", id);   
+        request.getSession().setAttribute("user", user);
+//        request.getSession().setAttribute("jobpost", jobpost);
+//        request.getSession().setAttribute("candidate", candidate);
+//        request.getSession().setAttribute("interviewer", interviewer);
+//        request.getSession().setAttribute("status", status);
         List<CommentDetails> comments = commentBean.getAllComments(id);
+        Interview interview = interviewBean.getInterviewById(id);
         request.getSession().setAttribute("comments", comments);
-        request.getSession().setAttribute("id", id);
+        request.getSession().setAttribute("interview", interview);
         request.getRequestDispatcher("/WEB-INF/pages/interview/comment-section.jsp").forward(request, response);
     }
 
@@ -76,11 +106,44 @@ public class Comment extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getRemoteUser();
-        String comment = request.getParameter("comment");
+        System.out.println("PPPPPPPOOOOOOOSSSSSSSSSTTTTTTT");
+        System.out.println (request.getParameter("form"));
+        
         Integer id = Integer.parseInt(request.getParameter("id"));
-        commentBean.createComment(username, comment, id);
+        String formPosted = request.getParameter("form");
+        
+        if(formPosted.contentEquals("schedule")){
+            System.out.println("SCHEDULE");
+            System.out.println (request.getParameter("date"));
+            System.out.println (request.getParameter("time"));
+            LocalDate interviewDate = LocalDate.parse(request.getParameter("date"));
+            LocalTime interviewTime = LocalTime.parse(request.getParameter("time"));
+            HashMap<String, String> messageBag = new HashMap<>();
+            InterviewValidator validator = new InterviewValidator(interviewDate, interviewBean);
+            if (validator.passes(messageBag)) {
+                interviewBean.setDateTime(id, interviewDate, interviewTime);
+                String interviewPlace = request.getParameter("place");
+                interviewBean.setPlace(id, interviewPlace);
+            }
+            else{
+                request.setAttribute("errors", messageBag);
+                request.getRequestDispatcher("/WEB-INF/pages/interview/comment-section.jsp").include(request, response);
+            }
+         
+        }
+        else{
+            if(formPosted.contentEquals("change")){
+                
+            }
+            else{   //comment
+                String username = request.getRemoteUser();
+                String comment = request.getParameter("comment");
+                commentBean.createComment(username, comment, id);
+            }
+        }
+           
         response.sendRedirect(request.getContextPath()+"/Comment?id="+id.toString());
+        
     }
 
     /**

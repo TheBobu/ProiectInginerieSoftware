@@ -72,6 +72,7 @@ public class Interviews extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("INTERVIEWS.JAVA");
         String username=request.getRemoteUser();
         User user=userBean.getUserByUsername(username);
         Integer userId=user.getId();
@@ -80,24 +81,32 @@ public class Interviews extends HttpServlet {
         //Integer userIdInt=Integer.parseInt(userId);
         //String requestedBy=request.getParameter("requestedBy");/////////////////////params
         
-        List<InterviewDetails> interviews;
+        List<InterviewDetails> interviews;         //!!!!!!!!schimbare light details
 //        if(request.isUserInRole("CandidateRole"))
 //            interviews = interviewBean.getAllInterviewsAsCandidate(userId);
 //        else
 //            interviews = interviewBean.getAllInterviewsAsInterviewer(userId);
-        Boolean candidate=Boolean.FALSE;
-        if(user.getPosition().compareTo(Position.CANDIDATE)==0)
-        {
-            interviews = interviewBean.getAllInterviewsAsCandidate(userId);
-            candidate=Boolean.TRUE;
-        }         
-        else
-            interviews = interviewBean.getAllInterviewsAsInterviewer(userId);
+//        Boolean candidate=Boolean.FALSE;
+//        if(user.getPosition().compareTo(Position.CANDIDATE)==0)
+//        {
+//            interviews = interviewBean.getAllInterviewsAsCandidate(userId);
+//            candidate=Boolean.TRUE;
+//        }         
+//        else
+//            interviews = interviewBean.getAllInterviewsAsInterviewer(userId);
+//        if (request.getPathInfo().compareTo("/Profile")==0)
+//        {
+         interviews=interviewBean.getAllInterviewsAsInterviewer(userId);
+//        }
+//        else
+//        {
+//            interviews = interviewBean.getAllInterviewsAsCandidate(userId);
+//        }
         
         //interv as candidate
          
         request.getSession().setAttribute("interviews", interviews);   
-        request.getSession().setAttribute("candidate", candidate);
+        //request.getSession().setAttribute("candidate", candidate);
         request.getRequestDispatcher("/WEB-INF/pages/interview/interviews.jsp").forward(request, response);
 
     }
@@ -113,6 +122,18 @@ public class Interviews extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+//        String id=request.getParameter("id");
+//        String jobpost=request.getParameter("jobpost");
+//        String candidate=request.getParameter("candidate");
+//        String interviewer=request.getParameter("interviewer");
+//        String status=request.getParameter("status");
+//        
+//        request.getSession().setAttribute("id", id);   
+//        request.getSession().setAttribute("jobpost", jobpost);
+//        request.getSession().setAttribute("candidate", candidate);
+//        request.getSession().setAttribute("interviewer", interviewer);
+//        request.getSession().setAttribute("status", status);
+//        request.getRequestDispatcher("/WEB-INF/pages/interview/comment-section.jsp").forward(request, response);
         
     }
 

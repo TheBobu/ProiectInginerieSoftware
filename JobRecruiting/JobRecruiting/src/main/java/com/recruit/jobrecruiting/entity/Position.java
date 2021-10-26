@@ -5,6 +5,10 @@
  */
 package com.recruit.jobrecruiting.entity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * An enum with the possible states: CANDIDATE, RECRUITER, DEPARTMENT_DIRECTOR,
  * GENERAL_DIRECTOR, ADMIN
@@ -13,4 +17,8 @@ package com.recruit.jobrecruiting.entity;
  */
 public enum Position {
     CANDIDATE, RECRUITER, DEPARTMENT_DIRECTOR, GENERAL_DIRECTOR, ADMIN, HR_DIRECTOR;
+
+    public static List<Position> canApplyToJobs() {
+        return new ArrayList<>(Arrays.asList(ADMIN, RECRUITER, CANDIDATE));
+    }
 }

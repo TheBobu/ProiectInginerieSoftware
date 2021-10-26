@@ -5,6 +5,9 @@
 --%>
 
 <%@tag description="put the tag description here" pageEncoding="UTF-8"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="messages" />
 
 <%-- any content can be specified here e.g.: --%>
 <style>
@@ -13,7 +16,7 @@
     }
 
     body{
-        background-image: linear-gradient(to right, #5f72bd 0%, #9b23ea 100%);
+        background: url('http://andreeapurta.com/proiectIngSoftware/6172-min.png');
     }
 
     .register{
@@ -92,6 +95,25 @@
         cursor: pointer;
     }
 
+    .btnGoBack{
+        text-decoration: none;
+        float: left;
+        margin-top: 32px;
+        text-align: center;
+        border: none;
+        border-radius: 1.5rem;
+        padding: 2%;
+        background: #9A9A9A;
+        color: #fff;
+        font-weight: 600;
+        width: 30%;
+        cursor: pointer;
+    }
+
+    .btnGoBack:hover{
+        color: #fff;
+    }
+
     .register-heading{
         text-align: center;
         margin-top: 8%;
@@ -104,8 +126,8 @@
     <div class="row">
         <div class="col-md-3 register-left">
             <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
-            <h3>Hello there!</h3>
-            <p>Have fun filling out this form!</p>
+            <h3><fmt:message key="label.formTemplate.helloThere" /></h3>
+            <p><fmt:message key="label.formTemplate.haveFun" /></p>
         </div>
         <div class="col-md-9 register-right">
             <jsp:doBody />

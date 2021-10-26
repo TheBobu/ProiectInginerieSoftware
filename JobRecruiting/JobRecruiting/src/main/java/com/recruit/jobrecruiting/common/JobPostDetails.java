@@ -9,6 +9,7 @@ import com.recruit.jobrecruiting.entity.Department;
 import com.recruit.jobrecruiting.entity.Status;
 import com.recruit.jobrecruiting.entity.Type;
 import com.recruit.jobrecruiting.entity.User;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,7 +20,8 @@ public class JobPostDetails {
 
     private Integer id;
     private String title;
-    private String description;
+    private String requirements;
+    private String responsabilities;
     private int noOfPositionsAvailable;
     private int noOfPositionsFilled;
 
@@ -31,10 +33,11 @@ public class JobPostDetails {
     private Type type;
     private int salary;
 
-    public JobPostDetails(Integer id, String title, String description, int noOfPositionsAvailable, int noOfPositionsFilled, List<SkillDetails> skills, Department department, User poster, Status status, Type type, int salary) {
+    public JobPostDetails(Integer id, String title, String requirements, String responsabilities, int noOfPositionsAvailable, int noOfPositionsFilled, List<SkillDetails> skills, Department department, User poster, Status status, Type type, int salary) {
         this.id = id;
         this.title = title;
-        this.description = description;
+        this.requirements = requirements;
+        this.responsabilities = responsabilities;
         this.noOfPositionsAvailable = noOfPositionsAvailable;
         this.noOfPositionsFilled = noOfPositionsFilled;
         this.skills = skills;
@@ -45,6 +48,7 @@ public class JobPostDetails {
         this.salary = salary;
     }
 
+
     public Integer getId() {
         return id;
     }
@@ -53,9 +57,6 @@ public class JobPostDetails {
         return title;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
     public int getNoOfPositionsAvailable() {
         return noOfPositionsAvailable;
@@ -89,9 +90,6 @@ public class JobPostDetails {
         this.title = title;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public void setNoOfPositionsAvailable(int noOfPositionsAvailable) {
         this.noOfPositionsAvailable = noOfPositionsAvailable;
@@ -132,4 +130,37 @@ public class JobPostDetails {
     public void setSalary(int salary) {
         this.salary = salary;
     }
+
+    public String getjobCode() {
+        return department.toString() + "_" + type.getAbbreviation() + "_" + id;
+    }
+
+    public boolean statusShouldBeEditable() {
+        return status != Status.WAITING_FOR_APPROVAL;
+    }
+
+    public String getRequirements() {
+        return requirements;
+    }
+
+    public void setRequirements(String requirements) {
+        this.requirements = requirements;
+    }
+
+    public String getResponsabilities() {
+        return responsabilities;
+    }
+
+    public void setResponsabilities(String responsabilities) {
+        this.responsabilities = responsabilities;
+    }
+
+    public List<String> bullets(String string) {
+        return Arrays.asList(string.split("~"));
+    }
+
+    public boolean isAppliable(String username) {
+        return status == Status.ACTIVE && !poster.getUsername().equals(username);
+    }
+
 }
